@@ -1,0 +1,65 @@
+<!doctype html>
+<script src='../webaudiox.contextx.js'></script>
+<script src='../webaudiox.gethistogram.js'></script>
+<script src='../webaudiox.adaptativenormalizer.js'></script>
+<body><script>
+	var contextx	= new WebAudiox.Contextx()
+
+	contextx.volume	= 0.1
+
+	// setup the analyser at the 
+	var analyser	= contextx.context.createAnalyser()
+	analyser.connect(contextx.masterOut);
+	contextx.masterOut	= analyser;
+	
+	// load a sound and play it immediatly
+	contextx.loadBuffer('sounds/perfume.mp3', function(buffer){
+		var source	= contextx.context.createBufferSource();
+		source.buffer	= buffer;
+		source.loop	= true
+		source.connect(contextx.masterOut);
+		source.start(0);		
+	});
+	
+	// create and add the canvas
+	var canvas	= document.createElement('canvas');
+	canvas.width	= window.innerWidth;
+	canvas.height	= window.innerHeight;
+	var ctx		= canvas.getContext("2d");  
+	document.body.appendChild(canvas)
+		
+	/**
+	 * update the bars in the canvas with the sound
+	*/
+	var updateBars	= function(analyser, nBar){
+		// init some variables		
+		nBar	= nBar !== undefined ? mBar : 10;
+		// clear the canvas
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		// compute the histogram
+		var histo	= WebAudiox.getByteFrequencyHistogram(analyser, nBar);
+		// draw the histogram
+		drawHisto(canvas, histo);
+		return;
+
+		// draw the histogram in the canvas
+		function drawHisto(canvas, histo){
+			var nBar	= histo.length;
+			var barW	= Math.floor(canvas.width/nBar);
+			for(var i = 0; i < histo.length; i++){
+				var height	= histo[i];
+				// up to you to find the colors you like
+				ctx.fillStyle	= "hsl("+(height*360)+", 100%, 50%)";
+				// display the bar itself
+				var heightPix	= height * canvas.height;
+				ctx.fillRect(i*barW, canvas.height-heightPix, barW, heightPix);
+			}
+		}
+	};
+	
+	// periodically update the bars
+	setInterval(function(){
+		updateBars(analyser);
+	}, 1000/60);
+
+</script></body>

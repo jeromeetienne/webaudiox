@@ -1,0 +1,35 @@
+<!doctype html>
+<script src='../webaudiox.contextx.js'></script>
+<body><script>
+	var contextx	= new WebAudiox.Contextx()
+	var sounds	= {}
+
+	//////////////////////////////////////////////////////////////////////////////////
+	//		with a play function						//
+	//////////////////////////////////////////////////////////////////////////////////
+	// load the sound
+	contextx.loadBuffer('sounds/eatpill.mp3', function(buffer){
+		sounds.eatPillBuffer	= buffer;
+	})
+	// setup a play function
+	sounds.playEatPill	= function(){
+		if( !sounds.eatPillBuffer )	return
+		var source	= contextx.context.createBufferSource()
+		source.buffer	= sounds.eatPillBuffer
+		source.connect(contextx.masterOut)
+		source.start(0)
+	}
+
+	//////////////////////////////////////////////////////////////////////////////////
+	//		to play immediatly						//
+	//////////////////////////////////////////////////////////////////////////////////
+
+	// load a sound and play it immediatly
+	contextx.loadBuffer('sounds/techno.mp3', function(buffer){
+		var source	= contextx.context.createBufferSource();
+		source.buffer	= buffer;
+		source.loop	= true
+		source.connect(contextx.masterOut);
+		source.start(0);
+	});
+</script></body>

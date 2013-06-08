@@ -1,0 +1,56 @@
+<!doctype html>
+<script src='../webaudiox.contextx.js'></script>
+<script src='../webaudiox.bytetonormalizedfloat32array.js'></script>
+<body style='margin: 0; overflow: hidden; background-color: #444444'>
+<script>
+	var contextx	= new WebAudiox.Contextx()
+
+	contextx.volume	= 0.1
+	// http://www.smartjava.org/content/exploring-html5-web-audio-visualizing-sound
+
+	var analyser	= contextx.context.createAnalyser()
+	analyser.smoothingTimeConstant	= 0.2;
+	analyser.connect(contextx.masterOut);
+	contextx.masterOut	= analyser;
+
+	// load a sound and play it immediatly
+	contextx.loadBuffer('sounds/perfume.mp3', function(buffer){
+		var source	= contextx.context.createBufferSource();
+		source.buffer	= buffer;
+		source.loop	= true
+		source.connect(contextx.masterOut);
+		source.start(0);		
+	});
+	
+	// create and add the canvas
+	var canvas	= document.createElement('canvas');
+	canvas.width	= window.innerWidth;
+	canvas.height	= window.innerHeight;
+	var ctx		= canvas.getContext("2d");  
+	document.body.appendChild(canvas)
+	
+	var gradient	= ctx.createLinearGradient(0,0,0,canvas.height);
+	gradient.addColorStop(1.00,'#000000');
+	gradient.addColorStop(0.75,'#ff0000');
+	gradient.addColorStop(0.25,'#ffff00');
+	gradient.addColorStop(0.00,'#ffffff');
+
+	setInterval(function(){
+		// get the average for the first channel
+		var bytesFreq	= new Uint8Array(analyser.frequencyBinCount)
+		analyser.getByteFrequencyData(bytesFreq)
+		// normalized
+		var histogram	= new Float32Array(10)
+		WebAudiox.ByteToNormalizedFloat32Array(bytesFreq, histogram)
+
+		// clear the canvas
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		// draw the spectrum		
+		var barStep	= canvas.width / histogram.length
+		var barWidth	= barStep*0.8
+		ctx.fillStyle	= gradient;
+		for(var i = 0; i < histogram.length; i++){
+			ctx.fillRect(i*barStep, (1-histogram[i])*canvas.height, barWidth, canvas.height);
+		}
+	}, 1000/60)
+</script></body>

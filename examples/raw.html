@@ -1,0 +1,17 @@
+<!doctype html>
+<body><script>
+	window.AudioContext = window.AudioContext || window.webkitAudioContext
+	var context	= new AudioContext()
+	var request	= new XMLHttpRequest()
+	request.open('GET', 'sounds/eatpill.mp3', true)
+	request.responseType	= 'arraybuffer'
+	request.onload	= function(){
+		context.decodeAudioData(request.response, function(buffer){
+			var source	= context.createBufferSource();
+			source.buffer	= buffer;
+			source.connect(context.destination);
+			source.start(0);
+		})
+	}
+	request.send()
+</script></body>

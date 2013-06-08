@@ -1,0 +1,24 @@
+<script src="http://connect.soundcloud.com/sdk.js"></script>
+<script>
+	// initialize client with app credentials
+	SC.initialize({
+		client_id: 'cccada03f1cdd425ac2d13f995dac282',
+		redirect_uri: 'http://127.0.0.1:8000/src/webaudiox/examples/callback.html'
+	});
+
+	// initiate auth popup
+	SC.connect(function() {
+		var context	= new webkitAudioContext()
+		var audio	= new Audio()
+
+		// `stream_url` you'd get from 
+		// requesting http://api.soundcloud.com/tracks/6981096.json
+		var audio	= new Audio()
+		audio.src	= 'http://api.soundcloud.com/tracks/92798630/stream'
+			+ '?client_id='+SC.options.client_id
+
+		var source = context.createMediaElementSource(audio);
+		source.connect(context.destination);
+		source.mediaElement.play();
+	});
+</script>

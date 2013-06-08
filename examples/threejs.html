@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<script src='../../../vendor/three.js/build/three.min.js'></script>
+<script src='../../../vendor/three.js/examples/js/ImprovedNoise.js'></script>
+
+<script src='../webaudiox.analyseraverage.js'></script>
+<script src='../webaudiox.contextx.js'></script>
+<script src='../webaudiox.three.js'></script>
+<body style='margin: 0px; background-color: #bbbbbb; overflow: hidden;'><script>
+	var renderer	= new THREE.WebGLRenderer();
+	renderer.setSize( window.innerWidth, window.innerHeight );
+	document.body.appendChild( renderer.domElement );
+
+	var updateFcts	= [];
+	var scene	= new THREE.Scene();
+	var camera	= new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.01, 100 );
+	camera.position.z = 3;
+
+
+	//////////////////////////////////////////////////////////////////////////////////
+	//		to play immediatly						//
+	//////////////////////////////////////////////////////////////////////////////////
+
+	var contextx	= new WebAudiox.Contextx()
+	contextx.volume	= 1
+
+	var analyser	= contextx.context.createAnalyser()
+	analyser.connect(contextx.masterOut);
+	contextx.masterOut	= analyser;
+
+	// load a sound and play it immediatly
+	contextx.loadBuffer('sounds/techno.mp3', function(buffer){
+		var masterOut	= contextx.masterOut;
+
+		// init AudioPannerNode
+		var panner	= contextx.context.createPanner()
+		panner.coneOuterGain	= 0.1
+		panner.coneOuterAngle	= Math.PI *180/Math.PI
+		panner.coneInnerAngle	= 0 *180/Math.PI
+		panner.connect(masterOut)
+		masterOut	= panner
+		// put a PannerObject3DUpdater
+		var pannerUpdater	= new WebAudiox.PannerObject3DUpdater(panner, mesh)
+		updateFcts.push(function(delta, now){
+			pannerUpdater.update(delta, now)
+		})
+
+		// init AudioBufferSourceNode
+		var source	= contextx.context.createBufferSource();
+		source.buffer	= buffer
+		source.loop	= true
+		source.connect(masterOut)
+		masterOut	= source
+		
+		// start the sound now
+		source.start(0);
+	});
+	
+	// put a ListenerObject3DUpdater
+	var listenerUpdater	= new WebAudiox.ListenerObject3DUpdater(contextx.context, camera)
+	updateFcts.push(function(delta, now){
+		listenerUpdater.update(delta, now)
+	})
+
+	//////////////////////////////////////////////////////////////////////////////////
+	//		add an object and make it move					//
+	//////////////////////////////////////////////////////////////////////////////////	
+	var geometry	= new THREE.CubeGeometry( 1, 1, 1)
+	var material	= new THREE.MeshBasicMaterial()
+	var mesh	= new THREE.Mesh( geometry, material )
+	scene.add( mesh )
+
+	updateFcts.push(function(delta, now){
+		var angle	= 0.2 * now * Math.PI*2
+		mesh.position.x = Math.cos(angle)*1
+		mesh.position.z = Math.sin(angle)*1
+	})
+
+	updateFcts.push(function(delta, now){
+		mesh.rotation.x += 3 * delta;
+		mesh.rotation.y += 2 * delta;		
+	})
+
+	// put color hue on perlin
+	var perlin 	= new ImprovedNoise();	
+
+	updateFcts.push(function(delta, now){
+
+		var lightness	= WebAudiox.analyserAverage(analyser)
+		lightness	*= 2;
+		lightness	= Math.min(lightness, 1)
+
+		var noiseAge	= 0.1*now		
+		var hue		= perlin.noise(noiseAge, 0, 0) + 0.5
+
+		material.color.setHSL(hue, 1, lightness)
+	})
+
+	//////////////////////////////////////////////////////////////////////////////////
+	//		Camera Controls							//
+	//////////////////////////////////////////////////////////////////////////////////
+	var mouse	= {x : 0, y : 0}
+	document.addEventListener('mousemove', function(event){
+		mouse.x	= (event.clientX / window.innerWidth ) - 0.5
+		mouse.y	= (event.clientY / window.innerHeight) - 0.5
+	}, false)
+	updateFcts.push(function(delta, now){
+		// camera.position.x += (mouse.x*50 - camera.position.x) * (delta*3)
+		// camera.position.y += (mouse.y*50 - camera.position.y) * (delta*3)
+		// camera.lookAt( scene.position )
+	})
+
+
+	//////////////////////////////////////////////////////////////////////////////////
+	//		render the scene						//
+	//////////////////////////////////////////////////////////////////////////////////
+	updateFcts.push(function(){
+		renderer.render( scene, camera );		
+	})
+	
+	//////////////////////////////////////////////////////////////////////////////////
+	//		loop runner							//
+	//////////////////////////////////////////////////////////////////////////////////
+	var lastTimeMsec= null
+	requestAnimationFrame(function animate(nowMsec){
+		// keep looping
+		requestAnimationFrame( animate );
+		// measure time
+		lastTimeMsec	= lastTimeMsec || nowMsec-1000/60
+		var deltaMsec	= Math.min(200, nowMsec - lastTimeMsec)
+		lastTimeMsec	= nowMsec
+		// call each update function
+		updateFcts.forEach(function(updateFn){
+			updateFn(deltaMsec/1000, nowMsec/1000)
+		})
+	})
+</script></body>
