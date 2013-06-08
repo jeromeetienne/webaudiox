@@ -3,7 +3,8 @@
 <script src='vendor/three.js/examples/js/ImprovedNoise.js'></script>
 
 <script src='../lib/webaudiox.analyseraverage.js'></script>
-<script src='../lib/webaudiox.contextx.js'></script>
+<script src='../lib/webaudiox.lineout.js'></script>
+<script src='../lib/webaudiox.loadbuffer.js'></script>
 <script src='../lib/webaudiox.three.js'></script>
 <body style='margin: 0px; background-color: #bbbbbb; overflow: hidden;'><script>
 	var renderer	= new THREE.WebGLRenderer();
@@ -20,24 +21,26 @@
 	//		to play immediatly						//
 	//////////////////////////////////////////////////////////////////////////////////
 
-	var contextx	= new WebAudiox.Contextx()
-	contextx.volume	= 1
+	var AudioContext= window.AudioContext || window.webkitAudioContext;
+	var context	= new AudioContext()
+	var lineOut	= new WebAudiox.LineOut(context)
+	lineOut.volume	= 1
 
-	var analyser	= contextx.context.createAnalyser()
-	analyser.connect(contextx.masterOut);
-	contextx.masterOut	= analyser;
+	var analyser	= context.createAnalyser()
+	analyser.connect(lineOut.destination);
+	lineOut.destination	= analyser;
 
 	// load a sound and play it immediatly
-	contextx.loadBuffer('sounds/techno.mp3', function(buffer){
-		var masterOut	= contextx.masterOut;
+	WebAudiox.loadBuffer(context, 'sounds/techno.mp3', function(buffer){
+		var destination	= lineOut.destination;
 
 		// init AudioPannerNode
-		var panner	= contextx.context.createPanner()
+		var panner	= context.createPanner()
 		panner.coneOuterGain	= 0.1
 		panner.coneOuterAngle	= Math.PI *180/Math.PI
 		panner.coneInnerAngle	= 0 *180/Math.PI
-		panner.connect(masterOut)
-		masterOut	= panner
+		panner.connect(destination)
+		destination	= panner
 		// put a PannerObject3DUpdater
 		var pannerUpdater	= new WebAudiox.PannerObject3DUpdater(panner, mesh)
 		updateFcts.push(function(delta, now){
@@ -45,18 +48,18 @@
 		})
 
 		// init AudioBufferSourceNode
-		var source	= contextx.context.createBufferSource();
+		var source	= context.createBufferSource();
 		source.buffer	= buffer
 		source.loop	= true
-		source.connect(masterOut)
-		masterOut	= source
+		source.connect(destination)
+		destination	= source
 		
 		// start the sound now
 		source.start(0);
 	});
 	
 	// put a ListenerObject3DUpdater
-	var listenerUpdater	= new WebAudiox.ListenerObject3DUpdater(contextx.context, camera)
+	var listenerUpdater	= new WebAudiox.ListenerObject3DUpdater(context, camera)
 	updateFcts.push(function(delta, now){
 		listenerUpdater.update(delta, now)
 	})
