@@ -6,6 +6,7 @@
 <script src='../lib/webaudiox.lineout.js'></script>
 <script src='../lib/webaudiox.loadbuffer.js'></script>
 <script src='../lib/webaudiox.three.js'></script>
+<script src='threex.pannerhelper.js'></script>
 <body style='margin: 0px; background-color: #bbbbbb; overflow: hidden;'><script>
 	var renderer	= new THREE.WebGLRenderer();
 	renderer.setSize( window.innerWidth, window.innerHeight );
@@ -13,15 +14,15 @@
 
 	var updateFcts	= [];
 	var scene	= new THREE.Scene();
-	var camera	= new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.01, 100 );
+	var camera	= new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.01, 100);
 	camera.position.z = 3;
-
 
 	//////////////////////////////////////////////////////////////////////////////////
 	//		to play immediatly						//
 	//////////////////////////////////////////////////////////////////////////////////
 
-	var AudioContext= window.AudioContext || window.webkitAudioContext;
+	window.AudioContext	= window.AudioContext || window.webkitAudioContext;
+
 	var context	= new AudioContext()
 	// put a ListenerObject3DUpdater
 	var listenerUpdater	= new WebAudiox.ListenerObject3DUpdater(context, camera)
@@ -38,14 +39,18 @@
 	lineOut.destination	= analyser;
 
 	// load a sound and play it immediatly
-	WebAudiox.loadBuffer(context, 'sounds/techno.mp3', function(buffer){
+	WebAudiox.loadBuffer(context, 'sounds/triggerrally/checkpoint.wav', function(buffer){
 		var destination	= lineOut.destination;
 
 		// init AudioPannerNode
 		var panner	= context.createPanner()
-		panner.coneOuterGain	= 0.1
-		panner.coneOuterAngle	= Math.PI *180/Math.PI
-		panner.coneInnerAngle	= 0 *180/Math.PI
+		panner.coneOuterGain	= 0
+		panner.coneOuterAngle	= 0 *180/Math.PI
+		panner.coneInnerAngle	= Math.PI/8 *180/Math.PI
+
+		var pannerMesh	= new THREEx.PannerHelper(panner)
+		mesh.add(pannerMesh)
+
 		panner.connect(destination)
 		destination	= panner
 		// put a PannerObject3DUpdater
@@ -69,47 +74,19 @@
 	//		add an object and make it move					//
 	//////////////////////////////////////////////////////////////////////////////////	
 	var geometry	= new THREE.CubeGeometry( 1, 1, 1)
-	var material	= new THREE.MeshBasicMaterial()
+	var material	= new THREE.MeshNormalMaterial()
 	var mesh	= new THREE.Mesh( geometry, material )
 	scene.add( mesh )
 
 	updateFcts.push(function(delta, now){
-		var angle	= 0.2 * now * Math.PI*2
-		mesh.position.x = Math.cos(angle)*1
-		mesh.position.z = Math.sin(angle)*1
+		// var angle	= 0.2 * now * Math.PI*2
+		// mesh.position.x = Math.cos(angle)*1
+		// mesh.position.z = Math.sin(angle)*1
 	})
 
 	updateFcts.push(function(delta, now){
-		mesh.rotation.x += 3 * delta;
-		mesh.rotation.y += 2 * delta;		
-	})
-
-	// put color hue on perlin
-	var perlin 	= new ImprovedNoise();	
-
-	updateFcts.push(function(delta, now){
-
-		var lightness	= WebAudiox.analyserAverage(analyser)
-		lightness	*= 2;
-		lightness	= Math.min(lightness, 1)
-
-		var noiseAge	= 0.1*now
-		var hue		= perlin.noise(noiseAge, 0, 0) + 0.5
-		material.color.setHSL(hue, 1, lightness)
-	})
-
-	//////////////////////////////////////////////////////////////////////////////////
-	//		Camera Controls							//
-	//////////////////////////////////////////////////////////////////////////////////
-	var mouse	= {x : 0, y : 0}
-	document.addEventListener('mousemove', function(event){
-		mouse.x	= (event.clientX / window.innerWidth ) - 0.5
-		mouse.y	= (event.clientY / window.innerHeight) - 0.5
-	}, false)
-	updateFcts.push(function(delta, now){
-		// camera.position.x += (mouse.x*50 - camera.position.x) * (delta*3)
-		// camera.position.y += (mouse.y*50 - camera.position.y) * (delta*3)
-		// camera.lookAt( scene.position )
+		mesh.rotation.x += 0.1 * delta;
+//		mesh.rotation.y += 2 * delta;		
 	})
 
 

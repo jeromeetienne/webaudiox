@@ -1,7 +1,6 @@
 <!doctype html>
 <script src='../lib/webaudiox.loadbuffer.js'></script>
 <body><script>
-
 	var AudioContext= window.AudioContext || window.webkitAudioContext;
 	var context	= new AudioContext()
 	var sounds	= {}
@@ -20,6 +19,7 @@
 		source.buffer	= sounds.eatPillBuffer
 		source.connect(context.destination)
 		source.start(0)
+		return source
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////
@@ -33,5 +33,18 @@
 		source.loop	= true
 		source.connect(context.destination);
 		source.start(0);
+		return source
 	});
+	
+	//////////////////////////////////////////////////////////////////////////////////
+	//		detection 							//
+	//////////////////////////////////////////////////////////////////////////////////
+	
+	WebAudiox.loadBuffer.onLoad	= function(context, url){
+		console.log('url loaded', url)
+		console.log('nb sound remaining', WebAudiox.loadBuffer.inProgressCount)
+		if( WebAudiox.loadBuffer.inProgressCount === 0 ){
+			console.log('all sounds loaded')
+		}
+	}
 </script></body>

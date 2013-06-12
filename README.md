@@ -7,8 +7,9 @@ no libs only snippets for you to copy, and fine tune to your own needs.
 * port examples from webaudio.js
 * should i do a build/webaudio-bundle.js ?
 * webaudiox.contextx.js seems weird and obsolete
-  * maybe webaudiox.boilerplate.js ?
+  * maybe webaudiox.boilerplate.js ? seems more like a boilerplate
   * it is .lineout.js + loadbuffer.js + mutewithvisibility.js
+  * mutewithvisibility.js is in contextx.js too! duplicate 
 
 * DONE put in its own repo
 * done fix the naming issue
