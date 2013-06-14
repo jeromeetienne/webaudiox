@@ -53,7 +53,7 @@ THREEx.PannerHelper	= function(panner){
 	var height	= 1;
 	var geometry	= new THREE.CylinderGeometry(radiusTop, 0, height, 16, 16, true)
 	var material	= new THREE.MeshBasicMaterial()
-	material.color.set('blue')
+	material.color.set('green')
 	material.wireframe	= true
 	var coneInner	= new THREE.Mesh(geometry, material)	
 	coneInner.position.z	= height/2
@@ -86,8 +86,8 @@ THREEx.PannerHelper.prototype = Object.create( THREE.Object3D.prototype );
 
 		// init AudioPannerNode
 		var panner	= context.createPanner()
-		panner.coneOuterGain	= 0
-		panner.coneOuterAngle	= 0 *180/Math.PI
+		panner.coneOuterGain	= 0.4
+		panner.coneOuterAngle	= Math.PI/6 *180/Math.PI
 		panner.coneInnerAngle	= Math.PI/8 *180/Math.PI
 
 		var pannerMesh	= new THREEx.PannerHelper(panner)

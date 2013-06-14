@@ -24,22 +24,6 @@ here are the various examples:
 
 ## TODO
 * port examples from webaudio.js
-* webaudiox.contextx.js seems weird and obsolete
-  * maybe webaudiox.boilerplate.js ? seems more like a boilerplate
-    * no! kill it
-  * it is .lineout.js + loadbuffer.js + mutewithvisibility.js
-  * mutewithvisibility.js is in contextx.js too! duplicate 
-    * kill mutewithvisibility.js
-
-* DONE put in its own repo
-* done fix the naming issue
-  * one WebAudioX.ContextX
-  * one WebAudioX.AbsoluteNormalizer
-* done port all the three.js localisation
-  * webaudiox.three.js
-  * put a panner
-  * put some dopler
-
 
 
 ## Notes
