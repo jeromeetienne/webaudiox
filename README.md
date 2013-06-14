@@ -5,17 +5,18 @@ no libs only snippets for you to copy, and fine tune to your own needs.
 
 ## examples
 
+here are the various examples: 
 [analyseraverage](http://jeromeetienne.github.io/webaudiox/examples/analyseraverage.html)
-[beatdetektorjs](http://jeromeetienne.github.io/webaudiox/examples/beatdetektorjs.html)
-[frequencyspectrum](http://jeromeetienne.github.io/webaudiox/examples/frequencyspectrum.html)
-[jsfx](http://jeromeetienne.github.io/webaudiox/examples/jsfx.html)
-[lineout](http://jeromeetienne.github.io/webaudiox/examples/lineout.html)
-[raw](http://jeromeetienne.github.io/webaudiox/examples/raw.html)
-[soundcloud-callback](http://jeromeetienne.github.io/webaudiox/examples/soundcloud-callback.html)
-[soundcloud-test](http://jeromeetienne.github.io/webaudiox/examples/soundcloud-test.html)
-[soundsbank](http://jeromeetienne.github.io/webaudiox/examples/soundsbank.html)
-[threejs-panner](http://jeromeetienne.github.io/webaudiox/examples/threejs-panner.html)
-[threejs](http://jeromeetienne.github.io/webaudiox/examples/threejs.html)
+, [beatdetektorjs](http://jeromeetienne.github.io/webaudiox/examples/beatdetektorjs.html)
+, [frequencyspectrum](http://jeromeetienne.github.io/webaudiox/examples/frequencyspectrum.html)
+, [jsfx](http://jeromeetienne.github.io/webaudiox/examples/jsfx.html)
+, [lineout](http://jeromeetienne.github.io/webaudiox/examples/lineout.html)
+, [raw](http://jeromeetienne.github.io/webaudiox/examples/raw.html)
+, [soundcloud-callback](http://jeromeetienne.github.io/webaudiox/examples/soundcloud-callback.html)
+, [soundcloud-test](http://jeromeetienne.github.io/webaudiox/examples/soundcloud-test.html)
+, [soundsbank](http://jeromeetienne.github.io/webaudiox/examples/soundsbank.html)
+, [threejs-panner](http://jeromeetienne.github.io/webaudiox/examples/threejs-panner.html)
+, [threejs](http://jeromeetienne.github.io/webaudiox/examples/threejs.html)
 
 ## TODO
 * port examples from webaudio.js
