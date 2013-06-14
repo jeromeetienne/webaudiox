@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<script src='../lib/webaudiox.shim.js'></script>
+<script src='../lib/webaudiox.lineout.js'></script>
+<script src='../lib/webaudiox.loadbuffer.js'></script>
+<body style='margin: 0px; background-color: #bbbbbb; overflow: hidden;'><script>
+	var context	= new AudioContext()
+
+	// Create lineOut
+	var lineOut	= new WebAudiox.LineOut(context)
+	lineOut.volume	= 1
+
+	// load a sound and play it immediatly
+	WebAudiox.loadBuffer(context, 'sounds/techno.mp3', function(buffer){
+		// init AudioBufferSourceNode
+		var source	= context.createBufferSource();
+		source.buffer	= buffer
+		source.loop	= true
+		source.connect(lineOut.destination)
+		
+		// start the sound now
+		source.start(0);
+		
+		
+		const MIX_TO_MONO = false;
+		const NUM_SAMPLES = 2048;
+	});
+</script></body>

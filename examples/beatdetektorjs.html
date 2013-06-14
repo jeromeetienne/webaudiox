@@ -1,0 +1,89 @@
+
+<!doctype html>
+<script src='../lib/webaudiox.shim.js'></script>
+<script src='../lib/webaudiox.lineout.js'></script>
+<script src='../lib/webaudiox.loadbuffer.js'></script>
+
+<script src='vendor/beatdetektor.js'></script>
+<body><script>
+	var context	= new AudioContext()
+
+	// Create lineOut
+	var lineOut	= new WebAudiox.LineOut(context)
+	lineOut.volume	= 0.2
+	
+	//////////////////////////////////////////////////////////////////////////////////
+	//		to play immediatly						//
+	//////////////////////////////////////////////////////////////////////////////////
+	var beatDetektor	= new BeatDetektor();
+	var vu			= new BeatDetektor.modules.vis.VU();
+	var bassKick		= new BeatDetektor.modules.vis.BassKick();
+
+	// load a sound and play it immediatly
+	WebAudiox.loadBuffer(context, 'sounds/marbles.ogg', function(buffer){
+		var destination	= lineOut.destination;
+
+		var source	= context.createBufferSource();
+		source.buffer	= buffer;
+		source.loop	= true
+		source.connect(destination);
+		destination	= source
+
+
+		// This AudioNode will do the amplitude modulation effect directly in JavaScript
+		var jsProcessor = context.createJavaScriptNode(2048);
+		var ftimer	= 0;
+		source.connect(jsProcessor);
+		jsProcessor.connect(context.destination)
+		jsProcessor.onaudioprocess = 	function(event){
+			// Get left channel input. No need for output arrays. They're hooked up
+			// directly to the destination, and we're not doing any processing.
+			var inputArrayL = event.inputBuffer.getChannelData(0);
+			// for beatDetektor.js
+			beatDetektor.process(context.currentTime, inputArrayL);
+			// for basskick
+			bassKick.process(beatDetektor)
+			document.body.style.background = bassKick.is_kick ? '#222' : 'white'
+			// for the vumeter
+			ftimer		+= beatDetektor.last_update;
+			if (ftimer > 1.0 / 24.0) {
+				vu.process(beatDetektor, ftimer);
+				ftimer = 0;
+			}
+		};
+	
+		source.start(0);	
+	});
+	
+	//////////////////////////////////////////////////////////////////////////////////
+	//		histogram							//
+	//////////////////////////////////////////////////////////////////////////////////
+	
+	
+	// create and add the canvas
+	var canvas	= document.createElement('canvas');
+	canvas.width	= window.innerWidth;
+	canvas.height	= window.innerHeight;
+	var ctx		= canvas.getContext("2d");  
+	document.body.appendChild(canvas)
+	
+	var gradient	= ctx.createLinearGradient(0,0,0,canvas.height);
+	gradient.addColorStop(1.00,'#000000');
+	gradient.addColorStop(0.75,'#ff0000');
+	gradient.addColorStop(0.25,'#ffff00');
+	gradient.addColorStop(0.00,'#ffffff');
+
+	setInterval(function(){
+		var histogram	= vu.vu_levels
+		// clear the canvas
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		// draw the spectrum		
+		var barStep	= canvas.width / histogram.length
+		var barWidth	= barStep*0.8
+		ctx.fillStyle	= gradient;
+		for(var i = 0; i < histogram.length; i++){
+			ctx.fillRect(i*barStep, (1-histogram[i])*canvas.height, barWidth, canvas.height);
+		}
+	}, 1000/60)
+
+</script></body>

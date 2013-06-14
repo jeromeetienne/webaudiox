@@ -3,13 +3,28 @@ webaudiox.js
 it is a webaudio api ala vendor.js.
 no libs only snippets for you to copy, and fine tune to your own needs.
 
+## examples
+
+[analyseraverage](http://jeromeetienne.github.io/webaudiox/examples/analyseraverage.html)
+[beatdetektorjs](http://jeromeetienne.github.io/webaudiox/examples/beatdetektorjs.html)
+[frequencyspectrum](http://jeromeetienne.github.io/webaudiox/examples/frequencyspectrum.html)
+[jsfx](http://jeromeetienne.github.io/webaudiox/examples/jsfx.html)
+[lineout](http://jeromeetienne.github.io/webaudiox/examples/lineout.html)
+[raw](http://jeromeetienne.github.io/webaudiox/examples/raw.html)
+[soundcloud-callback](http://jeromeetienne.github.io/webaudiox/examples/soundcloud-callback.html)
+[soundcloud-test](http://jeromeetienne.github.io/webaudiox/examples/soundcloud-test.html)
+[soundsbank](http://jeromeetienne.github.io/webaudiox/examples/soundsbank.html)
+[threejs-panner](http://jeromeetienne.github.io/webaudiox/examples/threejs-panner.html)
+[threejs](http://jeromeetienne.github.io/webaudiox/examples/threejs.html)
+
 ## TODO
 * port examples from webaudio.js
-* should i do a build/webaudio-bundle.js ?
 * webaudiox.contextx.js seems weird and obsolete
   * maybe webaudiox.boilerplate.js ? seems more like a boilerplate
+    * no! kill it
   * it is .lineout.js + loadbuffer.js + mutewithvisibility.js
   * mutewithvisibility.js is in contextx.js too! duplicate 
+    * kill mutewithvisibility.js
 
 * DONE put in its own repo
 * done fix the naming issue
