@@ -1,21 +1,25 @@
 <!doctype html>
-<script src='../lib/webaudiox.contextx.js'></script>
+<script src='../lib/webaudiox.shim.js'></script>
+<script src='../lib/webaudiox.lineout.js'></script>
+<script src='../lib/webaudiox.loadbuffer.js'></script>
 <script src='../lib/webaudiox.analyseraverage.js'></script>
 <body><script>
-	var contextx	= new WebAudiox.Contextx()
+	var context	= new AudioContext()
 
-	contextx.volume	= 0.1
+	// Create lineOut
+	var lineOut	= new WebAudiox.LineOut(context)
+	lineOut.volume	= 0.2
 
-	var analyser	= contextx.context.createAnalyser()
-	analyser.connect(contextx.masterOut);
-	contextx.masterOut	= analyser;
+	var analyser	= context.createAnalyser()
+	analyser.connect(lineOut.destination);
+	lineOut.destination	= analyser;
 
 	// load a sound and play it immediatly
-	contextx.loadBuffer('sounds/perfume.mp3', function(buffer){
-		var source	= contextx.context.createBufferSource();
+	WebAudiox.loadBuffer(context, 'sounds/perfume.mp3', function(buffer){
+		var source	= context.createBufferSource();
 		source.buffer	= buffer;
 		source.loop	= true
-		source.connect(contextx.masterOut);
+		source.connect(lineOut.destination);
 		source.start(0);		
 	});
 	
