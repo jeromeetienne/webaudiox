@@ -6,17 +6,22 @@ no libs only snippets for you to copy, and fine tune to your own needs.
 ## examples
 
 here are the various examples: 
-[analyseraverage](http://jeromeetienne.github.io/webaudiox/examples/analyseraverage.html)
-, [beatdetektorjs](http://jeromeetienne.github.io/webaudiox/examples/beatdetektorjs.html)
-, [frequencyspectrum](http://jeromeetienne.github.io/webaudiox/examples/frequencyspectrum.html)
-, [jsfx](http://jeromeetienne.github.io/webaudiox/examples/jsfx.html)
-, [lineout](http://jeromeetienne.github.io/webaudiox/examples/lineout.html)
-, [raw](http://jeromeetienne.github.io/webaudiox/examples/raw.html)
-, [soundcloud-callback](http://jeromeetienne.github.io/webaudiox/examples/soundcloud-callback.html)
-, [soundcloud-test](http://jeromeetienne.github.io/webaudiox/examples/soundcloud-test.html)
-, [soundsbank](http://jeromeetienne.github.io/webaudiox/examples/soundsbank.html)
-, [threejs-panner](http://jeromeetienne.github.io/webaudiox/examples/threejs-panner.html)
-, [threejs](http://jeromeetienne.github.io/webaudiox/examples/threejs.html)
+
+* how to get a track from sound cloud: [here](http://jeromeetienne.github.io/webaudiox/examples/soundcloud-test.html)
+* how to got a sound localized on a three.js object: [here](http://jeromeetienne.github.io/webaudiox/examples/threejs.html)
+  * an experimentation using ```PannerNode``` [here](http://jeromeetienne.github.io/webaudiox/examples/threejs-panner.html)
+
+* how to load and play a sound only with the API: [here](http://jeromeetienne.github.io/webaudiox/examples/raw.html)
+* how to generate a sound using jsfx: [here](http://jeromeetienne.github.io/webaudiox/examples/jsfx.html)
+* how to display a frequency spectrum: [here](http://jeromeetienne.github.io/webaudiox/examples/frequencyspectrum.html)
+* how to use it with beatdetektor.js: [here](http://jeromeetienne.github.io/webaudiox/examples/beatdetektorjs.html)
+* how to use it with webaudiox.lineout.js ? [here](http://jeromeetienne.github.io/webaudiox/examples/lineout.html)
+  * this is a typical boilerplate for a line out.
+  * it has a ```lineOut.volume``` property for tuning the master volume
+  * it has a ```lineOut.toggleMute()``` function to mute/unmute the output
+  * it has a *muteIfHidden* feature. So when your webpage page get hidden, the sound is muted
+* a possible way to handle soundback: [here](http://jeromeetienne.github.io/webaudiox/examples/soundsbank.html)
+* a way to detect pulse using an ```analyzerNode``` : [here](http://jeromeetienne.github.io/webaudiox/examples/analyseraverage.html)
 
 ## TODO
 * port examples from webaudio.js
