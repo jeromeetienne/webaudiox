@@ -164,7 +164,6 @@ WebAudiox.LineOut	= function(context){
 		var callback	= function(){
 			var isHidden	= document[documentStr] ? true : false
 			gainNode.gain.value	= isHidden ? 0 : 1
-console.log('isHidden', isHidden, 'gain.value', gainNode.gain.value)
 		}.bind(this)
 		// bind the event itself
 		document.addEventListener(eventStr, callback, false)
