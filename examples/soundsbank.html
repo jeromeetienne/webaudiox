@@ -1,23 +1,62 @@
 <!doctype html>
 <script src='../lib/webaudiox.loadbuffer.js'></script>
+<script src='../lib/webaudiox.lineout.js'></script>
 <body><script>
-	var AudioContext= window.AudioContext || window.webkitAudioContext;
+	var soundBank	= new SoundBank
+
+	WebAudiox.loadBuffer.onLoad	= function(context, url){
+		console.log('url loaded', url)
+		console.log('nb sound remaining', WebAudiox.loadBuffer.inProgressCount)
+		if( WebAudiox.loadBuffer.inProgressCount === 0 ){
+			console.log('all sounds loaded')
+		}
+	}
+	console.log('nb sound loading:', WebAudiox.loadBuffer.inProgressCount)
+
+	//////////////////////////////////////////////////////////////////////////////////
+	//		comment								//
+	//////////////////////////////////////////////////////////////////////////////////
+	
+
+/**
+ * example of a sound bank class. able to load in
+ * @class examples
+ */
+function SoundBank(){
+	/**
+	 * local shim for window.AudioContext
+	 */
+	var AudioContext	= window.AudioContext || window.webkitAudioContext;
+	/**
+	 * show if the Web Audio API is detected or not
+	 * @type {boolean}
+	 */
+	this.webAudioDetected	= AudioContext ? true : false
+
+	// if WebAudioDetected === false, declare needed
+	if( this.webAudioDetected === false ){
+		this.playEatPill	= function(){}
+		return;
+	}
+	
 	var context	= new AudioContext()
-	var sounds	= {}
+
+	// Create lineOut
+	var lineOut	= new WebAudiox.LineOut(context)
 
 	//////////////////////////////////////////////////////////////////////////////////
 	//		with a play function						//
 	//////////////////////////////////////////////////////////////////////////////////
 	// load the sound
-	WebAudiox.loadBuffer(context, 'sounds/eatpill.mp3', function(buffer){
-		sounds.eatPillBuffer	= buffer;
-	})
+	WebAudiox.loadBuffer(context, 'sounds/triggerrally/checkpoint.wav', function(buffer){
+		this.eatPillBuffer	= buffer;
+	}.bind(this))
 	// setup a play function
-	sounds.playEatPill	= function(){
-		if( !sounds.eatPillBuffer )	return
+	this.playEatPill	= function(){
+		if( !this.eatPillBuffer )	return
 		var source	= context.createBufferSource()
-		source.buffer	= sounds.eatPillBuffer
-		source.connect(context.destination)
+		source.buffer	= this.eatPillBuffer
+		source.connect(lineOut.destination)
 		source.start(0)
 		return source
 	}
@@ -27,24 +66,13 @@
 	//////////////////////////////////////////////////////////////////////////////////
 
 	// load a sound and play it immediatly
-	WebAudiox.loadBuffer(context, 'sounds/techno.mp3', function(buffer){
+	WebAudiox.loadBuffer(context, 'sounds/marbles.ogg', function(buffer){
 		var source	= context.createBufferSource();
 		source.buffer	= buffer;
 		source.loop	= true
-		source.connect(context.destination);
+		source.connect(lineOut.destination);
+		// start playing
 		source.start(0);
-		return source
 	});
-	
-	//////////////////////////////////////////////////////////////////////////////////
-	//		detection 							//
-	//////////////////////////////////////////////////////////////////////////////////
-	
-	WebAudiox.loadBuffer.onLoad	= function(context, url){
-		console.log('url loaded', url)
-		console.log('nb sound remaining', WebAudiox.loadBuffer.inProgressCount)
-		if( WebAudiox.loadBuffer.inProgressCount === 0 ){
-			console.log('all sounds loaded')
-		}
-	}
+}
 </script></body>
