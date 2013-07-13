@@ -17,6 +17,13 @@ webaudiox.js is a
 
 ## webaudiox.jsfx.js
 
+You can see the
+[file on github](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.jsfx.js).
+You can try an usage 
+[example live](https://jeromeetienne.github.io/webaudiox//examples/jsfx.html)
+and check its 
+[source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/jsfx.html).
+
 [jsfx.js](https://github.com/egonelbre/jsfx) 
 is a library to generate procedural sound, very 8-bit kindof sound.
 See [jsfx demo page](http://www.egonelbre.com/js/jsfx/) for details on this fun library
@@ -33,14 +40,15 @@ var lib		= ["square",0.0000,0.4000,0.0000,0.3200,0.0000,0.2780,20.0000,496.0000,
 var buffer	= WebAudiox.getBufferFromJsfx(context, lib)
 ```
 
-You can see the
-[file on github](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.jsfx.js).
-You can watch an usage 
-[example live](https://jeromeetienne.github.io/webaudiox//examples/jsfx.html)
-and check its 
-[source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/jsfx.html).
 
 ## webaudiox.loadbuffer.js
+
+You can see the 
+[file on github](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.loadbuffer.js).
+You can try an usage 
+[example live](https://jeromeetienne.github.io/webaudiox//examples/lineout.html)
+and check its 
+[source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/lineout.html).
 
 It is helper to load sound. 
 it is a function which load the sound from an ```url``` and decode it.
@@ -53,12 +61,6 @@ WebAudiox.loadBuffer(context, url, function(buffer){
 });
 ```
 
-You can see the 
-[file on github](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.loadbuffer.js).
-You can watch an usage 
-[example live](https://jeromeetienne.github.io/webaudiox//examples/lineout.html)
-and check its 
-[source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/lineout.html).
 
 
 ### download management
@@ -83,6 +85,13 @@ it usefull to know is all your sounds as been loaded.
 
 
 ## Sound localisation with three.js
+
+You can see the 
+[file on github](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.three.js).
+You can try an usage 
+[example live](https://jeromeetienne.github.io/webaudiox//examples/threejs.html)
+and check its 
+[source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/threejs.html).
 
 This is useful lf you have a three.js scene and would like to play spacial sound in it.
 
@@ -127,13 +136,6 @@ listener
 // now is the absolute time in seconds
 listenerUpdater.update(delta, now)
 ```
-
-You can see the 
-[file on github](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.threejs.js).
-You can watch an usage 
-[example live](https://jeromeetienne.github.io/webaudiox//examples/threejs.html)
-and check its 
-[source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/threejs.html).
 
 ## examples
 
