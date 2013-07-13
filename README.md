@@ -140,7 +140,6 @@ You can try an usage
 and check its 
 [source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/threejs.html).
 Sure but what does it do ?
-
 This is useful lf you have a three.js scene and would like to play spacial sound in it.
 When a sound is played in 3d space, there are 2 actors: 
 the listener which hear the sound 
@@ -179,7 +178,6 @@ listenerUpdater.update(delta, now)
 Now lets localise a sound source.
 A sound source is localised only if it has a 
 [panner node](https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html#PannerNode).
-
 So you create a ```PannerObject3DUpdater``` for that 
 
 ```javascript
