@@ -11,7 +11,51 @@ It is just the concatenation of all the helpers.
 
 ## Usage Examples
 
+## webaudiox.bytetonormalizedfloat32array.js
 
+You can see the
+[file on github](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.bytetonormalizedfloat32array.js).
+You can try an usage 
+[example live](https://jeromeetienne.github.io/webaudiox/examples/frequencyspectrum.html)
+and check its 
+[source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/frequencyspectrum.html).
+Sure but what does it do ?
+
+It convert a byteArray to a normalized Float32Array.
+The destination Array is normalized because 
+values are garanted to be between 0 and 1.
+It works even if the destination array has a different than the source array.
+It is usefull when playing with frequency spectrum.
+
+```
+WebAudiox.ByteToNormalizedFloat32Array(srcArray, dstArray);
+// bytesFreq is from a analyser.getByteFrequencyData(bytesFreq)
+// histogram is destination array, e.g. new Float32Array(10)
+WebAudiox.ByteToNormalizedFloat32Array(bytesFreq, histogram)
+```
+
+## webaudiox.analyseraverage.js
+
+You can see the
+[file on github](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.analyseraverage.js).
+You can try an usage 
+[example live](https://jeromeetienne.github.io/webaudiox/examples/analyseraverage.html)
+and check its 
+[source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/analyseraverage.html).
+Sure but what does it do ?
+
+It makes an average on a ByteFrequencyData from an analyser node. clear ? :)
+in brief, it makes an fft to extract the frequency of the sound, all that in real time.
+It is often used to detect pulse in some frequency range.
+like detecting pulse in the low frequencies can be a easy beat detector.
+
+```
+var average	= new WebAudiox.analyserAverage(analyser, width, offset);
+// average is a Number of the computed average
+```
+
+width is optional and default to ```analyser.frequencyBinCount```.
+offset is optional and default to 0.
 
 ## webaudiox.lineout.js
 
@@ -76,30 +120,6 @@ typically when the user click on the mute button, you want to toggle the mute st
 ```
 lineOut.toggeMute()
 ```
-
-
-
-
-=====================
-NEED MORE
-
-=====================
-first what do we call a line out ?
-This is where all sound source ends.
-
-in webaudio api, a sound is roughtly a chain of node. each of them doing a processing on the sound. this chain of node forms a line.
-As all sound source ends in the line out, changing line out will affect all your sounds.
-This is where you set the main volume, the mute etc... for all sounds.
-
-=====================
-
-This is where all sound source ends.
-It has a global volume.
-it has a mute which can be controlled by the user. perfect for a mute button in a game for example
-The sound is mute when the browser tab is hidden using 
-[PageVisibility API](http://www.w3.org/TR/page-visibility/).
-Thus the user can stay on your site even if moving away for a moment.
-
 
 ## webaudiox.shim.js
 
