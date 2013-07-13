@@ -33,13 +33,13 @@ a clipping detection and
 a dynamic compressor to reduce clipping.
 
 Additionnaly it provides some tools useful in real-life cases.
-
-* ability for the user to mute the sound. usefull when the user is at the office or any place where it isn't
+Such as the ability for the user to mute the sound. 
+ut usefull when the user is at the office or any place where it isn't
 polite to have a loud computer :)
-* if the user changes of browser tab, the sound is mute as well. 
-* ability to tune the volume globally for all sounds
+Another thing, if the user changes of browser tab, the sound is mute as well. 
+and obviously ability to tune the volume globally for all sounds.
 
-### API 
+Now let's see it's API
 
 ### create a lineOut
 
