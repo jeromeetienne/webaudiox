@@ -15,12 +15,58 @@ webaudiox.js is a
 
 ## API 
 
+## webaudiox.lineout.js
+
+You can see the
+[file on github](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.lineout.js).
+You can try an usage 
+[example live](https://jeromeetienne.github.io/webaudiox/examples/lineout.html)
+and check its 
+[source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/lineout.html).
+Sure but what does it do ?
+
+It provide a main line out with the *good practices*
+from 
+["Developing Game Audio with the Web Audio API"](http://www.html5rocks.com/en/tutorials/webaudio/games/)
+on 
+[html5rocks](http://www.html5rocks.com/).
+
+=====================
+NEED MORE
+
+=====================
+
+This is where all sound source ends.
+It has a global volume.
+it has a mute which can be controlled by the user. perfect for a mute button in a game for example
+The sound is mute when the browser tab is hidden using 
+[PageVisibility API](http://www.w3.org/TR/page-visibility/).
+Thus the user can stay on your site even if moving away for a moment.
+
+
+## webaudiox.shim.js
+
+You can see the
+[file on github](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.shim.js).
+You can try an usage 
+[example live](https://jeromeetienne.github.io/webaudiox/examples/jsfx.html)
+and check its 
+[source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/jsfx.html).
+Sure but what does it do ?
+
+It does a [shim](http://en.wikipedia.org/wiki/Shim_\(computing\)) which handle 
+the vendor prefix, so you don't have to. Typically it contains code like 
+
+```
+window.AudioContext	= window.AudioContext || window.webkitAudioContext;
+```
+
 ## webaudiox.jsfx.js
 
 You can see the
 [file on github](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.jsfx.js).
 You can try an usage 
-[example live](https://jeromeetienne.github.io/webaudiox//examples/jsfx.html)
+[example live](https://jeromeetienne.github.io/webaudiox/examples/jsfx.html)
 and check its 
 [source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/jsfx.html).
 
@@ -46,7 +92,7 @@ var buffer	= WebAudiox.getBufferFromJsfx(context, lib)
 You can see the 
 [file on github](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.loadbuffer.js).
 You can try an usage 
-[example live](https://jeromeetienne.github.io/webaudiox//examples/lineout.html)
+[example live](https://jeromeetienne.github.io/webaudiox/examples/lineout.html)
 and check its 
 [source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/lineout.html).
 
@@ -89,7 +135,7 @@ it usefull to know is all your sounds as been loaded.
 You can see the 
 [file on github](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.three.js).
 You can try an usage 
-[example live](https://jeromeetienne.github.io/webaudiox//examples/threejs.html)
+[example live](https://jeromeetienne.github.io/webaudiox/examples/threejs.html)
 and check its 
 [source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/threejs.html).
 
