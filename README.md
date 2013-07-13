@@ -22,7 +22,6 @@ You can try an usage
 and check its 
 [source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/lineout.html).
 Sure but what does it do ?
-
 It provide a main line out with the *good practices*
 from 
 ["Developing Game Audio with the Web Audio API"](http://www.html5rocks.com/en/tutorials/webaudio/games/)
@@ -30,13 +29,14 @@ on
 [html5rocks](http://www.html5rocks.com/). 
 So it provides 
 a clipping detection and
-a dynamic compressor to reduce clipping.
+a dynamic compressor to reduce clipping to improve sound quality.
 
 Additionnaly it provides some tools useful in real-life cases.
 Such as the ability for the user to mute the sound. 
-ut usefull when the user is at the office or any place where it isn't
+Its is usefull when the user is at the office or any place where it isn't
 polite to have a loud computer :)
-Another thing, if the user changes of browser tab, the sound is mute as well. 
+Another thing, if the the browser tab is hidden, the sound is mute using 
+[PageVisibility API](http://www.w3.org/TR/page-visibility/).
 and obviously ability to tune the volume globally for all sounds.
 
 Now let's see it's API
