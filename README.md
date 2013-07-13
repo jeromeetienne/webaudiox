@@ -1,19 +1,17 @@
 webaudiox.js
 ============
 webaudiox.js is a bunch of helpers for 
-[WebAudio API](https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html)
-each of them can be use independantly.
+[WebAudio API](https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html).
+
+It isn't a library per say.
+You can use any of those helpers independantly.
+There is a ```webaudiox-bundle.js``` provided tho.
+This is for convenience.
+It is just the concatenation of all the helpers.
+
+## Usage Examples
 
 
-
-webaudiox.js is a
-
-```webaudiox-bundle.js``` is just the concatenation of all the helpers.
-
-
-## how to use it 
-
-## API 
 
 ## webaudiox.lineout.js
 
@@ -29,10 +27,69 @@ It provide a main line out with the *good practices*
 from 
 ["Developing Game Audio with the Web Audio API"](http://www.html5rocks.com/en/tutorials/webaudio/games/)
 on 
-[html5rocks](http://www.html5rocks.com/).
+[html5rocks](http://www.html5rocks.com/). 
+So it provides 
+a clipping detection and
+a dynamic compressor to reduce clipping.
+
+Additionnaly it provides some tools useful in real-life cases.
+
+* ability for the user to mute the sound. usefull when the user is at the office or any place where it isn't
+polite to have a loud computer :)
+* if the user changes of browser tab, the sound is mute as well. 
+* ability to tune the volume globally for all sounds
+
+### API 
+
+### create a lineOut
+
+```
+var lineOut	= new WebAudiox.LineOut(context)
+```
+
+### to set the volume/gain
+ 
+```
+lineOut.volume	= 0.8;
+```
+
+### To connect a sound to your lineOut
+
+use ```lineOut.destination``` as you would use ```context.destination```.
+
+```
+source.connect(lineOut.destination)
+```
+
+### test if currently muted by user
+
+```
+if( lineOut.isMuted === true ){
+	console.log('sound has been muted by user')
+}
+```
+
+### toggle mute status
+
+typically when the user click on the mute button, you want to toggle the mute status.
+
+```
+lineOut.toggeMute()
+```
+
+
+
 
 =====================
 NEED MORE
+
+=====================
+first what do we call a line out ?
+This is where all sound source ends.
+
+in webaudio api, a sound is roughtly a chain of node. each of them doing a processing on the sound. this chain of node forms a line.
+As all sound source ends in the line out, changing line out will affect all your sounds.
+This is where you set the main volume, the mute etc... for all sounds.
 
 =====================
 
