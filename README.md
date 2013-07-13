@@ -1,7 +1,15 @@
 webaudiox.js
 ============
-it is a webaudio api ala vendor.js.
-no libs only snippets for you to copy, and fine tune to your own needs.
+webaudiox.js is a bunch of helpers for 
+[WebAudio API](https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html)
+each of them can be use independantly.
+
+
+
+webaudiox.js is a
+
+```webaudiox-bundle.js``` is just the concatenation of all the helpers.
+
 
 ## how to use it 
 
@@ -9,13 +17,13 @@ no libs only snippets for you to copy, and fine tune to your own needs.
 
 ## webaudiox.jsfx.js
 
-jsfx.js is a library to generate procedural sound, very 8-bit kindof sound.
+[jsfx.js](https://github.com/egonelbre/jsfx) 
+is a library to generate procedural sound, very 8-bit kindof sound.
 See [jsfx demo page](http://www.egonelbre.com/js/jsfx/) for details on this fun library
 by [@egonelbre](https://twitter.com/egonelbre/).
 It is usefull because you can generate lots of different sound easily without downloading
 anything.
-
-here is a usage example
+Here is a usage example
 
 ```
 // create the audio context 
@@ -25,14 +33,14 @@ var lib		= ["square",0.0000,0.4000,0.0000,0.3200,0.0000,0.2780,20.0000,496.0000,
 var buffer	= WebAudiox.getBufferFromJsfx(context, lib)
 ```
 
-You can see the 
+You can see the
 [file on github](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.jsfx.js).
 You can watch an usage 
 [example live](https://jeromeetienne.github.io/webaudiox//examples/jsfx.html)
 and check its 
 [source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/jsfx.html).
 
-## WebAudiox.loadBuffer
+## webaudiox.loadbuffer.js
 
 It is helper to load sound. 
 it is a function which load the sound from an ```url``` and decode it.
