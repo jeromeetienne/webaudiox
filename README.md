@@ -1,6 +1,5 @@
-webaudiox.js
-============
-webaudiox.js is a bunch of helpers for 
+[webaudiox.js](https://github.com/jeromeetienne/webaudiox)
+is a bunch of helpers for 
 [WebAudio API](https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html).
 It isn't a library per say.
 You can use any of those helpers independantly.
@@ -9,7 +8,7 @@ There is a ```webaudiox-bundle.js``` provided tho.
 This is for convenience.
 It is just the concatenation of all the helpers.
 
-## Boilerplate
+## Usage
 
 Here is a boilerplate, a good example to start with. 
 It init the AudioContext, a lineOut and download a sound.
@@ -35,6 +34,25 @@ It init the AudioContext, a lineOut and download a sound.
 	});
 </script>
 ```
+
+## Installation
+
+Download the helpers with a usual ```<script>```. 
+the easiest is to get ```webaudiox-bundle.js``` directly.
+
+```
+<script src='webaudiox-bundle.js'></script>
+```
+
+## Requirements
+
+It is has no external dependancies. So no real requirements.
+Well WebAudio API must be available obviously :)
+Currently Chrome, Firefox, IOS and opera support it.
+
+## Contributings
+
+Feel free to send pull requests. i love little helpers which are usefull :)
 
 # API Per Helpers
 
