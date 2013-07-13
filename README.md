@@ -9,9 +9,32 @@ There is a ```webaudiox-bundle.js``` provided tho.
 This is for convenience.
 It is just the concatenation of all the helpers.
 
-# Usage Examples
+## Boilerplate
 
-**TODO**
+Here is a boilerplate, a good example to start with. 
+It init the AudioContext, a lineOut and download a sound.
+
+```
+<script src='webaudiox-bundle.js'></script>
+<script>
+	// create WebAudio API context
+	var context	= new AudioContext()
+
+	// Create lineOut
+	var lineOut	= new WebAudiox.LineOut(context)
+
+	// load a sound and play it immediatly
+	WebAudiox.loadBuffer(context, 'sound.wav', function(buffer){
+		// init AudioBufferSourceNode
+		var source	= context.createBufferSource();
+		source.buffer	= buffer
+		source.connect(lineOut.destination)
+		
+		// start the sound now
+		source.start(0);
+	});
+</script>
+```
 
 # API Per Helpers
 
@@ -290,11 +313,11 @@ pannerUpdater.update(delta, now)
 
 here are the various examples: 
 
+* a possible way to handle soundback: [here](http://jeromeetienne.github.io/webaudiox/examples/soundsbank.html)
 * how to get a track from sound cloud: [here](http://jeromeetienne.github.io/webaudiox/examples/soundcloud-test.html)
 * how to load and play a sound only with the API: [here](http://jeromeetienne.github.io/webaudiox/examples/raw.html)
 * how to use it with beatdetektor.js: [here](http://jeromeetienne.github.io/webaudiox/examples/beatdetektorjs.html)
-* a possible way to handle soundback: [here](http://jeromeetienne.github.io/webaudiox/examples/soundsbank.html)
-
+* how load and play a sound with webaudio api raw. no helper at all: [here](http://jeromeetienne.github.io/webaudiox/examples/raw.html)
 
 
 # TODO
