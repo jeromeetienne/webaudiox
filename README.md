@@ -12,7 +12,7 @@ no libs only snippets for you to copy, and fine tune to your own needs.
 It is helper to load sound. 
 it is a function which load the sound from an ```url``` and decode it.
 
-```
+```javascript
 WebAudiox.loadBuffer(context, url, function(buffer){
 	// notified when the url has been downloaded and decoded.
 	// the result is in buffer variable
@@ -21,6 +21,13 @@ WebAudiox.loadBuffer(context, url, function(buffer){
 });
 ```
 
+You can see the 
+[file on github](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.loadbuffer.js).
+You can watch an usage 
+[example live](https://jeromeetienne.github.io/webaudiox//examples/lineout.html)
+and check its 
+[source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/lineout.html).
+
 
 ### download management
 
@@ -28,7 +35,7 @@ There is global onLoad callback ```WebAudiox.loadBuffer.onLoad```
 This functiont is notified everytime .loadBuffer() load something.
 you can overload it to fit your need.
 
-```
+```javascript
 // context is the webaudio API context
 // url is where to download the sound
 // buffer is the just loaded buffer
@@ -52,7 +59,7 @@ This is useful lf you have a three.js scene and would like to play spacial sound
 First lets localise the listener. most of the time it will be the the viewer camera.
 So you create a ```ListenerObject3DUpdater``` for that 
 
-```
+```javascript
 // context is your WebAudio context
 // object3d is the object which represent the listener
 var listenerUpdater = new WebAudiox.ListenerObject3DUpdater(context, object3d)
@@ -61,7 +68,7 @@ var listenerUpdater = new WebAudiox.ListenerObject3DUpdater(context, object3d)
 then you call ```.update()``` everytime you update the position of your ```object3d```
 listener
 
-```
+```javascript
 // delta is the time between the last update in seconds
 // now is the absolute time in seconds
 listenerUpdater.update(delta, now)
@@ -74,7 +81,7 @@ A sound source is localised only if it has a panner node.
 
 So you create a ```PannerObject3DUpdater``` for that 
 
-```
+```javascript
 // panner is the panner node from WebAudio API
 // object3d is the object which represent the sound source in space
 var pannerUpdater = new WebAudiox.PannerObject3DUpdater(panner, object3d)
@@ -83,7 +90,7 @@ var pannerUpdater = new WebAudiox.PannerObject3DUpdater(panner, object3d)
 then you call ```.update()``` everytime you update the position of your ```object3d```
 listener
 
-```
+```javascript
 // delta is the time between the last update in seconds
 // now is the absolute time in seconds
 listenerUpdater.update(delta, now)
