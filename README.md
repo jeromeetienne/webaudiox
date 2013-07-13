@@ -54,7 +54,7 @@ Currently Chrome, Firefox, IOS and opera support it.
 
 Feel free to send pull requests. i love little helpers which are usefull :)
 
-# API Per Helpers
+# API for Each Helpers
 
 Here is all the helpers provided and their respective API. the source contains a jsdoc
 which is authoritative.
