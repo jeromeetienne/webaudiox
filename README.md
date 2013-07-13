@@ -53,7 +53,6 @@ You can try an usage
 and check its 
 [source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/jsfx.html).
 Sure but what does it do ?
-
 It does a [shim](http://en.wikipedia.org/wiki/Shim_\(computing\)) which handle 
 the vendor prefix, so you don't have to. Typically it contains code like 
 
@@ -69,6 +68,7 @@ You can try an usage
 [example live](https://jeromeetienne.github.io/webaudiox/examples/jsfx.html)
 and check its 
 [source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/jsfx.html).
+Sure but what does it do ?
 
 [jsfx.js](https://github.com/egonelbre/jsfx) 
 is a library to generate procedural sound, very 8-bit kindof sound.
@@ -95,6 +95,7 @@ You can try an usage
 [example live](https://jeromeetienne.github.io/webaudiox/examples/lineout.html)
 and check its 
 [source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/lineout.html).
+Sure but what does it do ?
 
 It is helper to load sound. 
 it is a function which load the sound from an ```url``` and decode it.
@@ -138,8 +139,20 @@ You can try an usage
 [example live](https://jeromeetienne.github.io/webaudiox/examples/threejs.html)
 and check its 
 [source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/threejs.html).
+Sure but what does it do ?
 
 This is useful lf you have a three.js scene and would like to play spacial sound in it.
+When a sound is played in 3d space, there are 2 actors: 
+the listener which hear the sound 
+and
+the sound source which emit the sound.
+Each of them must be localised in 3d space. 
+
+In practice when you use it with three.js
+you need to constantly update the position of the 
+listener and all the sound sources. First in your init, you instance the updater objects.
+Then at each iteration of your rendering loop, you update all the positions.
+Here is the API details.
 
 ### listener localisation
 
@@ -161,10 +174,11 @@ listener.
 listenerUpdater.update(delta, now)
 ```
 
-### sound localisation
+### sound source localisation
 
 Now lets localise a sound source.
-A sound source is localised only if it has a panner node.
+A sound source is localised only if it has a 
+[panner node](https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html#PannerNode).
 
 So you create a ```PannerObject3DUpdater``` for that 
 
@@ -180,7 +194,7 @@ listener
 ```javascript
 // delta is the time between the last update in seconds
 // now is the absolute time in seconds
-listenerUpdater.update(delta, now)
+pannerUpdater.update(delta, now)
 ```
 
 ## examples
