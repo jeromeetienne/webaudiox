@@ -98,7 +98,7 @@ var listenerUpdater = new WebAudiox.ListenerObject3DUpdater(context, object3d)
 ```
 
 then you call ```.update()``` everytime you update the position of your ```object3d```
-listener
+listener.
 
 ```javascript
 // delta is the time between the last update in seconds
@@ -128,6 +128,12 @@ listener
 listenerUpdater.update(delta, now)
 ```
 
+You can see the 
+[file on github](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.threejs.js).
+You can watch an usage 
+[example live](https://jeromeetienne.github.io/webaudiox//examples/threejs.html)
+and check its 
+[source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/threejs.html).
 
 ## examples
 
