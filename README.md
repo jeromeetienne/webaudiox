@@ -13,7 +13,7 @@ It is just the concatenation of all the helpers.
 Here is a boilerplate, a good example to start with. 
 It init the AudioContext, a lineOut and download a sound.
 
-```
+```html
 <script src='webaudiox-bundle.js'></script>
 <script>
 	// create WebAudio API context
@@ -40,7 +40,7 @@ It init the AudioContext, a lineOut and download a sound.
 Download the helpers with a usual ```<script>```. 
 the easiest is to get ```webaudiox-bundle.js``` directly.
 
-```
+```html
 <script src='webaudiox-bundle.js'></script>
 ```
 
@@ -75,7 +75,7 @@ values are garanted to be between 0 and 1.
 It works even if the destination array has a different than the source array.
 It is usefull when playing with frequency spectrum.
 
-```
+```javascript
 WebAudiox.ByteToNormalizedFloat32Array(srcArray, dstArray);
 // bytesFreq is from a analyser.getByteFrequencyData(bytesFreq)
 // histogram is destination array, e.g. new Float32Array(10)
@@ -97,7 +97,7 @@ in brief, it makes an fft to extract the frequency of the sound, all that in rea
 It is often used to detect pulse in some frequency range.
 like detecting pulse in the low frequencies can be a easy beat detector.
 
-```
+```javascript
 var average	= new WebAudiox.analyserAverage(analyser, width, offset);
 // average is a Number of the computed average
 ```
@@ -136,13 +136,13 @@ Now let's see it's API
 
 ### create a lineOut
 
-```
+```javascript
 var lineOut	= new WebAudiox.LineOut(context)
 ```
 
 ### to set the volume/gain
  
-```
+```javascript
 lineOut.volume	= 0.8;
 ```
 
@@ -150,13 +150,13 @@ lineOut.volume	= 0.8;
 
 use ```lineOut.destination``` as you would use ```context.destination```.
 
-```
+```javascript
 source.connect(lineOut.destination)
 ```
 
 ### test if currently muted by user
 
-```
+```javascript
 if( lineOut.isMuted === true ){
 	console.log('sound has been muted by user')
 }
@@ -166,7 +166,7 @@ if( lineOut.isMuted === true ){
 
 typically when the user click on the mute button, you want to toggle the mute status.
 
-```
+```javascript
 lineOut.toggeMute()
 ```
 
@@ -182,7 +182,7 @@ Sure but what does it do ?
 It does a [shim](http://en.wikipedia.org/wiki/Shim_\(computing\)) which handle 
 the vendor prefix, so you don't have to. Typically it contains code like 
 
-```
+```javascript
 window.AudioContext	= window.AudioContext || window.webkitAudioContext;
 ```
 
@@ -204,7 +204,7 @@ It is usefull because you can generate lots of different sound easily without do
 anything.
 Here is a usage example
 
-```
+```javascript
 // create the audio context 
 var context	= new AudioContext()
 // parameter for jsfx.js - http://www.egonelbre.com/js/jsfx/
