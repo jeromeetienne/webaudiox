@@ -44,6 +44,9 @@ the easiest is to get ```webaudiox-bundle.js``` directly.
 <script src='webaudiox-bundle.js'></script>
 ```
 
+[bower](http://bower.io/) is supported if it fit your needs. just use
+```bower install webaudiox``` 
+
 ## Requirements
 
 It is has no external dependancies. So no real requirements.
