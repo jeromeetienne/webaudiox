@@ -7,6 +7,31 @@ no libs only snippets for you to copy, and fine tune to your own needs.
 
 ## API 
 
+## webaudiox.jsfx.js
+
+jsfx.js is a library to generate procedural sound, very 8-bit kindof sound.
+See [jsfx demo page](http://www.egonelbre.com/js/jsfx/) for details on this fun library
+by [@egonelbre](https://twitter.com/egonelbre/).
+It is usefull because you can generate lots of different sound easily without downloading
+anything.
+
+here is a usage example
+
+```
+// create the audio context 
+var context	= new AudioContext()
+// parameter for jsfx.js - http://www.egonelbre.com/js/jsfx/
+var lib		= ["square",0.0000,0.4000,0.0000,0.3200,0.0000,0.2780,20.0000,496.0000,2400.0000,0.4640,0.0000,0.0000,0.0100,0.0003,0.0000,0.0000,0.0000,0.0235,0.0000,0.0000,0.0000,0.0000,1.0000,0.0000,0.0000,0.0000,0.0000]
+var buffer	= WebAudiox.getBufferFromJsfx(context, lib)
+```
+
+You can see the 
+[file on github](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.jsfx.js).
+You can watch an usage 
+[example live](https://jeromeetienne.github.io/webaudiox//examples/jsfx.html)
+and check its 
+[source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/jsfx.html).
+
 ## WebAudiox.loadBuffer
 
 It is helper to load sound. 
@@ -14,8 +39,7 @@ it is a function which load the sound from an ```url``` and decode it.
 
 ```javascript
 WebAudiox.loadBuffer(context, url, function(buffer){
-	// notified when the url has been downloaded and decoded.
-	// the result is in buffer variable
+	// notified when the url has been downloaded and the sound decoded.
 }, function(){
 	// notified if an error occurs
 });
