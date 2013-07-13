@@ -35,6 +35,8 @@ function SoundBank(){
 
 	// if WebAudioDetected === false, declare needed
 	if( this.webAudioDetected === false ){
+		// NOTE: one liner to extract all the .play*() function
+		// Object.keys(sounds).filter(function(property){return /^play/.test(property)}).forEach(function(fnName){console.log('this.'+fnName+'\t= function(){}')})
 		this.playEatPill	= function(){}
 		return;
 	}
