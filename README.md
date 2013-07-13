@@ -38,7 +38,9 @@ It init the AudioContext, a lineOut and download a sound.
 ## Installation
 
 Download the helpers with a usual ```<script>```. 
-the easiest is to get ```webaudiox-bundle.js``` directly.
+the easiest is to get 
+[webaudiox-bundle.js](https://raw.github.com/jeromeetienne/webaudiox/master/build/webaudiox-bundle.js)
+in ```/build``` directory.
 
 ```html
 <script src='webaudiox-bundle.js'></script>
