@@ -9,6 +9,9 @@ There is a ```webaudiox-bundle.js``` provided tho.
 This is for convenience.
 It is just the concatenation of all the helpers.
 
+# Usage Examples
+
+**TODO**
 
 # API Per Helpers
 
@@ -220,6 +223,12 @@ You can try an usage
 [example live](https://jeromeetienne.github.io/webaudiox/examples/threejs.html)
 and check its 
 [source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/threejs.html).
+Additionaly, here is an experimentation using ```PannerNode``` 
+with a 
+[example live](https://jeromeetienne.github.io/webaudiox/examples/threejs-panner.html)
+and its
+[source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/threejs-panner.html).
+
 Sure but what does it do ?
 This is useful lf you have a three.js scene and would like to play spacial sound in it.
 When a sound is played in 3d space, there are 2 actors: 
