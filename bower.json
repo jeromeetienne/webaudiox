@@ -1,6 +1,6 @@
 {
   "name": "webaudiox",
-  "version": "1.0.0",
+  "version": "v1.0.1",
   "main": "build/webaudiox-bundle.js",
   "ignore": [
     "**/.*",

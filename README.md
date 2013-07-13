@@ -54,6 +54,11 @@ Currently Chrome, Firefox, IOS and opera support it.
 
 Feel free to send pull requests. i love little helpers which are usefull :)
 
+## ChangeLogs
+*  v1.0.1 bower support
+  * you can try with ```bower install webaudiox```
+*  v1.0.0 initial release
+
 # API for Each Helpers
 
 Here is all the helpers provided and their respective API. the source contains a jsdoc
