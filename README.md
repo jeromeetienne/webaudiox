@@ -9,7 +9,11 @@ There is a ```webaudiox-bundle.js``` provided tho.
 This is for convenience.
 It is just the concatenation of all the helpers.
 
-## Usage Examples
+
+# API Per Helpers
+
+Here is all the helpers provided and their respective API. the source contains a jsdoc
+which is authoritative.
 
 ## webaudiox.bytetonormalizedfloat32array.js
 
@@ -173,7 +177,6 @@ You can try an usage
 and check its 
 [source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/lineout.html).
 Sure but what does it do ?
-
 It is helper to load sound. 
 it is a function which load the sound from an ```url``` and decode it.
 
@@ -185,10 +188,11 @@ WebAudiox.loadBuffer(context, url, function(buffer){
 });
 ```
 
+### Scheduling Download
 
-
-### download management
-
+In real-life cases, like game, you want to be sure all your sounds
+are ready to play before the user start playing.
+So here is way to schedule your sound downloads simply.
 There is global onLoad callback ```WebAudiox.loadBuffer.onLoad```
 This functiont is notified everytime .loadBuffer() load something.
 you can overload it to fit your need.
@@ -208,7 +212,7 @@ it is counter of all the .loadBuffer in progress.
 it usefull to know is all your sounds as been loaded.
 
 
-## Sound localisation with three.js
+## webaudiox.three.js
 
 You can see the 
 [file on github](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.three.js).
