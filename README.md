@@ -2,9 +2,9 @@ webaudiox.js
 ============
 webaudiox.js is a bunch of helpers for 
 [WebAudio API](https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html).
-
 It isn't a library per say.
 You can use any of those helpers independantly.
+This make it very light to include in your own code.
 There is a ```webaudiox-bundle.js``` provided tho.
 This is for convenience.
 It is just the concatenation of all the helpers.
