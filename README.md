@@ -249,8 +249,10 @@ In real-life cases, like game, you want to be sure all your sounds
 are ready to play before the user start playing.
 So here is way to schedule your sound downloads simply.
 There is global onLoad callback ```WebAudiox.loadBuffer.onLoad```
-This functiont is notified everytime .loadBuffer() load something.
+This function is notified everytime .loadBuffer() load something.
 you can overload it to fit your need.
+here for an 
+[usage example](https://github.com/jeromeetienne/webaudiox/blob/master/lib/soundsbank.html).
 
 ```javascript
 // context is the webaudio API context
