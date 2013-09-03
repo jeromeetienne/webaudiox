@@ -46,6 +46,67 @@ function SoundBank(){
 	// Create lineOut
 	var lineOut	= new WebAudiox.LineOut(context)
 
+	// handle updateFcts - used for sound localisation
+	this.updateFcts	= [];
+	this.update	= function(delta, now){
+		this.updateFcts.forEach(function(updateFct){
+			updateFct(delta, now)
+		})
+	}
+	
+	//////////////////////////////////////////////////////////////////////////////////
+	//		comment								//
+	//////////////////////////////////////////////////////////////////////////////////
+	
+	/**
+	 * setup a WebAudiox.ListenerObject3DUpdater for a given object3d
+	 * @param  {THREE.Object3D} object3d the object3d which represent the listener
+	 * @return {WebAudiox.ListenerObject3DUpdater} just built
+	 */
+	this.setListenerUpdater	= function(object3d){
+		// put a ListenerObject3DUpdater
+		var listenerUpdater	= new WebAudiox.ListenerObject3DUpdater(context, camera)
+		updateFcts.push(function(delta, now){
+			listenerUpdater.update(delta, now)
+		})
+		return listenerUpdater
+	}
+
+	// load the sound
+	WebAudiox.loadBuffer(context, 'sounds/techno.mp3', function(buffer){
+		this.sharkTrackBuffer	= buffer;
+	}.bind(this))
+	// setup a play function
+	this.playSharkTrack	= function(object3d){
+		// if buffer not yet loaded do nothing
+		if( !this.sharkTrackBuffer )	return
+
+		var destination	= lineOut.destination;
+
+		// init AudioPannerNode
+		var panner	= context.createPanner()
+		panner.coneOuterGain	= 0.1
+		panner.coneOuterAngle	= Math.PI *180/Math.PI
+		panner.coneInnerAngle	= 0 *180/Math.PI
+		panner.connect(destination)
+		destination	= panner
+		// put a PannerObject3DUpdater
+		var pannerUpdater	= new WebAudiox.PannerObject3DUpdater(panner, object3d)
+		updateFcts.push(function(delta, now){
+			pannerUpdater.update(delta, now)
+		})
+
+		// init AudioBufferSourceNode
+		var source	= context.createBufferSource();
+		source.buffer	= buffer
+		source.loop	= true
+		source.connect(destination)
+		destination	= source
+		
+		// start the sound now
+		source.start(0);
+	}
+
 	//////////////////////////////////////////////////////////////////////////////////
 	//		with a play function						//
 	//////////////////////////////////////////////////////////////////////////////////

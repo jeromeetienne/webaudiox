@@ -14,7 +14,7 @@
 	var updateFcts	= [];
 	var scene	= new THREE.Scene();
 	var camera	= new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.01, 100 );
-	camera.position.z = 3;
+	camera.position.z = 0;
 
 
 	//////////////////////////////////////////////////////////////////////////////////
@@ -63,6 +63,8 @@
 		
 		// start the sound now
 		source.start(0);
+		
+		return source;
 	});
 	
 	//////////////////////////////////////////////////////////////////////////////////
@@ -74,9 +76,9 @@
 	scene.add( mesh )
 
 	updateFcts.push(function(delta, now){
-		var angle	= 0.2 * now * Math.PI*2
-		mesh.position.x = Math.cos(angle)*1
-		mesh.position.z = Math.sin(angle)*1
+		var angle	= 0.1 * now * Math.PI*2
+		mesh.position.x = Math.cos(angle)*3
+		mesh.position.z = Math.sin(angle)*3
 	})
 
 	updateFcts.push(function(delta, now){
@@ -88,9 +90,8 @@
 	var perlin 	= new ImprovedNoise();	
 
 	updateFcts.push(function(delta, now){
-
 		var lightness	= WebAudiox.analyserAverage(analyser)
-		lightness	*= 2;
+		lightness	*= 2
 		lightness	= Math.min(lightness, 1)
 
 		var noiseAge	= 0.1*now

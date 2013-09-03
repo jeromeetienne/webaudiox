@@ -74,7 +74,7 @@ which is authoritative.
 You can see the
 [file on github](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.bytetonormalizedfloat32array.js).
 You can try an usage 
-[example live](https://jeromeetienne.github.io/webaudiox/examples/frequencyspectrum.html)
+[example live](http://jeromeetienne.github.io/webaudiox/examples/frequencyspectrum.html)
 and check its 
 [source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/frequencyspectrum.html).
 Sure but what does it do ?
@@ -97,7 +97,7 @@ WebAudiox.ByteToNormalizedFloat32Array(bytesFreq, histogram)
 You can see the
 [file on github](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.analyseraverage.js).
 You can try an usage 
-[example live](https://jeromeetienne.github.io/webaudiox/examples/analyseraverage.html)
+[example live](http://jeromeetienne.github.io/webaudiox/examples/analyseraverage.html)
 and check its 
 [source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/analyseraverage.html).
 Sure but what does it do ?
@@ -120,7 +120,7 @@ offset is optional and default to 0.
 You can see the
 [file on github](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.lineout.js).
 You can try an usage 
-[example live](https://jeromeetienne.github.io/webaudiox/examples/lineout.html)
+[example live](http://jeromeetienne.github.io/webaudiox/examples/lineout.html)
 and check its 
 [source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/lineout.html).
 Sure but what does it do ?
@@ -185,7 +185,7 @@ lineOut.toggeMute()
 You can see the
 [file on github](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.shim.js).
 You can try an usage 
-[example live](https://jeromeetienne.github.io/webaudiox/examples/jsfx.html)
+[example live](http://jeromeetienne.github.io/webaudiox/examples/jsfx.html)
 and check its 
 [source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/jsfx.html).
 Sure but what does it do ?
@@ -201,7 +201,7 @@ window.AudioContext	= window.AudioContext || window.webkitAudioContext;
 You can see the
 [file on github](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.jsfx.js).
 You can try an usage 
-[example live](https://jeromeetienne.github.io/webaudiox/examples/jsfx.html)
+[example live](http://jeromeetienne.github.io/webaudiox/examples/jsfx.html)
 and check its 
 [source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/jsfx.html).
 Sure but what does it do ?
@@ -228,7 +228,7 @@ var buffer	= WebAudiox.getBufferFromJsfx(context, lib)
 You can see the 
 [file on github](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.loadbuffer.js).
 You can try an usage 
-[example live](https://jeromeetienne.github.io/webaudiox/examples/lineout.html)
+[example live](http://jeromeetienne.github.io/webaudiox/examples/lineout.html)
 and check its 
 [source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/lineout.html).
 Sure but what does it do ?
@@ -274,12 +274,12 @@ it usefull to know is all your sounds as been loaded.
 You can see the 
 [file on github](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.three.js).
 You can try an usage 
-[example live](https://jeromeetienne.github.io/webaudiox/examples/threejs.html)
+[example live](http://jeromeetienne.github.io/webaudiox/examples/threejs.html)
 and check its 
 [source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/threejs.html).
 Additionaly, here is an experimentation using ```PannerNode``` 
 with a 
-[example live](https://jeromeetienne.github.io/webaudiox/examples/threejs-panner.html)
+[example live](http://jeromeetienne.github.io/webaudiox/examples/threejs-panner.html)
 and its
 [source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/threejs-panner.html).
 Sure but what does it do ?

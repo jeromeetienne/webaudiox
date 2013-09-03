@@ -21,6 +21,9 @@ WebAudiox.AbsoluteNormalizer	= function(){
 
 var WebAudiox	= WebAudiox	|| {}
 
+// TODO to rewrite with a simple weight average on a history array
+// - simple and no magic involved
+
 WebAudiox.AdaptativeNormalizer	= function(factorForMin, factorForMax){
 	var minThreshold	= 0;
 	var maxThreshold	= 1;
@@ -45,9 +48,16 @@ console.log(minThreshold.toFixed(10),maxThreshold.toFixed(10))
 	}
 }
 
+// @namespace defined WebAudiox name space
 var WebAudiox	= WebAudiox	|| {}
 
-
+/**
+ * do a average on a ByteFrequencyData from an analyser node
+ * @param  {[type]} analyser the analyser node
+ * @param  {Number} width    how many elements of the array will be considered
+ * @param  {Number} offset   the index of the element to consider
+ * @return {Number}          the ByteFrequency average
+ */
 WebAudiox.analyserAverage	= function(analyser, width, offset){
 	// handle paramerter
 	width		= width !== undefined ? width	: analyser.frequencyBinCount;
@@ -82,6 +92,12 @@ WebAudiox.ByteToNormalizedFloat32Array	= function(srcArray, dstArray){
 }
 var WebAudiox	= WebAudiox	|| {}
 
+/**
+ * generate buffer with jsfx.js 
+ * @param  {AudioContext} context the WebAudio API context
+ * @param  {Array} lib     parameter for jsfx
+ * @return {[type]}         the just built buffer
+ */
 WebAudiox.getBufferFromJsfx	= function(context, lib){
 	var params	= jsfxlib.arrayToParams(lib);
 	var data	= jsfx.generate(params);
@@ -177,6 +193,8 @@ var WebAudiox	= WebAudiox	|| {}
 
 /**
  * Helper to load a buffer
+ * 
+ * @param  {AudioContext} context the WebAudio API context
  * @param  {String} url     the url of the sound to load
  * @param  {Function} onLoad  callback to notify when the buffer is loaded and decoded
  * @param  {Function} onError callback to notify when an error occured
@@ -194,7 +212,7 @@ WebAudiox.loadBuffer	= function(context, url, onLoad, onError){
 			// notify the callback
 			onLoad && onLoad(buffer)
 			// notify
-			WebAudiox.loadBuffer.onLoad && WebAudiox.loadBuffer.onLoad(context, url)
+			WebAudiox.loadBuffer.onLoad(context, url, buffer)
 		}, function(){
 			// notify the callback
 			onError && onError()
@@ -206,12 +224,16 @@ WebAudiox.loadBuffer	= function(context, url, onLoad, onError){
 }
 
 /**
- * global onLoad callback
+ * global onLoad callback. it is notified everytime .loadBuffer() load something
+ * @param  {AudioContext} context the WebAudio API context
+ * @param  {String} url     the url of the sound to load
+ * @param {[type]} buffer the just loaded buffer
  */
-WebAudiox.loadBuffer.onLoad	= null
+WebAudiox.loadBuffer.onLoad	= function(context, url, buffer){}
 
 /**
- * counter of the inProgress
+ * counter of all the .loadBuffer in progress. usefull to know is all your sounds
+ * as been loaded
  * @type {Number}
  */
 WebAudiox.loadBuffer.inProgressCount	= 0
@@ -222,8 +244,16 @@ WebAudiox.loadBuffer.inProgressCount	= 0
  * shim to get AudioContext
  */
 window.AudioContext	= window.AudioContext || window.webkitAudioContext;
+// @namespace
 var WebAudiox	= WebAudiox	|| {}
 
+/**
+ * update webaudio context listener with three.Object3D position
+ * 
+ * @constructor
+ * @param  {AudioContext} context  the webaudio api context
+ * @param  {THREE.Object3D} object3d the object for the listenre
+ */
 WebAudiox.ListenerObject3DUpdater	= function(context, object3d){	
 	var prevPosition= null
 	this.update	= function(delta, now){
@@ -265,6 +295,13 @@ WebAudiox.ListenerObject3DUpdater	= function(context, object3d){
 	}
 }
 
+/**
+ * update panner position based on a object3d position
+ * 
+ * @constructor
+ * @param  {[type]} panner   the panner node to update
+ * @param  {THREE.Object3D} object3d the object from which we take the position
+ */
 WebAudiox.PannerObject3DUpdater	= function(panner, object3d){
 	var prevPosition= null
 	this.update	= function(delta, now){
@@ -272,7 +309,6 @@ WebAudiox.PannerObject3DUpdater	= function(panner, object3d){
 		object3d.updateMatrixWorld()
 		// get matrixWorld
 		var matrixWorld	= object3d.matrixWorld
-		
 		
 		////////////////////////////////////////////////////////////////////////
 		// set position
