@@ -29,13 +29,17 @@
 	binauralSrc.output.connect(lineOut.destination)
 	binauralSrc.start()
 	
+	// hook 'change' event for all inputs elements
 	var elements	= document.querySelectorAll('input');
 	elements	= Array.prototype.slice.call(elements, 0);
 	elements.forEach(function(element){
-		element.addEventListener('change', update)
+		element.addEventListener('change', onChange)
 	})
 	
-	function update(){
+	/**
+	 * onChange sound and UI
+	 */
+	function onChange(){
 		var pitch	= document.querySelector('#inputs #pitch input').value
 		binauralSrc.setPitch(parseFloat(pitch))
 		document.querySelector('#inputs #pitch .value').innerText	= pitch
