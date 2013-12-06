@@ -118,13 +118,22 @@ WebAudiox.BinauralSource	= function(pitch, beatRate, gain){
 	// do the initial update
 	updateNodes();
 
+	this.getGain	= function(){
+		return gain
+	}
 	this.setGain	= function(value){
 		gain	= value
 		updateNodes();		
 	}
+	this.getPitch	= function(){
+		return pitch
+	}
 	this.setPitch	= function(value){
 		pitch	= value
 		updateNodes();		
+	}
+	this.getBeatRate= function(){
+		return beatRate
 	}
 	this.setBeatRate= function(value){
 		beatRate	= value
