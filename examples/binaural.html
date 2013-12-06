@@ -1,0 +1,51 @@
+<!doctype html>
+<script src='../lib/webaudiox.shim.js'></script>
+<script src='../lib/webaudiox.lineout.js'></script>
+<script src='../lib/webaudiox.binaural.js'></script>
+<body><div id='inputs'>
+	pitch: 	<span id='pitch'>
+			<input type="range" min='0' max='1000' value='440'/>
+			<span class='value'>440</span>hz
+		</span>
+	<br/>
+	beat rate:
+	 	<span id='beatRate'>
+			<input type="range" min='0' max='50' value='5'/>
+			<span class='value'>5</span>hz
+		</span>
+	<br/>
+	gain:
+	 	<span id='gain'>
+			<input type="range" min='0' max='1' step='0.01' value='1'/>
+			<span class='value'>1</span>
+		</span>
+	<br/>
+</div><script>
+	var context	= new AudioContext()
+	var lineOut	= new WebAudiox.LineOut(context)
+
+	// create and connect the sound
+	var binauralSrc	= new WebAudiox.BinauralSource()
+	binauralSrc.output.connect(lineOut.destination)
+	binauralSrc.start()
+	
+	var elements	= document.querySelectorAll('input');
+	elements	= Array.prototype.slice.call(elements, 0);
+	elements.forEach(function(element){
+		element.addEventListener('change', update)
+	})
+	
+	function update(){
+		var pitch	= document.querySelector('#inputs #pitch input').value
+		binauralSrc.setPitch(parseFloat(pitch))
+		document.querySelector('#inputs #pitch .value').innerText	= pitch
+
+		var beatRate	= document.querySelector('#inputs #beatRate input').value
+		binauralSrc.setBeatRate(parseFloat(beatRate))
+		document.querySelector('#inputs #beatRate .value').innerText	= beatRate
+
+		var gain	= document.querySelector('#inputs #gain input').value
+		binauralSrc.setGain(parseFloat(gain))
+		document.querySelector('#inputs #gain .value').innerText	= gain
+	}
+</script></body>
