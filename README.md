@@ -4,7 +4,7 @@ is a bunch of helpers for
 It isn't a library per say.
 You can use any of those helpers independantly.
 This make it very light to include in your own code.
-There is a ```webaudiox-bundle.js``` provided tho.
+There is a ```webaudiox.js``` provided tho.
 This is for convenience.
 It is just the concatenation of all the helpers.
 
@@ -14,7 +14,7 @@ Here is a boilerplate, a good example to start with.
 It init the AudioContext, a lineOut and download a sound.
 
 ```html
-<script src='webaudiox-bundle.js'></script>
+<script src='webaudiox.js'></script>
 <script>
 	// create WebAudio API context
 	var context	= new AudioContext()
@@ -39,11 +39,11 @@ It init the AudioContext, a lineOut and download a sound.
 
 Download the helpers with a usual ```<script>```. 
 the easiest is to get 
-[webaudiox-bundle.js](https://raw.github.com/jeromeetienne/webaudiox/master/build/webaudiox-bundle.js)
+[webaudiox.js](https://raw.github.com/jeromeetienne/webaudiox/master/build/webaudiox.js)
 in ```/build``` directory.
 
 ```html
-<script src='webaudiox-bundle.js'></script>
+<script src='webaudiox.js'></script>
 ```
 
 [bower](http://bower.io/) is supported if it fit your needs. just use

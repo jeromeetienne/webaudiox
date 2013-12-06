@@ -4,7 +4,7 @@ server:
 	python -m SimpleHTTPServer
 
 build:
-	cat lib/*.js > build/webaudiox-bundle.js
+	cat lib/*.js > build/webaudiox.js
 
 deploy:
 	# assume there is something to commit
