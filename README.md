@@ -1,17 +1,17 @@
 [webaudiox.js](https://github.com/jeromeetienne/webaudiox)
 is a bunch of helpers for 
 [WebAudio API](https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html).
-It isn't a library per say.
+It isn't a library per se.
 You can use any of those helpers independantly.
-This make it very light to include in your own code.
-There is a ```webaudiox.js``` provided tho.
+This makes it very light to include these in your own code.
+There is a ```webaudiox.js``` provided though.
 This is for convenience.
 It is just the concatenation of all the helpers.
 
 ## Usage
 
 Here is a boilerplate, a good example to start with. 
-It init the AudioContext, a lineOut and download a sound.
+It initializes the AudioContext, the lineOut and downloads a sound.
 
 ```html
 <script src='webaudiox.js'></script>
@@ -51,13 +51,13 @@ in ```/build``` directory.
 
 ## Requirements
 
-It is has no external dependancies. So no real requirements.
+No real requirements: there are no external dependancies.
 Well WebAudio API must be available obviously :)
-Currently Chrome, Firefox, IOS and opera support it.
+Currently Chrome, Firefox, iOS and Opera support it.
 
 ## Contributings
 
-Feel free to send pull requests. i love little helpers which are usefull :)
+Feel free to send pull requests. i love little helpers which are useful :)
 
 ## ChangeLogs
 *  v1.0.1 bower support
@@ -79,11 +79,11 @@ and check its
 [source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/frequencyspectrum.html).
 Sure but what does it do ?
 
-It convert a byteArray to a normalized Float32Array.
+It converts a byteArray to a normalized Float32Array.
 The destination Array is normalized because 
 values are garanted to be between 0 and 1.
-It works even if the destination array has a different than the source array.
-It is usefull when playing with frequency spectrum.
+It works even if the destination array has a different value than the source array.
+It is useful when playing with frequency spectrum.
 
 ```javascript
 WebAudiox.ByteToNormalizedFloat32Array(srcArray, dstArray);
@@ -103,7 +103,7 @@ and check its
 Sure but what does it do ?
 
 It makes an average on a ByteFrequencyData from an analyser node. clear ? :)
-in brief, it makes an fft to extract the frequency of the sound, all that in real time.
+In brief, it makes an fft to extract the frequency of the sound, all that in real time.
 It is often used to detect pulse in some frequency range.
 like detecting pulse in the low frequencies can be a easy beat detector.
 
@@ -133,9 +133,9 @@ So it provides
 a clipping detection and
 a dynamic compressor to reduce clipping to improve sound quality.
 
-Additionnaly it provides some tools useful in real-life cases.
+Additionaly it provides some tools useful in real-life cases.
 Such as the ability for the user to mute the sound. 
-Its is usefull when the user is at the office or any place where it isn't
+Its is useful when the user is at the office or any place where it isn't
 polite to have a loud computer :)
 Another thing, there is a *muteIfHidden* feature. so if the browser tab is hidden, 
 the sound is mute using 
@@ -266,7 +266,7 @@ WebAudiox.loadBuffer.onLoad = function(context, url, buffer){
 
 Additionally there is ```WebAudiox.loadBuffer.inProgressCount```.
 it is counter of all the .loadBuffer in progress. 
-it usefull to know is all your sounds as been loaded.
+it useful to know is all your sounds as been loaded.
 
 
 ## webaudiox.three.js
@@ -286,9 +286,9 @@ Sure but what does it do ?
 
 This is useful lf you have a three.js scene and would like to play spacial sound in it.
 When a sound is played in 3d space, there are 2 actors: 
-the listener which hear the sound 
+the listener which hears the sound 
 and
-the sound source which emit the sound.
+the sound source which emits the sound.
 Each of them must be localised in 3d space. 
 
 In practice when you use it with three.js
@@ -299,7 +299,7 @@ Here is the API details.
 
 ### listener localisation
 
-First lets localise the listener. most of the time it will be the the viewer camera.
+First let's localise the listener. most of the time it will be the the viewer camera.
 So you create a ```ListenerObject3DUpdater``` for that 
 
 ```javascript
@@ -319,7 +319,7 @@ listenerUpdater.update(delta, now)
 
 ### sound source localisation
 
-Now lets localise a sound source.
+Now let's localise a sound source.
 A sound source is localised only if it has a 
 [panner node](https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html#PannerNode).
 So you create a ```PannerObject3DUpdater``` for that 
