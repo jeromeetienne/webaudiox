@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<head>
+	<!--
+	<script src='webaudiox.js'></script>
+	-->
+	<script src='../lib/webaudiox.shim.js'></script>
+	<script src='../lib/webaudiox.lineout.js'></script>
+	<script src='../lib/webaudiox.loadbuffer.js'></script>
+	<script src='../lib/webaudiox.convolver.js'></script>
+</head>
+<body>
+	<script>
+		var convolver;
+		var context = new AudioContext();
+
+		// Create lineOut
+		var lineOut = new WebAudiox.LineOut(context);
+		lineOut.volume = 0.4;
+		// init AudioBufferSourceNode
+		var source = context.createBufferSource();
+		// load a sound
+		WebAudiox.loadBuffer(context, 'sounds/techno.mp3', function(buffer) {				
+			source.buffer = buffer;	
+			source.loop = true;
+			source.start(0);			
+		});
+		
+		function normalSound(){	
+			source.disconnect();
+			source.connect(lineOut.destination);	
+		}
+		function oldTelephone(){
+			source.disconnect();
+			// Create Convolver
+			convolver = new WebAudiox.Convolver(context, 'sounds/telephone.wav');
+			// connect sound source to convolver			
+			source.connect(convolver);
+			// then connect convolver to lineOut(speakers)
+			convolver.connect(lineOut.destination);
+	    }
+	    function springReverb(){
+			source.disconnect();
+			// Create Convolver
+			convolver = new WebAudiox.Convolver(context, 'sounds/spring.wav');
+			// connect sound source to convolver			
+			source.connect(convolver);
+			// then connect convolver to lineOut(speakers)
+			convolver.connect(lineOut.destination);
+	    }
+	    function hallReverb(){
+			source.disconnect();
+			// Create Convolver
+			convolver = new WebAudiox.Convolver(context, 'sounds/bright-hall.wav');
+			// connect sound source to convolver			
+			source.connect(convolver);
+			// then connect convolver to lineOut(speakers)
+			convolver.connect(lineOut.destination);
+	    }
+	    function muffledSound(){
+			source.disconnect();
+			// Create Convolver
+			convolver = new WebAudiox.Convolver(context, 'sounds/muffler.wav');
+			// connect sound source to convolver			
+			source.connect(convolver);
+			// then connect convolver to lineOut(speakers)
+			convolver.connect(lineOut.destination);
+	    }
+	</script>
+	
+	<button type="button" onclick="normalSound()" >Original Sound</button>
+	<button type="button" onclick="oldTelephone()" >Old Telephone</button>
+	<button type="button" onclick="springReverb()" >Spring Reverb</button>
+	<button type="button" onclick="hallReverb()" >Bright-Hall Reverb</button>
+	<button type="button" onclick="muffledSound()" >Muffled</button>
+</body>
+</html>
