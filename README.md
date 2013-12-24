@@ -282,9 +282,12 @@ original sound.  It can be used to create spatial acoustics (like hall-reverb an
 effects (like an old telephone, or high-frequency muffler).
 
 To use it, first load a sound with WebAudioX.loadBuffer() in the normal manner, as described above.  
-We will call this the 'source'.
+We will call this the 'source'.  
 
 Next, use the WebAudioX.Convolver() function, which takes the 'AudioContext' as its first parameter and the impulse file 'url' as its second parameter.  Then connect your original 'source' to the convolver and connect the convolver to the lineOut (speakers).  Your original sound source will now be modified by the impulse file.
+
+Looking for free-to-download impulse files?  You will find some very handy ones [here](http://chromium.googlecode.com/svn/trunk/samples/audio/impulse-responses/).
+
 Here is a usage example:
 
 ```javascript
