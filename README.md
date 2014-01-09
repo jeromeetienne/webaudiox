@@ -64,6 +64,12 @@ Feel free to send pull requests. i love little helpers which are useful :)
   * you can try with ```bower install webaudiox```
 *  v1.0.0 initial release
 
+## Plugins
+* [webaudiox.ConvolverHelper](https://github.com/erichlof/webaudiox.ConvolverHelper)
+is a plugin by @erichlof .
+It provides a simple mean to use convolvers, thus you can simulate being thru an old
+telephone, in a hall, or in a tunnel.
+
 # API for Each Helpers
 
 Here is all the helpers provided and their respective API. the source contains a jsdoc
@@ -267,39 +273,6 @@ WebAudiox.loadBuffer.onLoad = function(context, url, buffer){
 Additionally there is ```WebAudiox.loadBuffer.inProgressCount```.
 it is counter of all the .loadBuffer in progress. 
 it useful to know is all your sounds as been loaded.
-
-## webaudiox.convolver.js
-
-You can see the 
-[file on github](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.convolver.js).
-You can try a
-[demo live](http://jeromeetienne.github.io/webaudiox/examples/ConvolverDemo.html)
-and check its 
-[source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/ConvolverDemo.html).
-Sure but what does it do ?
-It is helper to create a convolver.  A convolver takes an audio impulse file and blends it with your
-original sound.  It can be used to create spatial acoustics (like hall-reverb and echo) or complex filter
-effects (like an old telephone, or high-frequency muffler).
-
-To use it, first load a sound with WebAudioX.loadBuffer() in the normal manner, as described above.  
-We will call this the 'source'.  
-
-Next, use the WebAudioX.Convolver() function, which takes the 'AudioContext' as its first parameter and the impulse file 'url' as its second parameter.  Then connect your original 'source' to the convolver and connect the convolver to the lineOut (speakers).  Your original sound source will now be modified by the impulse file.
-
-Looking for free-to-download impulse files?  You will find some very handy ones [here](http://chromium.googlecode.com/svn/trunk/samples/audio/impulse-responses/).
-
-Here is a usage example:
-
-```javascript
-// Create Convolver
-var convolver = new WebAudiox.Convolver(context, 'sounds/telephone.wav');
-// connect sound source to convolver			
-source.connect(convolver);
-// then connect convolver to lineOut(speakers)
-convolver.connect(lineOut.destination);
-// now that everything is hooked up, we can play the sound source
-source.start(0);
-```
 
 ## webaudiox.three.js
 
