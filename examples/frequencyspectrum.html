@@ -19,14 +19,23 @@
 	analyser.connect(lineOut.destination);
 	lineOut.destination	= analyser;
 
-	// load a sound and play it immediatly
-	WebAudiox.loadBuffer(context, 'sounds/perfume.mp3', function(buffer){
-		var source	= context.createBufferSource();
-		source.buffer	= buffer;
-		source.loop	= true
-		source.connect(lineOut.destination);
-		source.start(0);		
-	});
+	// // load a sound and play it immediatly
+	// WebAudiox.loadBuffer(context, 'sounds/perfume.mp3', function(buffer){
+	// 	var source	= context.createBufferSource();
+	// 	source.buffer	= buffer;
+	// 	source.loop	= true
+	// 	source.connect(lineOut.destination);
+	// 	source.start(0);		
+	// });
+	
+	// get microphone as source
+	// navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
+	// navigator.getUserMedia( {audio:true}, 	function gotStream(stream) {
+	// 	// Create an AudioNode from the stream.
+	// 	var source	= context.createMediaStreamSource( stream );
+		
+	// 	source.connect(lineOut.destination);
+	// });	
 	
 	// create and add the canvas
 	var canvas	= document.createElement('canvas');

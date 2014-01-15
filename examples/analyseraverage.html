@@ -15,7 +15,7 @@
 	lineOut.destination	= analyser;
 
 	// load a sound and play it immediatly
-	WebAudiox.loadBuffer(context, 'sounds/marbles.ogg', function(buffer){
+	WebAudiox.loadBuffer(context, 'sounds/Cissy_Strut_Edit.mp3', function(buffer){
 		var source	= context.createBufferSource();
 		source.buffer	= buffer;
 		source.loop	= true
@@ -30,9 +30,17 @@
 	var ctx		= canvas.getContext("2d");  
 	document.body.appendChild(canvas)
 	
+	var smoothedVolume	= null
 	setInterval(function(){
 		var scale	= WebAudiox.analyserAverage(analyser)
-
+		var volume	= scale
+		if( smoothedVolume !== null ){
+			smoothedVolume	+= (volume  - smoothedVolume) * 0.9
+		}else{
+			smoothedVolume	= volume;
+		}
+		
+		
 		// clear the canvas
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -41,6 +49,7 @@
 
 		// draw a circle
 		var radius	= 1+scale * 400;
+		var radius	= 1+smoothedVolume * 400;
 		ctx.beginPath();
 		ctx.arc(canvas.width/2, canvas.height/2, radius, 0, Math.PI*2, true); 
 		ctx.closePath();

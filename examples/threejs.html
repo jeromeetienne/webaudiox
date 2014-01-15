@@ -43,9 +43,9 @@
 
 		// init AudioPannerNode
 		var panner	= context.createPanner()
-		panner.coneOuterGain	= 0.1
-		panner.coneOuterAngle	= Math.PI *180/Math.PI
-		panner.coneInnerAngle	= 0 *180/Math.PI
+		// panner.coneOuterGain	= 0.1
+		// panner.coneOuterAngle	= Math.PI *180/Math.PI
+		// panner.coneInnerAngle	= 0 *180/Math.PI
 		panner.connect(destination)
 		destination	= panner
 		// put a PannerObject3DUpdater
