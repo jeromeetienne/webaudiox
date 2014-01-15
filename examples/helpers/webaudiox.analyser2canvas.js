@@ -18,7 +18,7 @@ WebAudiox.Analyser2Canvas	= function(analyser, canvas){
 	canvasCtx.fillStyle	= gradient
 	
 	canvasCtx.lineWidth	= 5;
-	canvasCtx.strokeStyle = "rgb(255, 255, 255)";
+	canvasCtx.strokeStyle	= "rgb(255, 255, 255)";
 
 	var analyser2volume	= new WebAudiox.Analyser2Volume(analyser)
 	

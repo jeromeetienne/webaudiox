@@ -98,14 +98,39 @@ WebAudiox.ByteToNormalizedFloat32Array(srcArray, dstArray);
 WebAudiox.ByteToNormalizedFloat32Array(bytesFreq, histogram)
 ```
 
-## webaudiox.analyseraverage.js
+## webaudiox.analyser2canvas.js
 
 You can see the
-[file on github](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.analyseraverage.js).
+[file on github](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.analyser2canvas.js).
 You can try an usage 
-[example live](http://jeromeetienne.github.io/webaudiox/examples/analyseraverage.html)
+[example live](http://jeromeetienne.github.io/webaudiox/examples/analyser2canvas.html)
 and check its 
-[source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/analyseraverage.html).
+[source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/analyser2canvas.html).
+Sure but what does it do ?
+
+It display various visualisation of the played sound, the one analysed by ```analyser```.
+It display a FFT histogram, a waveform, and a volume. It is there mainly for debug.
+
+First you create the object
+
+```
+var analyser2canvas	= new WebAudiox.Analyser2Canvas(analyser, canvas);
+```
+
+Then every time you want to draw on the canvas do 
+
+```
+analyser2canvas.update()
+```
+
+## webaudiox.analyser2volume.js
+
+You can see the
+[file on github](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.analyser2volume.js).
+You can try an usage 
+[example live](http://jeromeetienne.github.io/webaudiox/examples/analyser2volume.html)
+and check its 
+[source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/analyser2volume.html).
 Sure but what does it do ?
 
 It makes an average on a ByteFrequencyData from an analyser node. clear ? :)
@@ -114,8 +139,17 @@ It is often used to detect pulse in some frequency range.
 like detecting pulse in the low frequencies can be a easy beat detector.
 
 ```javascript
-var average	= new WebAudiox.analyserAverage(analyser, width, offset);
-// average is a Number of the computed average
+// create the object
+var analyser2Volume	= new WebAudiox.Analyser2Volume(analyser)
+var rawVolume		= analyser2Volume.rawValue()
+var smoothedVolume	= analyser2Volume.smoothedValue()
+```
+
+It is possible to directly compute the raw volume.
+
+```javascript
+var rawVolume	= new WebAudiox.Analyser2Volume.compute(analyser, width, offset);
+// rawVolume is a Number of the computed average
 ```
 
 width is optional and default to ```analyser.frequencyBinCount```.

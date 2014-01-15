@@ -52,15 +52,48 @@ console.log(minThreshold.toFixed(10),maxThreshold.toFixed(10))
 var WebAudiox	= WebAudiox	|| {}
 
 /**
+ * display an analyser node in a canvas
+ * 
+ * @param  {AnalyserNode} analyser     the analyser node
+ * @param  {Number}	  smoothFactor the smooth factor for smoothed volume
+ */
+WebAudiox.Analyser2Volume	= function(analyser, smoothFactor){
+	// arguments default values
+	smoothFactor	= smoothFactor !== undefined ? smoothFactor : 0.1
+	/**
+	 * return the raw volume
+	 * @return {Number} value between 0 and 1
+	 */
+	this.rawValue		= function(){
+		var rawVolume	= WebAudiox.Analyser2Volume.compute(analyser)
+		return rawVolume
+	}
+	
+	var smoothedVolume	= null
+	/**
+	 * [smoothedValue description]
+	 * @return {[type]} [description]
+	 */
+	this.smoothedValue	= function(){
+		var rawVolume	= WebAudiox.Analyser2Volume.compute(analyser)
+		// compute smoothedVolume
+		if( smoothedVolume === null )	smoothedVolume	= rawVolume
+		smoothedVolume	+= (rawVolume  - smoothedVolume) * smoothFactor		
+		// return the just computed value
+		return smoothedVolume
+	}
+}
+
+/**
  * do a average on a ByteFrequencyData from an analyser node
  * @param  {[type]} analyser the analyser node
  * @param  {Number} width    how many elements of the array will be considered
  * @param  {Number} offset   the index of the element to consider
  * @return {Number}          the ByteFrequency average
  */
-WebAudiox.analyserAverage	= function(analyser, width, offset){
+WebAudiox.Analyser2Volume.compute	= function(analyser, width, offset){
 	// handle paramerter
-	width		= width !== undefined ? width	: analyser.frequencyBinCount;
+	width		= width  !== undefined ? width	: analyser.frequencyBinCount;
 	offset		= offset !== undefined ? offset	: 0;
 	// inint variable
 	var freqByte	= new Uint8Array(analyser.frequencyBinCount);
@@ -76,6 +109,7 @@ WebAudiox.analyserAverage	= function(analyser, width, offset){
 	// return ampliture
 	return amplitude;
 }
+
 var WebAudiox	= WebAudiox	|| {}
 
 /**
@@ -158,6 +192,14 @@ WebAudiox.BinauralSource	= function(pitch, beatRate, gain){
 }
 var WebAudiox	= WebAudiox	|| {}
 
+
+/**
+ * source is integers from 0 to 255,  destination is float from 0 to 1 non included
+ * source and destination may not have the same length.
+ * 
+ * @param {[type]} srcArray [description]
+ * @param {[type]} dstArray [description]
+ */
 WebAudiox.ByteToNormalizedFloat32Array	= function(srcArray, dstArray){
 	var ratio	= srcArray.length / dstArray.length
 	for(var i = 0; i < dstArray.length; i++){
@@ -419,3 +461,92 @@ WebAudiox.PannerObject3DUpdater	= function(panner, object3d){
 	}
 }
 
+// @namespace defined WebAudiox namespace
+var WebAudiox	= WebAudiox	|| {}
+
+/**
+ * display an analyser node in a canvas
+ * 
+ * @param  {AnalyserNode} analyser     the analyser node
+ * @param  {Number}	  smoothFactor the smooth factor for smoothed volume
+ */
+WebAudiox.Analyser2Canvas	= function(analyser, canvas){
+	var canvasCtx		= canvas.getContext("2d")
+
+	var gradient	= canvasCtx.createLinearGradient(0,0,0,canvas.height)
+	gradient.addColorStop(1.00,'#000000')
+	gradient.addColorStop(0.75,'#ff0000')
+	gradient.addColorStop(0.25,'#ffff00')
+	gradient.addColorStop(0.00,'#ffffff')
+	canvasCtx.fillStyle	= gradient
+	
+	canvasCtx.lineWidth	= 5;
+	canvasCtx.strokeStyle	= "rgb(255, 255, 255)";
+
+	var analyser2volume	= new WebAudiox.Analyser2Volume(analyser)
+	
+	this.update	= function(){
+		//////////////////////////////////////////////////////////////////////////////////
+		//		comment								//
+		//////////////////////////////////////////////////////////////////////////////////
+
+		// draw a circle
+		var maxRadius	= Math.min(canvas.height, canvas.width) * 0.3
+		var radius	= 1 + analyser2volume.rawValue() * maxRadius;
+		canvasCtx.beginPath()
+		canvasCtx.arc(canvas.width*1.5/2, canvas.height*0.5/2, radius, 0, Math.PI*2, true)
+		canvasCtx.closePath()
+		canvasCtx.fill()
+		
+		// draw a circle
+// TODO make it relative to canvas size
+		var radius	= 1 + analyser2volume.smoothedValue() * maxRadius
+		canvasCtx.beginPath()
+		canvasCtx.arc(canvas.width*1.5/2, canvas.height*0.5/2, radius, 0, Math.PI*2, true)
+		canvasCtx.closePath()
+		canvasCtx.stroke()
+
+		//////////////////////////////////////////////////////////////////////////////////
+		//		display	ByteFrequencyData					//
+		//////////////////////////////////////////////////////////////////////////////////
+
+		// get the average for the first channel
+		var freqData	= new Uint8Array(analyser.frequencyBinCount)
+		analyser.getByteFrequencyData(freqData)
+		// normalized
+		var histogram	= new Float32Array(10)
+		WebAudiox.ByteToNormalizedFloat32Array(freqData, histogram)
+		// draw the spectrum
+		var barStep	= canvas.width / histogram.length
+		var barWidth	= barStep*0.8
+		canvasCtx.fillStyle	= gradient
+		for(var i = 0; i < histogram.length; i++){
+			canvasCtx.fillRect(i*barStep, (1-histogram[i])*canvas.height, barWidth, canvas.height)
+		}
+		
+		//////////////////////////////////////////////////////////////////////////////////
+		//		display ByteTimeDomainData					//
+		//////////////////////////////////////////////////////////////////////////////////
+		
+		canvasCtx.lineWidth	= 5;
+		canvasCtx.strokeStyle = "rgb(255, 255, 255)";
+		// get the average for the first channel
+		var timeData	= new Uint8Array(analyser.fftSize)
+		analyser.getByteTimeDomainData(timeData)
+		// normalized
+		var histogram	= new Float32Array(60)
+		WebAudiox.ByteToNormalizedFloat32Array(timeData, histogram)
+		// amplify the histogram
+		for(var i = 0; i < histogram.length; i++) {
+			histogram[i]	= (histogram[i]-0.5)*1.5+0.5
+		}
+		// draw the spectrum		
+		var barStep	= canvas.width / histogram.length
+		canvasCtx.beginPath()
+		for(var i = 0; i < histogram.length; i++) {
+			histogram[i]	= (histogram[i]-0.5)*1.5+0.5
+			canvasCtx.lineTo(i*barStep, (1-histogram[i])*canvas.height)
+		}
+		canvasCtx.stroke()
+	}	
+}
