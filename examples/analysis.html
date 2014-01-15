@@ -16,6 +16,7 @@
 	// http://www.smartjava.org/content/exploring-html5-web-audio-visualizing-sound
 
 	var analyser	= context.createAnalyser()
+console.log('analyser', analyser)
 	analyser.smoothingTimeConstant	= 0.2;
 	analyser.fftSize	= 512;
 	analyser.connect(lineOut.destination);
