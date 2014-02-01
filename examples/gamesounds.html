@@ -3,10 +3,10 @@
 <script src='vendor/three.js/examples/js/ImprovedNoise.js'></script>
 
 <script src='helpers/webaudiox.gamesounds.js'></script>
-<script src='../lib/webaudiox.binaural.js'></script>
 <script src='../lib/webaudiox.lineout.js'></script>
 <script src='../lib/webaudiox.loadbuffer.js'></script>
 <script src='../lib/webaudiox.three.js'></script>
+<script src='../lib/webaudiox.shim.js'></script>
 <body style='margin: 0px; background-color: #bbbbbb; overflow: hidden;'><script>
 	var renderer	= new THREE.WebGLRenderer();
 	renderer.setSize( window.innerWidth, window.innerHeight );
@@ -40,45 +40,34 @@
 	//		to play immediatly						//
 	//////////////////////////////////////////////////////////////////////////////////
 
-	var AudioContext= window.AudioContext || window.webkitAudioContext;
-	var context	= new AudioContext()
-	// put a ListenerObject3DUpdater
-	var listenerUpdater	= new WebAudiox.ListenerObject3DUpdater(context, camera)
-	updateFcts.push(function(delta, now){
-		listenerUpdater.update(delta, now)
-	})
-
-	// Create lineOut
-	var lineOut	= new WebAudiox.LineOut(context)
-	lineOut.volume	= 0.6
-	// add an analyser on lineOut
-	var analyser	= context.createAnalyser()
-	analyser.connect(lineOut.destination);
-	lineOut.destination	= analyser;
-
-
-
-	// load a sound and play it immediatly
-	var destination	= lineOut.destination;
-
-	// init AudioPannerNode
-	var panner	= context.createPanner()
-	// panner.coneOuterGain	= 0.1
-	// panner.coneOuterAngle	= Math.PI *180/Math.PI
-	// panner.coneInnerAngle	= 0 *180/Math.PI
-	panner.connect(destination)
-	destination	= panner
-	// put a PannerObject3DUpdater
-	var pannerUpdater	= new WebAudiox.PannerObject3DUpdater(panner, mesh)
-	updateFcts.push(function(delta, now){
-		pannerUpdater.update(delta, now)
-	})
-
-	var binauralSource	= new WebAudiox.BinauralSource()
-	binauralSource.output.connect(destination)
-	binauralSource.start(0)
+	var gameSounds	= new WebAudiox.GameSounds()
+	gameSounds.lineOut.volume	= 0.2
 	
+	// sounds.listenerFollow(camera)
+	// sounds.listenerUnfollow()
 
+	
+	var url	= 'sounds/rezoner-7DFPS-2013-2.mp3'
+	var url	= 'sounds/perfume.mp3'
+	var sound	= gameSounds.createSound().load(url, function(sound){
+		var utterance	= sound.play({
+			// volume	: 0.2,
+			// follow	: mesh,
+			position: new THREE.Vector3(-1,0,0),
+			// position: mesh
+		})
+		console.dir(utterance)
+		// setTimeout(function(){
+		// 	console.log('expired')
+		// 	utterance.stopFollow()
+		// }, 1*1000)
+	})
+	
+	// TODO put that in gamesounds
+	updateFcts.push(function(delta){
+		sound.update(delta)
+	})
+	
 	//////////////////////////////////////////////////////////////////////////////////
 	//		Camera Controls							//
 	//////////////////////////////////////////////////////////////////////////////////

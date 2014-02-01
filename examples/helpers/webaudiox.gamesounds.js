@@ -28,87 +28,155 @@ WebAudiox.GameSounds	= function(){
 	 * @type {boolean}
 	 */
 	this.webAudioDetected	= AudioContext ? true : false
-	
 
 	//////////////////////////////////////////////////////////////////////////////////
-	//		library API							//
+	//		create Sound							//
+	//////////////////////////////////////////////////////////////////////////////////
+			
+	/**
+	 * create a sound from this context
+	 * @param  {Object} defaultOptions the default option for this sound, optional
+	 * @return {WebAudiox.GameSound}	the created sound
+	 */
+	this.createSound	= function(defaultOptions){
+		return new WebAudiox.GameSound(this, defaultOptions)
+	}
+	
+	//////////////////////////////////////////////////////////////////////////////////
+	//		handle .follow/.unFollow					//
 	//////////////////////////////////////////////////////////////////////////////////
 	
-	var sounds	= {}
-	this.sounds	= sounds
+	this.follow	= function(object3d){
+		// put a ListenerObject3DUpdater
+		var listenerUpdater	= new WebAudiox.ListenerObject3DUpdater(context, object3d)
+		updateFcts.push(function(delta, now){
+			listenerUpdater.update(delta, now)
+		})
+	}
+	this.unFollow	= function(){
+		
+	}
 	
-	this.labels	= function(){
-		return Object.keys(sounds)
-	}	
-	this.has	= function(label){
-		return sounds[label] !== undefined
-	}
-	this.get	= function(label){
-		console.assert(sounds[label] !== undefined)
-		return sounds[label]
-	}
-	this.add	= function(label, url, playFn, onLoad, onError){
-		console.assert(sounds[label] === undefined)
-		sounds[label]	= new WebAudiox.GameSound(this, url, playFn, onLoad, onError)
-		return sounds[label]
-	}
-	this.remove	= function(label){
-		delete sounds[label]
-	}
-	this.play	= function(label){
-if( sounds[label] === undefined )	return
-		console.assert(sounds[label] !== undefined)
-		return sounds[label].play()
-	}
 }
 
-WebAudiox.GameSound	= function(gameSounds, url, playFn, onLoad, onError){
-	this.gameSounds	= gameSounds
-	// handle default arguments
-	playFn		= playFn || function(sound, context, destination){
-		var source	= context.createBufferSource()
-		source.buffer	= sound.buffer
-		source.connect(destination)
-		source.start(0)
-		return source						
-	}
-	// load the sound
-	this.buffer= null
-	WebAudiox.loadBuffer(gameSounds.context, url, function(decodedBuffer){
-		this.buffer	= decodedBuffer;
-		onLoad	&& onLoad()
-	}.bind(this), onError)
+//////////////////////////////////////////////////////////////////////////////////
+//		comment								//
+//////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * a sound from WebAudiox.GameSounds
+ * @param {WebAudiox.GameSounds} gameSounds     
+ * @param {Object} defaultOptions the default play options
+ */
+WebAudiox.GameSound	= function(gameSounds, defaultOptions){
+	this.gameSounds		= gameSounds
+	this.defaultOptions	= defaultOptions	|| {}	
+	//////////////////////////////////////////////////////////////////////////////////
+	//		update loop							//
+	//////////////////////////////////////////////////////////////////////////////////
 	
-	this.isReady	= function(){
-		return this.buffer !== null
+	var updateFcts	= []
+	this.update	= function(delta){
+		updateFcts.forEach(function(updateFct){
+			updateFct(delta)
+		})
 	}
 
-	this.play	= function(){
-		// if not yet loaded, do nothing
-		if( this.buffer === null )	return;
-		var context	= gameSounds.context
-		var destination	= gameSounds.lineOut.destination
-		return playFn(this, context, destination)
+	//////////////////////////////////////////////////////////////////////////////////
+	//		load url							//
+	//////////////////////////////////////////////////////////////////////////////////
+	
+	this.load	= function(url, onLoad, onError){
+		this.loaded	= false
+		WebAudiox.loadBuffer(gameSounds.context, url, function(decodedBuffer){
+			this.loaded	= true
+			this.buffer	= decodedBuffer;
+			onLoad	&& onLoad(this)
+		}.bind(this), onError)
+		return this
 	}
+
+	//////////////////////////////////////////////////////////////////////////////////
+	//		play								//
+	//////////////////////////////////////////////////////////////////////////////////
 	
-	// - volume
-	// - set static position/orientation 
-	// - set dynamic position/orientation/velocity
-	//   - unhook with onended
-	
-	// possible three.js api
-	// sound.at(position).play(3)
-	// sound.follow(object3d).play(3)
-	
-	// this.play	= function(object3d, intensity){
-		// * make it follow object3d
-		//   * so this mean there is a update function 
-		//   * (maybe there is already that in three.js event)
-		//   * this mean it has to be unfollowed when the sound is over
-		//   * how to know if a sound is over ? event ? setTimerout based on duration ?
-		//   * how to get duration ?
-		// * set a special intensity for this play
-		// * pass parameter generically in GameSounds
-		// * 
-	// }
+// TODO change play in createUtterance
+
+	this.play	= function(options){
+		options		= options || this.defaultOptions
+
+		var utterance	= {}
+		var context	= gameSounds.context
+		var destination	= gameSounds.lineOut.destination;
+
+		// .position and .follow are mutually exclusive
+		// console.assert( (options.position !== undefined) !== (options.follow !== undefined))
+
+		// honor .position: vector3
+		if( options.position !== undefined ){
+			// init AudioPannerNode if needed
+			if( utterance.pannerNode === undefined ){
+				var panner	= context.createPanner()
+				panner.connect(destination)
+				utterance.pannerNode	= panner
+				destination		= panner				
+			}
+			// set the value
+			if( options.position instanceof THREE.Vector3 ){
+				WebAudiox.PannerSetPosition(panner, options.position)			
+			}else if( options.position instanceof THREE.Object3D ){
+				WebAudiox.PannerSetObject3D(panner, options.position)			
+			}else	console.assert(false, 'invalid type for .position')
+		}
+
+		// honor .follow: mesh
+		if( options.follow !== undefined ){
+			// init AudioPannerNode if needed
+			if( utterance.pannerNode === undefined ){
+				var panner	= context.createPanner()
+				panner.connect(destination)
+				utterance.pannerNode	= panner
+				destination		= panner				
+			}
+			// put a PannerObject3DUpdater
+			var pannerUpdater	= new WebAudiox.PannerObject3DUpdater(panner, mesh)
+			utterance.pannerUpdater	= pannerUpdater
+			utterance.stopFollow	= function(){
+				updateFcts.splice(updateFcts.indexOf(updatePannerUpdater), 1)
+				delete	utterance.pannerUpdater
+			}
+			function updatePannerUpdater(delta, now){
+				pannerUpdater.update(delta, now)
+			}			
+			updateFcts.push(updatePannerUpdater)
+		}
+
+		// honor .volume = 0.3
+		if( options.volume !== undefined ){
+			var gain	= context.createGain();
+			gain.gain.value	= options.volume
+			gain.connect(destination)
+			destination	= gain			
+			utterance.gainNode	= gain
+		}
+
+		// init AudioBufferSourceNode
+		var source	= context.createBufferSource()
+		source.buffer	= this.buffer
+		source.connect(destination)
+		destination	= source
+
+		if( options.loop !== undefined )	source.loop	= options.loop
+
+		// start the sound now
+		source.start(0)
+
+		utterance.sourceNode	= source
+		utterance.stop		= function(delay){
+			source.stop(delay)
+			if( this.stopFollow )	this.stopFollow()
+		}
+		
+		return utterance
+	}
 }

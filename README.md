@@ -361,6 +361,9 @@ listenerUpdater.update(delta, now)
 Now let's localise a sound source.
 A sound source is localised only if it has a 
 [panner node](https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html#PannerNode).
+
+#### if you want a sound to follow a Object3D
+
 So you create a ```PannerObject3DUpdater``` for that 
 
 ```javascript
@@ -376,6 +379,22 @@ listener
 // delta is the time between the last update in seconds
 // now is the absolute time in seconds
 pannerUpdater.update(delta, now)
+```
+
+#### if you want a sound to be played at a given position
+
+```
+var panner	= context.createPanner()
+var position	= new THREE.Vector3(1,0,0)
+WebAudiox.PannerSetPosition(panner, position)
+```
+
+#### if you want a sound to be played from a THREE.Object3D
+
+```
+var panner	= context.createPanner()
+var object3d	= new THREE.Object3D
+WebAudiox.PannerSetObject3D(panner, object3d)
 ```
 
 # Other Examples
