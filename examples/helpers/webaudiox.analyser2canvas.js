@@ -36,7 +36,6 @@ WebAudiox.Analyser2Canvas	= function(analyser, canvas){
 		canvasCtx.fill()
 		
 		// draw a circle
-// TODO make it relative to canvas size
 		var radius	= 1 + analyser2volume.smoothedValue() * maxRadius
 		canvasCtx.beginPath()
 		canvasCtx.arc(canvas.width*1.5/2, canvas.height*0.5/2, radius, 0, Math.PI*2, true)
@@ -54,7 +53,7 @@ WebAudiox.Analyser2Canvas	= function(analyser, canvas){
 		var histogram	= new Float32Array(10)
 		WebAudiox.ByteToNormalizedFloat32Array(freqData, histogram)
 		// draw the spectrum
-		var barStep	= canvas.width / histogram.length
+		var barStep	= canvas.width / (histogram.length-1)
 		var barWidth	= barStep*0.8
 		canvasCtx.fillStyle	= gradient
 		for(var i = 0; i < histogram.length; i++){
@@ -78,7 +77,7 @@ WebAudiox.Analyser2Canvas	= function(analyser, canvas){
 			histogram[i]	= (histogram[i]-0.5)*1.5+0.5
 		}
 		// draw the spectrum		
-		var barStep	= canvas.width / histogram.length
+		var barStep	= canvas.width / (histogram.length-1)
 		canvasCtx.beginPath()
 		for(var i = 0; i < histogram.length; i++) {
 			histogram[i]	= (histogram[i]-0.5)*1.5+0.5

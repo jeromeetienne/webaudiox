@@ -1,4 +1,4 @@
-// @namespace defined WebAudiox name space
+// @namespace defined WebAudiox namespace
 var WebAudiox	= WebAudiox	|| {}
 
 /**
@@ -7,30 +7,28 @@ var WebAudiox	= WebAudiox	|| {}
  * @param  {AnalyserNode} analyser     the analyser node
  * @param  {Number}	  smoothFactor the smooth factor for smoothed volume
  */
-WebAudiox.Analyser2Volume	= function(analyser, smoothFactor){
+WebAudiox.AnalyserBeatDetector	= function(analyser, onBeat){
 	// arguments default values
-	smoothFactor	= smoothFactor !== undefined ? smoothFactor : 0.1
-	/**
-	 * return the raw volume
-	 * @return {Number} value between 0 and 1
-	 */
-	this.rawValue		= function(){
-		var rawVolume	= WebAudiox.Analyser2Volume.compute(analyser)
-		return rawVolume
-	}
-	
-	var smoothedVolume	= null
-	/**
-	 * [smoothedValue description]
-	 * @return {[type]} [description]
-	 */
-	this.smoothedValue	= function(){
-		var rawVolume	= WebAudiox.Analyser2Volume.compute(analyser)
-		// compute smoothedVolume
-		if( smoothedVolume === null )	smoothedVolume	= rawVolume
-		smoothedVolume	+= (rawVolume  - smoothedVolume) * smoothFactor		
-		// return the just computed value
-		return smoothedVolume
+	this.holdTime	= 0.66
+	this.decayRate	= 0.97
+	this.minVolume	= 0.15
+
+	var holdingTime	= 0
+	var threshold	= this.minVolume
+	this.update	= function(delta){
+		var rawVolume	= WebAudiox.AnalyserBeatDetector.compute(analyser)
+		if( rawVolume > threshold ){
+			onBeat()
+			holdingTime	= this.holdTime;
+			threshold	= rawVolume * 1.1;
+			threshold	= Math.max(threshold, this.minVolume);	
+		}else if( holdingTime > 0 ){
+			holdingTime	-= delta
+			holdingTime	= Math.max(holdingTime, 0)
+		}else{
+			threshold	*= this.decayRate;
+			threshold	= Math.max(threshold, this.minVolume);	
+		}
 	}
 }
 
@@ -41,7 +39,7 @@ WebAudiox.Analyser2Volume	= function(analyser, smoothFactor){
  * @param  {Number} offset   the index of the element to consider
  * @return {Number}          the ByteFrequency average
  */
-WebAudiox.Analyser2Volume.compute	= function(analyser, width, offset){
+WebAudiox.AnalyserBeatDetector.compute	= function(analyser, width, offset){
 	// handle paramerter
 	width		= width  !== undefined ? width	: analyser.frequencyBinCount;
 	offset		= offset !== undefined ? offset	: 0;
@@ -59,4 +57,5 @@ WebAudiox.Analyser2Volume.compute	= function(analyser, width, offset){
 	// return ampliture
 	return amplitude;
 }
+
 

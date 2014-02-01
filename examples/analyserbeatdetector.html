@@ -3,6 +3,7 @@
 <script src='../lib/webaudiox.lineout.js'></script>
 <script src='../lib/webaudiox.loadbuffer.js'></script>
 <script src='../lib/webaudiox.analyser2volume.js'></script>
+<script src='./helpers/webaudiox.analyserbeatdetector.js'></script>
 <body><script>
 	var context	= new AudioContext()
 
@@ -52,4 +53,27 @@
 		ctx.closePath()
 		ctx.fill()
 	});
+	
+	/**
+	 * note on how to compute bpm
+	 * - store the timestamp of each beat
+	 * - store only the last 100
+	 * - do a statistical computation on those timestamp to get bpm estimation
+	 *   - simple average is one
+	 *   - remove monster values in your average" 
+	 *   - a simple median ?
+	 *   - see http://en.wikipedia.org/wiki/Robust_statistics for details
+	 * - do a dat gui to tune those parameters
+	 * - test estimator by simulating a beat
+	 */
+	
+	var beatDetector= new WebAudiox.AnalyserBeatDetector(analyser, function(){
+		console.log('beat')
+	})
+	// loop and update
+	setInterval(function(){
+		beatDetector.update()
+	}, 1000/60);
+	
+	
 </script></body>

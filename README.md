@@ -390,6 +390,8 @@ here are the various examples:
 
 
 # TODO
+* http://webaudiodemos.appspot.com/
+* http://webaudioapi.com/
 * port examples from webaudio.js
 * QF-MichaelK: jetienne: http://www.youtube.com/watch?v=Nwuwg_tkHVA it's the rainbow one in the middle...
 * QF-MichaelK: http://www.smartjava.org/content/exploring-html5-web-audio-visualizing-sound
