@@ -683,7 +683,7 @@ var WebAudiox	= WebAudiox	|| {}
 /**
  * attempts to a more structure sound banks
  */
-WebAudiox.GameSounds2	= function(){
+WebAudiox.GameSounds	= function(){
 	// create WebAudio API context
 	var context	= new AudioContext()
 	this.context	= context
@@ -726,7 +726,7 @@ WebAudiox.GameSounds2	= function(){
 	 * @return {WebAudiox.GameSound}	the created sound
 	 */
 	this.createSound	= function(defaultOptions){
-		return new WebAudiox.GameSound2(this, defaultOptions)
+		return new WebAudiox.GameSound(this, defaultOptions)
 	}
 	
 
@@ -768,7 +768,7 @@ WebAudiox.GameSounds2	= function(){
  * @param {WebAudiox.GameSounds} gameSounds     
  * @param {Object} defaultOptions the default play options
  */
-WebAudiox.GameSound2	= function(gameSounds, defaultOptions){
+WebAudiox.GameSound	= function(gameSounds, defaultOptions){
 	this.gameSounds		= gameSounds
 	this.defaultOptions	= defaultOptions	|| {}
 
