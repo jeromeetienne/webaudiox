@@ -23,8 +23,8 @@ WebAudiox.GameSounds	= function(){
 	var lineOut	= new WebAudiox.LineOut(context)
 	this.lineOut	= lineOut
 	
-	var sounds	= []
-	this.sounds	= sounds
+	var bank	= []
+	this.bank	= bank
 	
 	/**
 	 * show if the Web Audio API is detected or not
@@ -37,12 +37,12 @@ WebAudiox.GameSounds	= function(){
 	//////////////////////////////////////////////////////////////////////////////////
 	
 	this.update	= function(delta){
-
 		if( this.listenerUpdater ){
 			this.listenerUpdater.update(delta)
 		}
-		
-		sounds.forEach(function(sound){
+		// update each bank
+		Object.keys(bank).forEach(function(label){
+			var sound	= bank[label]
 			sound.update(delta)
 		})
 	}
@@ -56,8 +56,8 @@ WebAudiox.GameSounds	= function(){
 	 * @param  {Object} defaultOptions the default option for this sound, optional
 	 * @return {WebAudiox.GameSound}	the created sound
 	 */
-	this.createSound	= function(defaultOptions){
-		return new WebAudiox.GameSound(this, defaultOptions)
+	this.createSound	= function(label, defaultOptions){
+		return new WebAudiox.GameSound(label, this, defaultOptions)
 	}
 	
 
@@ -99,18 +99,19 @@ WebAudiox.GameSounds	= function(){
  * @param {WebAudiox.GameSounds} gameSounds     
  * @param {Object} defaultOptions the default play options
  */
-WebAudiox.GameSound	= function(gameSounds, defaultOptions){
-	this.gameSounds		= gameSounds
-	this.defaultOptions	= defaultOptions	|| {}
+WebAudiox.GameSound	= function(label, gameSounds, defaultOptions){
+	this.label		= label		|| console.assert(false)
+	this.gameSounds		= gameSounds	|| console.assert(false)
+	this.defaultOptions	= defaultOptions|| {}
 
 	//////////////////////////////////////////////////////////////////////////////////
 	//		register/unregister in gameSound				//
 	//////////////////////////////////////////////////////////////////////////////////
 	
-	gameSounds.sounds.push(this)
+	console.assert(gameSounds.bank[label] === undefined, 'label already defined')
+	gameSounds.bank[label]	= this
 	this.destroy	= function(){
-		var sounds	= gameSounds.sounds
-		sounds.splice(sounds.indexOf(this), 1)
+		delete gameSounds.bank[label]
 	}
 	
 	
