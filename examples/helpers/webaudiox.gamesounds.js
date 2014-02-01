@@ -23,11 +23,29 @@ WebAudiox.GameSounds	= function(){
 	var lineOut	= new WebAudiox.LineOut(context)
 	this.lineOut	= lineOut
 	
+	var sounds	= []
+	this.sounds	= sounds
+	
 	/**
 	 * show if the Web Audio API is detected or not
 	 * @type {boolean}
 	 */
 	this.webAudioDetected	= AudioContext ? true : false
+
+	//////////////////////////////////////////////////////////////////////////////////
+	//		update loop							//
+	//////////////////////////////////////////////////////////////////////////////////
+	
+	this.update	= function(delta){
+
+		if( this.listenerUpdater ){
+			this.listenerUpdater.update(delta)
+		}
+		
+		sounds.forEach(function(sound){
+			sound.update(delta)
+		})
+	}
 
 	//////////////////////////////////////////////////////////////////////////////////
 	//		create Sound							//
@@ -42,6 +60,17 @@ WebAudiox.GameSounds	= function(){
 		return new WebAudiox.GameSound(this, defaultOptions)
 	}
 	
+
+	// set the listener position
+	this.setPosition	= function(position){
+		if( position instanceof THREE.Vector3 ){
+			WebAudiox.ListenerSetPosition(context, position)	
+		}else if( position instanceof THREE.Object3D ){
+			WebAudiox.ListenerSetObject3D(context, position)	
+		}else	console.assert(false)
+		return this
+	}
+
 	//////////////////////////////////////////////////////////////////////////////////
 	//		handle .follow/.unFollow					//
 	//////////////////////////////////////////////////////////////////////////////////
@@ -49,12 +78,14 @@ WebAudiox.GameSounds	= function(){
 	this.follow	= function(object3d){
 		// put a ListenerObject3DUpdater
 		var listenerUpdater	= new WebAudiox.ListenerObject3DUpdater(context, object3d)
-		updateFcts.push(function(delta, now){
-			listenerUpdater.update(delta, now)
-		})
+		this.listenerUpdater	= listenerUpdater
+		return this
 	}
 	this.unFollow	= function(){
-		
+		context.listener.setVelocity(0,0,0);
+
+		this.listenerUpdater	= null	
+		return this
 	}
 	
 }
@@ -70,7 +101,19 @@ WebAudiox.GameSounds	= function(){
  */
 WebAudiox.GameSound	= function(gameSounds, defaultOptions){
 	this.gameSounds		= gameSounds
-	this.defaultOptions	= defaultOptions	|| {}	
+	this.defaultOptions	= defaultOptions	|| {}
+
+	//////////////////////////////////////////////////////////////////////////////////
+	//		register/unregister in gameSound				//
+	//////////////////////////////////////////////////////////////////////////////////
+	
+	gameSounds.sounds.push(this)
+	this.destroy	= function(){
+		var sounds	= gameSounds.sounds
+		sounds.splice(sounds.indexOf(this), 1)
+	}
+	
+	
 	//////////////////////////////////////////////////////////////////////////////////
 	//		update loop							//
 	//////////////////////////////////////////////////////////////////////////////////
@@ -108,9 +151,6 @@ WebAudiox.GameSound	= function(gameSounds, defaultOptions){
 		var utterance	= {}
 		var context	= gameSounds.context
 		var destination	= gameSounds.lineOut.destination;
-
-		// .position and .follow are mutually exclusive
-		// console.assert( (options.position !== undefined) !== (options.follow !== undefined))
 
 		// honor .position: vector3
 		if( options.position !== undefined ){
