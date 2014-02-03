@@ -128,18 +128,20 @@ analyser2canvas.update()
 
 ## webaudiox.analyser2volume.js
 
-You can see the
-[file on github](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.analyser2volume.js).
-You can try an usage 
-[example live](http://jeromeetienne.github.io/webaudiox/examples/analyser2volume.html)
-and check its 
-[source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/analyser2volume.html).
-Sure but what does it do ?
-
-It makes an average on a ByteFrequencyData from an analyser node. clear ? :)
+This helper makes an average on a ByteFrequencyData from an analyser node. clear ? :)
 In brief, it makes an fft to extract the frequency of the sound, all that in real time.
 It is often used to detect pulse in some frequency range.
 like detecting pulse in the low frequencies can be a easy beat detector.
+
+#### Show Don't Tell
+
+* [webaudiox.analyser2volume.js](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.analyser2volume.js)
+the source itself.
+* [examples/analyser2volume.html](http://jeromeetienne.github.io/webaudiox/examples/analyser2volume.html)
+\[[view source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/analyser2volume.html)\] :
+It shows a basic usage of this helper
+
+#### Usage
 
 ```javascript
 // create the object
@@ -160,14 +162,7 @@ offset is optional and default to 0.
 
 ## webaudiox.lineout.js
 
-You can see the
-[file on github](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.lineout.js).
-You can try an usage 
-[example live](http://jeromeetienne.github.io/webaudiox/examples/lineout.html)
-and check its 
-[source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/lineout.html).
-Sure but what does it do ?
-It provide a main line out with the *good practices*
+This helper provides a main line out with the *good practices*
 from 
 ["Developing Game Audio with the Web Audio API"](http://www.html5rocks.com/en/tutorials/webaudio/games/)
 on 
@@ -185,21 +180,29 @@ the sound is mute using
 [PageVisibility API](http://www.w3.org/TR/page-visibility/).
 and obviously ability to tune the volume globally for all sounds.
 
+#### Show Don't Tell
+
+* [webaudiox.lineout.js](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.lineout.js)
+the source itself.
+* [examples/lineout.html](http://jeromeetienne.github.io/webaudiox/examples/lineout.html)
+\[[view source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/lineout.html)\] :
+It shows a basic usage of this helper
+
 Now let's see it's API
 
-### create a lineOut
+#### create a lineOut
 
 ```javascript
 var lineOut	= new WebAudiox.LineOut(context)
 ```
 
-### to set the volume/gain
+#### to set the volume/gain
  
 ```javascript
 lineOut.volume	= 0.8;
 ```
 
-### To connect a sound to your lineOut
+#### To connect a sound to your lineOut
 
 use ```lineOut.destination``` as you would use ```context.destination```.
 
@@ -207,7 +210,7 @@ use ```lineOut.destination``` as you would use ```context.destination```.
 source.connect(lineOut.destination)
 ```
 
-### test if currently muted by user
+#### test if currently muted by user
 
 ```javascript
 if( lineOut.isMuted === true ){
@@ -215,7 +218,7 @@ if( lineOut.isMuted === true ){
 }
 ```
 
-### toggle mute status
+#### toggle mute status
 
 typically when the user click on the mute button, you want to toggle the mute status.
 
