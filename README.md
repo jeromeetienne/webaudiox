@@ -308,6 +308,24 @@ Additionally there is ```WebAudiox.loadBuffer.inProgressCount```.
 it is counter of all the .loadBuffer in progress. 
 it useful to know is all your sounds as been loaded.
 
+#### OfflineAudioContext for fast decoding
+
+With the normal AudioContext decoding e.g. an mp3 file takes just 
+as long as the mp3 file lasts. So if your mp3 file's duration is 
+1.5 minutes then your decompression (or analyzation, etc.) takes 
+1.5 minutes, which might be unbearable for your app.
+OfflineAudioContext allows faster than realtime decompression,
+for example:
+
+```javascript
+var AudioContext = window.AudioContext || window.webkitAudioContext;
+var OfflineAudioContext = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+this._context = new AudioContext();
+this._loaderContext = new OfflineAudioContext(2, 1024, 44100); //22050 to 96000, CD = 44100
+```
+
+See the [W3C docs for OfflineAudioContext](https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html#OfflineAudioContext-section)
+
 ## webaudiox.three.js
 
 You can see the 
