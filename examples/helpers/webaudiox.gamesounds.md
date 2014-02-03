@@ -36,9 +36,40 @@ var utterance	= sound.play({
 })
 ```
 
-* ```utterance.stopFollow()``` to stop follow the object3d
+## gamesound.update(delta)
+It updates the sound. ```delta``` is the number of seconds since the last iteration of
+of the rendering loop
 
-* ```utterance.pannerNode``` to have direct access to the panner node
+## gamesound.register(label)
+
+Register this sound into the bank of ```gameSounds``` with this ```label```.
+Every label is unique into a ```gameSounds```
+```gamesound.unregister()``` unregisters the sound from gameSounds bank.
+
+## gamesound.load(url, onLoad, onError)
+
+## gamesound.play(options)
+
+it will play a utterance of this sound.
+What is a utterance, this is a instance of a played sound.
+Everytime you play a gamesound, it is handled by an independant utterance.
+This you can controls them independantly.
+e.g. You can have various volume how strong is an impact,
+You can play sound at various fixed locations, or following different objects.
+
+Here are all the options you can set
+
+### options.loop
+
+```.loop``` set the ```.loop``` parameter in the ```SourceBuffer```
+
+### options.position
+
+```.position``` options receives a three.js position. It may be ```THREE.Object3D``` 
+or directly a ```THREE.Vector3```.
+The utterance will be played at this position
+It will create a ```PannerNode``` if needed, and update it according to the 3d object
+position.
 
 ### options.follow
 
