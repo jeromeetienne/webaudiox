@@ -2,8 +2,8 @@
 
 It aims at making 
 [Web Audio Api](http://www.w3.org/TR/webaudio/) easy to use for gamedevs.
-
-**TODO** What does it provides ?
+It aims to provide easy-to-use API for the common cases seen by gamedevs.
+Yet, by exposing its internals, it conserves the flexibility to fit your own needs.
 
 ## Basic Usage
 
@@ -13,24 +13,21 @@ First, we init ```gameSounds```.
 var gameSounds	= new WebAudiox.GameSounds()
 ```
 
-Then we create
+Then we create a sound and load it from a url.
 
 ```
 gameSounds.createSound().load('mysound.ogg', function(sound){
-	sound.play()
+	// here the sound is loaded
 })
 ```
 
+We are all ready to play a sound. So let's do it.
+
 ```
-var sound	= gameSounds.createSound().fromJsfx(lib)
-var utterance	= sound.play({
-	loop	: true,	// to make the sound loop, 
-	volume	: 0.2,	// set the volume for this utterance
-	position: new THREE.Vector3(1,0,0),	// set position of the sound from a THREE.Vector3
-						// it is possible to use THREE.Object3D too
-	follow	: object3d	// it will follow
-})
+sound.play();
 ```
+ 
+This will create a **utterance**, i.e. an instance of our sound, a playing version of our sound. Each utterance is independant. Thus you got the flexibility to change its parameters during the playing of it. e.g. change its location, its volume, whatever you want.
 
 ## WebAudiox.GameSounds
 
@@ -40,7 +37,7 @@ Instanciate the object itself
 var gameSounds	= new WebAudiox.GameSounds()
 ```
 
-It will keep the WebAudio API context, 
+It will keep the WebAudio API context.
 It has a line out to the speakers which implement the current best practice according to ["Developing Game Audio with the Web Audio API"](http://www.html5rocks.com/en/tutorials/webaudio/games/) article on [HTML5Rock](http://www.html5rocks.com). 
 It will expose the following properties:
 
