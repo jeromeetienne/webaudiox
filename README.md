@@ -186,7 +186,8 @@ and obviously ability to tune the volume globally for all sounds.
 the source itself.
 * [examples/lineout.html](http://jeromeetienne.github.io/webaudiox/examples/lineout.html)
 \[[view source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/lineout.html)\] :
-It shows a basic usage of this helper
+It shows a basic usage of this helper.
+**TODO: this link is broken**
 
 Now let's see it's API
 
@@ -228,29 +229,23 @@ lineOut.toggeMute()
 
 ## webaudiox.shim.js
 
-You can see the
-[file on github](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.shim.js).
-You can try an usage 
-[example live](http://jeromeetienne.github.io/webaudiox/examples/jsfx.html)
-and check its 
-[source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/jsfx.html).
-Sure but what does it do ?
-It does a [shim](http://en.wikipedia.org/wiki/Shim_\(computing\)) which handle 
+This helper does a [shim](http://en.wikipedia.org/wiki/Shim_\(computing\)) which handle 
 the vendor prefix, so you don't have to. Typically it contains code like 
+
 
 ```javascript
 window.AudioContext	= window.AudioContext || window.webkitAudioContext;
 ```
 
-## webaudiox.jsfx.js
+#### Show Don't Tell
 
-You can see the
-[file on github](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.jsfx.js).
-You can try an usage 
-[example live](http://jeromeetienne.github.io/webaudiox/examples/jsfx.html)
-and check its 
-[source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/jsfx.html).
-Sure but what does it do ?
+* [webaudiox.shim.js](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.shim.js)
+the source itself.
+* [examples/jsfx.html](http://jeromeetienne.github.io/webaudiox/examples/jsfx.html)
+\[[view source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/jsfx.html)\] :
+It shows a basic usage of this helper.
+
+## webaudiox.jsfx.js
 
 [jsfx.js](https://github.com/egonelbre/jsfx) 
 is a library to generate procedural sound, very 8-bit kindof sound.
@@ -258,6 +253,17 @@ See [jsfx demo page](http://www.egonelbre.com/js/jsfx/) for details on this fun 
 by [@egonelbre](https://twitter.com/egonelbre/).
 It is usefull because you can generate lots of different sound easily without downloading
 anything.
+
+#### Show Don't Tell
+
+* [webaudiox.jsfx.js](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.jsfx.js)
+the source itself.
+* [examples/jsfx.html](http://jeromeetienne.github.io/webaudiox/examples/jsfx.html)
+\[[view source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/jsfx.html)\] :
+It shows a basic usage of this helper
+
+#### Usage
+
 Here is a usage example
 
 ```javascript
@@ -278,8 +284,22 @@ You can try an usage
 and check its 
 [source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/lineout.html).
 Sure but what does it do ?
-It is helper to load sound. 
+
+
+This helper loads sound. 
 it is a function which load the sound from an ```url``` and decode it.
+
+
+#### Show Don't Tell
+
+* [webaudiox.loadbuffer.js](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.loadbuffer.js)
+the source itself.
+* [examples/lineout.html](http://jeromeetienne.github.io/webaudiox/examples/lineout.html)
+\[[view source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/lineout.html)\] :
+It shows a basic usage of this helper.
+**TODO this link is broken**
+
+#### Usage
 
 ```javascript
 WebAudiox.loadBuffer(context, url, function(buffer){
