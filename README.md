@@ -346,11 +346,9 @@ the source itself.
 * [examples/threejs.html](http://jeromeetienne.github.io/webaudiox/examples/threejs.html)
 \[[view source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/threejs.html)\] :
 It shows a basic usage of this helper.
-**TODO this link is broken**
 * [examples/threejs-panner.html](http://jeromeetienne.github.io/webaudiox/examples/threejs-panner.html)
 \[[view source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/threejs-panner.html)\] :
 It shows a basic usage of this helper.
-**TODO this link is broken**
 
 #### Usage
 
