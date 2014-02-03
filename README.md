@@ -278,7 +278,7 @@ var buffer	= WebAudiox.getBufferFromJsfx(context, lib)
 ## webaudiox.loadbuffer.js
 
 This helper loads sound. 
-it is a function which load the sound from an ```url``` and decode it.
+It is a function which load the sound from an ```url``` and decode it.
 
 #### Show Don't Tell
 
