@@ -51,11 +51,11 @@ WebAudiox.GameSounds	= function(){
 			
 	/**
 	 * create a sound from this context
-	 * @param  {Object} defaultOptions the default option for this sound, optional
+	 * @param  {Object} options the default option for this sound, optional
 	 * @return {WebAudiox.GameSound}	the created sound
 	 */
-	this.createSound	= function(defaultOptions){
-		return new WebAudiox.GameSound(this, defaultOptions)
+	this.createSound	= function(options){
+		return new WebAudiox.GameSound(this, options)
 	}
 	
 
