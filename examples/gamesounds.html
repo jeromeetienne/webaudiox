@@ -42,32 +42,33 @@
 
 	var gameSounds	= new WebAudiox.GameSounds()
 	gameSounds.lineOut.volume	= 0.2
-	// gameSounds.setPosition(new THREE.Vector3(0,0,0))
-	gameSounds.follow(camera)
-	setTimeout(function(){
-		gameSounds.unFollow()		
-	}, 2*1000)
-	// TODO put that in gameSounds
+	// gameSounds.listenerAt(new THREE.Vector3(0,0,0))
+	gameSounds.listenerFollow(camera)
+	// setTimeout(function(){
+	// 	gameSounds.listenerStopFollow()		
+	// }, 2*1000)
 	updateFcts.push(function(delta){
 		gameSounds.update(delta)
 	})
 
 	
 	var url	= 'sounds/rezoner-7DFPS-2013-2.mp3'
-	gameSounds.createSound('soundTrack').load(url, function(sound){
-		var utterance	= sound.play({
-			loop	: true,
-			volume	: 1.0,
-			follow	: mesh,
-			// position: new THREE.Vector3(-1,0,0),
-			// position: mesh
+	gameSounds.createSound()
+		.register('soundTrack')
+		.load(url, function(sound){
+			var utterance	= sound.play({
+				loop	: true,
+				volume	: 1.0,
+				follow	: mesh,
+				// position: new THREE.Vector3(-1,0,0),
+				// position: mesh
+			})
+			console.dir(utterance)
+			// setTimeout(function(){
+			// 	console.log('expired')
+			// 	utterance.stopFollow()
+			// }, 1*1000)
 		})
-		console.dir(utterance)
-		// setTimeout(function(){
-		// 	console.log('expired')
-		// 	utterance.stopFollow()
-		// }, 1*1000)
-	})
 	
 	//////////////////////////////////////////////////////////////////////////////////
 	//		Camera Controls							//
@@ -78,9 +79,9 @@
 		mouse.y	= (event.clientY / window.innerHeight) - 0.5
 	}, false)
 	updateFcts.push(function(delta, now){
-		// camera.position.x += (mouse.x*50 - camera.position.x) * (delta*3)
-		// camera.position.y += (mouse.y*50 - camera.position.y) * (delta*3)
-		// camera.lookAt( scene.position )
+		camera.position.x += (mouse.x*50 - camera.position.x) * (delta*3)
+		camera.position.y += (mouse.y*50 - camera.position.y) * (delta*3)
+		camera.lookAt( scene.position )
 	})
 
 

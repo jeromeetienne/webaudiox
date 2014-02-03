@@ -1,18 +1,10 @@
+/**
+ * @namespace
+ */
 var WebAudiox	= WebAudiox	|| {}
 
 /**
- * ## how to implement 3d in this
- * * GameSounds.update(delta)
-
- * * GameSounds.follow(camera)
- * * sound.follow(object3d).play()
- * * sound.lookAt(vector3).play()
- * * sound.at(vector3).play()
- * * sound.velocity(vector3).play()
- */
-
-/**
- * attempts to a more structure sound banks
+ * a specific helpers for gamedevs to make WebAudio API easy to use for their case
  */
 WebAudiox.GameSounds	= function(){
 	// create WebAudio API context
@@ -28,6 +20,7 @@ WebAudiox.GameSounds	= function(){
 	
 	/**
 	 * show if the Web Audio API is detected or not
+	 * 
 	 * @type {boolean}
 	 */
 	this.webAudioDetected	= AudioContext ? true : false
@@ -35,7 +28,12 @@ WebAudiox.GameSounds	= function(){
 	//////////////////////////////////////////////////////////////////////////////////
 	//		update loop							//
 	//////////////////////////////////////////////////////////////////////////////////
-	
+
+	/**
+	 * the update function
+	 * 
+	 * @param  {Number} delta seconds since the last iteration
+	 */
 	this.update	= function(delta){
 		if( this.listenerUpdater ){
 			this.listenerUpdater.update(delta)
@@ -56,13 +54,21 @@ WebAudiox.GameSounds	= function(){
 	 * @param  {Object} defaultOptions the default option for this sound, optional
 	 * @return {WebAudiox.GameSound}	the created sound
 	 */
-	this.createSound	= function(label, defaultOptions){
-		return new WebAudiox.GameSound(label, this, defaultOptions)
+	this.createSound	= function(defaultOptions){
+		return new WebAudiox.GameSound(this, defaultOptions)
 	}
 	
 
-	// set the listener position
-	this.setPosition	= function(position){
+	//////////////////////////////////////////////////////////////////////////////////
+	//		handle .listenerAt						//
+	//////////////////////////////////////////////////////////////////////////////////
+	
+	/**
+	 * Set the listener position
+	 * @param  {THREE.Vector3|THREE.Object3D} position the position to copy
+	 * @return {WebAudiox.GameSounds} the object itself for linked API
+	 */
+	this.listenerAt	= function(position){
 		if( position instanceof THREE.Vector3 ){
 			WebAudiox.ListenerSetPosition(context, position)	
 		}else if( position instanceof THREE.Object3D ){
@@ -75,23 +81,32 @@ WebAudiox.GameSounds	= function(){
 	//		handle .follow/.unFollow					//
 	//////////////////////////////////////////////////////////////////////////////////
 	
-	this.follow	= function(object3d){
+	/**
+	 * Make the listener follow a three.js THREE.Object3D
+	 * 
+	 * @param  {THREE.Object3D} object3d the object to follow
+	 * @return {WebAudiox.GameSounds} the object itself for linked API
+	 */
+	this.listenerFollow	= function(object3d){
 		// put a ListenerObject3DUpdater
 		var listenerUpdater	= new WebAudiox.ListenerObject3DUpdater(context, object3d)
 		this.listenerUpdater	= listenerUpdater
 		return this
 	}
-	this.unFollow	= function(){
+	
+	/**
+	 * Make the listener Stop Following the object 
+	 * @return {WebAudiox.GameSounds} the object itself for linked API
+	 */
+	this.listenerStopFollow	= function(){
 		context.listener.setVelocity(0,0,0);
-
 		this.listenerUpdater	= null	
 		return this
 	}
-	
 }
 
 //////////////////////////////////////////////////////////////////////////////////
-//		comment								//
+//		WebAudiox.GameSound						//
 //////////////////////////////////////////////////////////////////////////////////
 
 /**
@@ -99,21 +114,25 @@ WebAudiox.GameSounds	= function(){
  * @param {WebAudiox.GameSounds} gameSounds     
  * @param {Object} defaultOptions the default play options
  */
-WebAudiox.GameSound	= function(label, gameSounds, defaultOptions){
-	this.label		= label		|| console.assert(false)
+WebAudiox.GameSound	= function(gameSounds, defaultOptions){
 	this.gameSounds		= gameSounds	|| console.assert(false)
 	this.defaultOptions	= defaultOptions|| {}
 
 	//////////////////////////////////////////////////////////////////////////////////
 	//		register/unregister in gameSound				//
 	//////////////////////////////////////////////////////////////////////////////////
-	
-	console.assert(gameSounds.bank[label] === undefined, 'label already defined')
-	gameSounds.bank[label]	= this
-	this.destroy	= function(){
-		delete gameSounds.bank[label]
+		
+	this.label	= null;	
+	this.register	= function(label){
+		console.assert(gameSounds.bank[label] === undefined, 'label already defined')
+		gameSounds.bank[label]	= this
+		return this;
 	}
-	
+	this.unregister	= function(){
+		if( this.label === null )	return;
+		delete gameSounds.bank[label]
+		return this;
+	}
 	
 	//////////////////////////////////////////////////////////////////////////////////
 	//		update loop							//

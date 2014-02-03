@@ -38,7 +38,18 @@ var utterance	= sound.play({
 
 * ```utterance.stopFollow()``` to stop follow the object3d
 
-* ```utterance.pannerNode``` to have direct access to the panner node.
-* ```utterance.gainNode``` to have direct access to gain node. If you 
-dynamically change the gain during the utterance.
+* ```utterance.pannerNode``` to have direct access to the panner node
+
+### options.follow
+
+```.follow``` options receives a ```THREE.Object3D``` as arguments. This 3d object
+will be followed by the utterance.
+It will create a ```PannerNode``` if needed, and update it according to the 3d object
+position.
+
+Additionnaly It exposes ```utterance.stopFollow()``` to stop following a 3d object.
+
+### options.volume
+If ````options.volume``` is set, it will create a ```utterance.gainNode``` for it. 
+If you wish, you can access ```.gainNode``` directly change the gain during the utterance.
 
