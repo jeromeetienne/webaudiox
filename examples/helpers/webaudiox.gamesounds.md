@@ -2,13 +2,21 @@ webaudiox.gamesounds.js
 =======================
 
 It aims at making webaudio api easy to use for gamedevs.
-
+It depends on 
+[webaudiox.lineout.js](https://github.com/jeromeetienne/webaudiox#webaudioxlineoutjs),
+[webaudiox.loadbuffer.js](https://github.com/jeromeetienne/webaudiox#webaudioxloadbufferjs)
+and
+[webaudiox.three.js](https://github.com/jeromeetienne/webaudiox#webaudioxthreejs) if
+you want to use the sound localisation.
 
 
 ```
 var gameSounds	= new WebAudiox.GameSounds()
 gameSounds.lineOut.volume	= 0.2
 ```
+
+* ```.lineOut``` is a [WebAudiox.LineOut](https://github.com/jeromeetienne/webaudiox#webaudioxlineoutjs)
+* ```.context``` is a AudioContext from Web Audio API
 
 
 ```

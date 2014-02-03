@@ -77,19 +77,19 @@ which is authoritative.
 
 ## webaudiox.bytetonormalizedfloat32array.js
 
-You can see the
-[file on github](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.bytetonormalizedfloat32array.js).
-You can try an usage 
-[example live](http://jeromeetienne.github.io/webaudiox/examples/frequencyspectrum.html)
-and check its 
-[source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/frequencyspectrum.html).
-Sure but what does it do ?
-
-It converts a byteArray to a normalized Float32Array.
+This helpers converts a byteArray to a normalized Float32Array.
 The destination Array is normalized because 
 values are garanted to be between 0 and 1.
 It works even if the destination array has a different value than the source array.
 It is useful when playing with frequency spectrum.
+
+### Show Don't Tell
+* [webaudiox.bytetonormalizedfloat32array.js](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.bytetonormalizedfloat32array.js)
+the source itself.
+* [examples/frequencyspectrum.html](http://jeromeetienne.github.io/threex.sample/examples/frequencyspectrum.html)
+\[[view source](https://github.com/jeromeetienne/threex.sample/blob/master/examples/frequencyspectrum.html)\] :
+It shows a basic usage of this helper
+
 
 ```javascript
 WebAudiox.ByteToNormalizedFloat32Array(srcArray, dstArray);
