@@ -277,18 +277,8 @@ var buffer	= WebAudiox.getBufferFromJsfx(context, lib)
 
 ## webaudiox.loadbuffer.js
 
-You can see the 
-[file on github](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.loadbuffer.js).
-You can try an usage 
-[example live](http://jeromeetienne.github.io/webaudiox/examples/lineout.html)
-and check its 
-[source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/lineout.html).
-Sure but what does it do ?
-
-
 This helper loads sound. 
 it is a function which load the sound from an ```url``` and decode it.
-
 
 #### Show Don't Tell
 
@@ -309,7 +299,7 @@ WebAudiox.loadBuffer(context, url, function(buffer){
 });
 ```
 
-### Scheduling Download
+#### Scheduling Download
 
 In real-life cases, like game, you want to be sure all your sounds
 are ready to play before the user start playing.
@@ -336,19 +326,6 @@ it useful to know is all your sounds as been loaded.
 
 ## webaudiox.three.js
 
-You can see the 
-[file on github](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.three.js).
-You can try an usage 
-[example live](http://jeromeetienne.github.io/webaudiox/examples/threejs.html)
-and check its 
-[source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/threejs.html).
-Additionaly, here is an experimentation using ```PannerNode``` 
-with a 
-[example live](http://jeromeetienne.github.io/webaudiox/examples/threejs-panner.html)
-and its
-[source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/threejs-panner.html).
-Sure but what does it do ?
-
 This is useful lf you have a three.js scene and would like to play spacial sound in it.
 When a sound is played in 3d space, there are 2 actors: 
 the listener which hears the sound 
@@ -360,9 +337,26 @@ In practice when you use it with three.js
 you need to constantly update the position of the 
 listener and all the sound sources. First in your init, you instance the updater objects.
 Then at each iteration of your rendering loop, you update all the positions.
+
+
+#### Show Don't Tell
+
+* [webaudiox.three.js](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.three.js)
+the source itself.
+* [examples/threejs.html](http://jeromeetienne.github.io/webaudiox/examples/threejs.html)
+\[[view source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/threejs.html)\] :
+It shows a basic usage of this helper.
+**TODO this link is broken**
+* [examples/threejs-panner.html](http://jeromeetienne.github.io/webaudiox/examples/threejs-panner.html)
+\[[view source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/threejs-panner.html)\] :
+It shows a basic usage of this helper.
+**TODO this link is broken**
+
+#### Usage
+
 Here is the API details.
 
-### listener localisation
+#### listener localisation
 
 First let's localise the listener. most of the time it will be the the viewer camera.
 So you create a ```ListenerObject3DUpdater``` for that 
@@ -382,7 +376,7 @@ listener.
 listenerUpdater.update(delta, now)
 ```
 
-### sound source localisation
+#### sound source localisation
 
 Now let's localise a sound source.
 A sound source is localised only if it has a 
