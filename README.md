@@ -86,8 +86,8 @@ It is useful when playing with frequency spectrum.
 ### Show Don't Tell
 * [webaudiox.bytetonormalizedfloat32array.js](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.bytetonormalizedfloat32array.js)
 the source itself.
-* [examples/frequencyspectrum.html](http://jeromeetienne.github.io/threex.sample/examples/frequencyspectrum.html)
-\[[view source](https://github.com/jeromeetienne/threex.sample/blob/master/examples/frequencyspectrum.html)\] :
+* [examples/frequencyspectrum.html](http://jeromeetienne.github.io/webaudiox/examples/frequencyspectrum.html)
+\[[view source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/frequencyspectrum.html)\] :
 It shows a basic usage of this helper
 **TODO: this link is broken**
 
@@ -108,8 +108,8 @@ It display a FFT histogram, a waveform, and a volume. It is there mainly for deb
 ### Show Don't Tell
 * [webaudiox.analyser2canvas.js](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.analyser2canvas.js)
 the source itself.
-* [examples/analyser2canvas.html](http://jeromeetienne.github.io/threex.sample/examples/analyser2canvas.html)
-\[[view source](https://github.com/jeromeetienne/threex.sample/blob/master/examples/analyser2canvas.html)\] :
+* [examples/analyser2canvas.html](http://jeromeetienne.github.io/webaudiox/examples/analyser2canvas.html)
+\[[view source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/analyser2canvas.html)\] :
 It shows a basic usage of this helper
 
 ### Usage
