@@ -151,6 +151,7 @@ WebAudiox.GameSound	= function(gameSounds, defaultOptions){
 	
 	this.load	= function(url, onLoad, onError){
 		this.loaded	= false
+		this.buffer	= null
 		WebAudiox.loadBuffer(gameSounds.context, url, function(decodedBuffer){
 			this.loaded	= true
 			this.buffer	= decodedBuffer;

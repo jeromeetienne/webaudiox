@@ -48,6 +48,15 @@ Every label is unique into a ```gameSounds```
 
 ## gamesound.load(url, onLoad, onError)
 
+This load a sounds from an ```url```.
+Once the sound is loaded, ```onLoad(gameSound)``` is notified.
+If an error occurs during the load, ```onLoad()``` is notified.
+
+It exposes ```gameSound.loaded``` Boolean. if it is true, the sound
+is loaded, false otherwise.
+It exposes ```gameSound.buffer```. It is the loaded buffer once it is loaded,
+or null otherwise.
+
 ## gamesound.play(options)
 
 it will play a utterance of this sound.
