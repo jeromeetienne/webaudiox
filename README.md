@@ -4,8 +4,8 @@ is a bunch of helpers for
 It isn't a library per se.
 You can use any of those helpers independantly.
 This makes it very light to include these in your own code.
-There is a ```webaudiox.js``` provided though.
-This is for convenience.
+There is a ```webaudiox.js``` which bundle them though.
+This is provided for convenience.
 It is just the concatenation of all the helpers.
 
 ## Usage
@@ -324,7 +324,7 @@ Additionally there is ```WebAudiox.loadBuffer.inProgressCount```.
 it is counter of all the .loadBuffer in progress. 
 it useful to know is all your sounds as been loaded.
 
-## webaudiox.three.js
+# webaudiox.three.js
 
 This is useful lf you have a three.js scene and would like to play spacial sound in it.
 When a sound is played in 3d space, there are 2 actors: 
@@ -339,7 +339,7 @@ listener and all the sound sources. First in your init, you instance the updater
 Then at each iteration of your rendering loop, you update all the positions.
 
 
-#### Show Don't Tell
+### Show Don't Tell
 
 * [webaudiox.three.js](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.three.js)
 the source itself.
@@ -350,7 +350,7 @@ It shows a basic usage of this helper.
 \[[view source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/threejs-panner.html)\] :
 It shows a basic usage of this helper.
 
-#### Usage
+### Usage
 
 Here is the API details.
 
@@ -374,13 +374,13 @@ listener.
 listenerUpdater.update(delta, now)
 ```
 
-#### sound source localisation
+### sound source localisation
 
 Now let's localise a sound source.
 A sound source is localised only if it has a 
 [panner node](https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html#PannerNode).
 
-#### if you want a sound to follow a Object3D
+### if you want a sound to follow a Object3D
 
 So you create a ```PannerObject3DUpdater``` for that 
 
@@ -399,7 +399,7 @@ listener
 pannerUpdater.update(delta, now)
 ```
 
-#### if you want a sound to be played at a given position
+### if you want a sound to be played at a given position
 
 ```
 var panner	= context.createPanner()
