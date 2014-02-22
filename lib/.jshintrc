@@ -1,0 +1,13 @@
+{
+  "undef": true,
+  "unused": false,
+  "asi": true,
+  "browser": true,
+  "devel": true,
+  "globals": {
+    "THREE"	: false,
+    "jsfxlib"	: false,
+    "AudioContext" : false,
+    "jsfx"	: false
+  }
+}
