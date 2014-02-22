@@ -25,7 +25,7 @@
 	var lineOut	= new WebAudiox.LineOut(context)
 
 	// create and connect the sound
-	var binauralSrc	= new WebAudiox.BinauralSource()
+	var binauralSrc	= new WebAudiox.BinauralSource(context)
 	binauralSrc.output.connect(lineOut.destination)
 	binauralSrc.start()
 	
