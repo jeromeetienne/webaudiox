@@ -1,4 +1,4 @@
-## 8 bit procedural sound generation with Web Audio API
+# 8 bit procedural sound generation with Web Audio API
 
 Last week we started talking about 
 [webaudiox](http://jeromeetienne.github.io/webaudiox).
