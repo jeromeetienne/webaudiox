@@ -264,16 +264,33 @@ It shows a basic usage of this helper
 
 #### Usage
 
-Here is a usage example
+Let's see how to use it. First you create a 
+[Audio Context](https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html#AudioContext-section) like this.
+
+```
+var context	= new AudioContext()
+```
+
+now you get the famous ```lib``` parameter from 
+[jsfx](https://github.com/egonelbre/jsfx). You can generate some on its 
+[demo page](http://www.egonelbre.com/js/jsfx/).
+From ```lib```, you will generate a
+[Audio Buffer](https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html#AudioBuffer)
+.
 
 ```javascript
-// create the audio context 
-var context	= new AudioContext()
-// parameter for jsfx.js - http://www.egonelbre.com/js/jsfx/
 var lib		= ["square",0.0000,0.4000,0.0000,0.3200,0.0000,0.2780,20.0000,496.0000,2400.0000,0.4640,0.0000,0.0000,0.0100,0.0003,0.0000,0.0000,0.0000,0.0235,0.0000,0.0000,0.0000,0.0000,1.0000,0.0000,0.0000,0.0000,0.0000]
 var buffer	= WebAudiox.getBufferFromJsfx(context, lib)
 ```
 
+Now we are all ready to play a sound! So let's do that.
+
+```javascript
+var source	= context.createBufferSource()
+source.buffer	= buffer
+source.connect(context.destination)
+source.start(0)
+```
 
 ## webaudiox.loadbuffer.js
 

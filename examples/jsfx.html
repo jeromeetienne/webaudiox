@@ -8,32 +8,16 @@
 <script src="vendor/jsfx/jsfxlib.js"></script>
 
 <body><script>
+	// get audio context
 	var context	= new AudioContext()
-
-	// Create lineOut
-	var lineOut	= new WebAudiox.LineOut(context)
-	lineOut.volume	= 0.2
-
-	var sounds	= {}
-
-	//////////////////////////////////////////////////////////////////////////////////
-	//		comment								//
-	//////////////////////////////////////////////////////////////////////////////////
 	
-	// init a sound with jsfx
+	// get sound buffer from jsfx.js
 	var lib		= ["square",0.0000,0.4000,0.0000,0.3200,0.0000,0.2780,20.0000,496.0000,2400.0000,0.4640,0.0000,0.0000,0.0100,0.0003,0.0000,0.0000,0.0000,0.0235,0.0000,0.0000,0.0000,0.0000,1.0000,0.0000,0.0000,0.0000,0.0000]
-	sounds.noiseBuffer	= WebAudiox.getBufferFromJsfx(context, lib)
-	sounds.playNoise	= function(){
-		var source	= context.createBufferSource()
-		source.buffer	= sounds.noiseBuffer
-		source.connect(lineOut.destination)
-		source.start(0)
-		return source
-	}
-	
-	//////////////////////////////////////////////////////////////////////////////////
-	//		comment								//
-	//////////////////////////////////////////////////////////////////////////////////
-	
-	sounds.playNoise()
+	var buffer	= WebAudiox.getBufferFromJsfx(context, lib)
+
+	// play the sound
+	var source	= context.createBufferSource()
+	source.buffer	= buffer
+	source.connect(context.destination)
+	source.start(0)
 </script></body>
