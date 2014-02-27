@@ -261,6 +261,9 @@ the source itself.
 * [examples/jsfx.html](http://jeromeetienne.github.io/webaudiox/examples/jsfx.html)
 \[[view source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/jsfx.html)\] :
 It shows a basic usage of this helper
+* [examples/jsfx-basic.html](http://jeromeetienne.github.io/webaudiox/examples/jsfx-basic.html)
+\[[view source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/jsfx-basic.html)\] :
+It shows a basic usage of this helper
 
 #### Usage
 

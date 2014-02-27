@@ -24,7 +24,7 @@ anything.
 #### Show Don't Tell
 
 * [webaudiox.jsfx.js](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.jsfx.js)
-the source itself.
+the source itself. Simple Enougth :)
 * [examples/jsfx.html](http://jeromeetienne.github.io/webaudiox/examples/jsfx.html)
 \[[view source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/jsfx.html)\] :
 It shows a basic usage of this helper
@@ -47,6 +47,7 @@ From ```lib```, you will generate a
 
 ```javascript
 var lib		= ["square",0.0000,0.4000,0.0000,0.3200,0.0000,0.2780,20.0000,496.0000,2400.0000,0.4640,0.0000,0.0000,0.0100,0.0003,0.0000,0.0000,0.0000,0.0235,0.0000,0.0000,0.0000,0.0000,1.0000,0.0000,0.0000,0.0000,0.0000]
+// generate the audio buffer from jsfx.js lib
 var buffer	= WebAudiox.getBufferFromJsfx(context, lib)
 ```
 
@@ -58,3 +59,4 @@ source.buffer	= buffer
 source.connect(context.destination)
 source.start(0)
 ```
+

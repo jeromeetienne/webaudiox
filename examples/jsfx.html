@@ -1,23 +1,176 @@
 <!doctype html>
 <script src='../lib/webaudiox.shim.js'></script>
 <script src='../lib/webaudiox.lineout.js'></script>
+<script src='../lib/webaudiox.loadbuffer.js'></script>
+<script src='../lib/webaudiox.bytetonormalizedfloat32array.js'></script>
+
+<script src='../lib/webaudiox.analyser2volume.js'></script>
+<script src='./helpers/webaudiox.analyser2canvas.js'></script>
+
 <script src='../lib/webaudiox.jsfx.js'></script>
 <!-- include the .js files for jsfx.js -->
 <script src="vendor/jsfx/audio.js"></script>
 <script src="vendor/jsfx/jsfx.js"></script>
 <script src="vendor/jsfx/jsfxlib.js"></script>
 
-<body><script>
-	// get audio context
-	var context	= new AudioContext()
-	
-	// get sound buffer from jsfx.js
-	var lib		= ["square",0.0000,0.4000,0.0000,0.3200,0.0000,0.2780,20.0000,496.0000,2400.0000,0.4640,0.0000,0.0000,0.0100,0.0003,0.0000,0.0000,0.0000,0.0235,0.0000,0.0000,0.0000,0.0000,1.0000,0.0000,0.0000,0.0000,0.0000]
-	var buffer	= WebAudiox.getBufferFromJsfx(context, lib)
+<body style='background-color: #444444'>
 
-	// play the sound
-	var source	= context.createBufferSource()
-	source.buffer	= buffer
-	source.connect(context.destination)
-	source.start(0)
+<style>
+body {
+	color: #808080;
+	font-family:Monospace;
+	font-size:20px;
+	text-align:center;
+
+}
+#info {
+	font-size:20px;
+	line-height: 3em;				
+}
+a {
+	color: #0080ff;
+}
+</style>
+<div id="info">
+	<a href="https://github.com/jeromeetienne/webaudiox" target="_blank">webaudiox.js</a> 
+	- DRY library for Web Audio API
+	and its jsfx.js helper	
+	<a href="https://github.com/jeromeetienne/webaudiox#webaudioxjsfxjs" target="_blank">webaudiox.jsfx.js</a>.
+</div>
+<style>
+div.card {
+	-webkit-user-select: none;
+	width	: 280px;
+	display: inline-block;
+	border	: 3px solid black;
+	border-radius: 14px;
+	margin	: 10px
+}
+div.card:hover {
+	pointer	: 'cross';
+	background: #222222;
+}
+div.card canvas {
+	margin: 10px;
+}
+div.card h3 {
+	text-align: center;
+	line-height: 0;
+	margin-top: 0;
+}
+</style>
+<script>
+	var context	= new AudioContext()
+
+	// Create lineOut
+	var lineOut	= new WebAudiox.LineOut(context)
+	lineOut.volume	= 0.1
+
+	//////////////////////////////////////////////////////////////////////////////////
+	//		comment								//
+	//////////////////////////////////////////////////////////////////////////////////
+	
+	var lib	= ["square",0.0000,0.4000,0.0000,0.0280,0.5370,0.3620,20.0000,879.0000,2400.0000,0.0000,0.0000,0.0000,0.0100,0.0003,0.0000,0.3260,0.1140,0.0000,0.0000,0.0000,0.0000,0.0000,1.0000,0.0000,0.0000,0.0000,0.0000]
+	var domElement	= addItem(lib, 'Pickup')
+	document.body.appendChild(domElement)
+
+	var lib	= ["square",0.0000,0.4000,0.0000,0.0700,0.3150,0.1940,20.0000,767.0000,2400.0000,0.0000,0.0000,0.0000,0.0100,0.0003,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,1.0000,0.0000,0.0000,0.0000,0.0000]
+	var domElement	= addItem(lib, 'Pickup')
+	document.body.appendChild(domElement)
+
+	
+	var lib	= ["saw",0.0000,0.4000,0.0000,0.0540,0.0000,0.1420,20.0000,797.0000,2400.0000,-0.4340,0.0000,0.0000,0.0100,0.0003,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,1.0000,0.0000,0.0000,0.2480,0.0000]
+	var domElement	= addItem(lib, 'Hurt')
+	document.body.appendChild(domElement)
+	
+	var lib	= ["square",0.0000,0.4000,0.0000,0.0940,0.0000,0.1680,20.0000,272.0000,2400.0000,-0.4260,0.0000,0.0000,0.0100,0.0003,0.0000,0.0000,0.0000,0.0530,0.0000,0.0000,0.0000,0.0000,1.0000,0.0000,0.0000,0.2140,0.0000]
+	var domElement	= addItem(lib, 'Hurt')
+	document.body.appendChild(domElement)
+
+	var lib	= ["square",0.0000,0.4000,0.0000,0.3440,0.0000,0.3740,20.0000,491.0000,2400.0000,0.2300,0.0000,0.0000,0.0100,0.0003,0.0000,0.0000,0.0000,0.0795,0.0000,0.0000,0.0000,0.0000,1.0000,0.0000,0.0000,0.0000,0.0000]
+	var domElement	= addItem(lib, 'Power Up')
+	document.body.appendChild(domElement)
+
+	var lib	= ["saw",0.0000,0.4000,0.0000,0.3780,0.0000,0.4160,20.0000,465.0000,2400.0000,0.0820,0.0000,0.4600,13.1593,0.0003,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,1.0000,0.0000,0.0000,0.0000,0.0000]
+	var domElement	= addItem(lib, 'Power Up')
+	document.body.appendChild(domElement)
+	
+	
+	var lib	= ["noise",0.0000,0.4000,0.0000,0.3820,0.6090,0.3620,20.0000,975.0000,2400.0000,-0.3940,0.0000,0.0000,0.0100,0.0003,0.0000,0.6300,0.7250,0.0000,0.0000,0.7408,-0.1400,-0.2680,1.0000,0.0000,0.0000,0.0000,0.0000]
+	var domElement	= addItem(lib, 'Explosion')
+	document.body.appendChild(domElement)
+
+	var lib	= ["noise",0.0000,0.4000,0.0000,0.2460,0.6750,0.4840,20.0000,831.0000,2400.0000,-0.2220,0.0000,0.0000,0.0100,0.0003,0.0000,0.0000,0.0000,0.0000,0.0000,0.3016,0.0000,0.0000,1.0000,0.0000,0.0000,0.0000,0.0000]
+	var domElement	= addItem(lib, 'Explosion')
+	document.body.appendChild(domElement)
+	
+	var lib	= ["square",0.0000,0.4000,0.0000,0.3860,0.0000,0.2140,20.0000,401.0000,2400.0000,0.4620,0.0000,0.0000,0.0100,0.0003,0.0000,0.0000,0.0000,0.1985,0.0000,0.0000,0.0000,0.0000,1.0000,0.0000,0.0000,0.0000,0.0000]
+	var domElement	= addItem(lib, 'Jump')
+	document.body.appendChild(domElement)
+
+	var lib	= ["sine",0.0000,0.4000,0.0000,0.2240,0.2940,0.2640,633.0000,1400.0000,2400.0000,-0.9760,0.0000,0.0000,0.0100,0.0003,0.0000,0.0000,0.0000,0.1705,0.0400,0.0000,0.0000,0.0000,1.0000,0.0000,0.0000,0.0000,0.0000]
+	var domElement	= addItem(lib, 'Laser')
+	document.body.appendChild(domElement)
+
+	var lib	= ["saw",0.0000,0.4000,0.0000,0.2100,0.0000,0.2880,270.0000,1236.0000,2400.0000,-0.8400,0.0000,0.0000,0.0100,0.0003,0.0000,0.0000,0.0000,0.2935,0.0520,0.0000,0.0880,0.0460,1.0000,0.0000,0.0000,0.0000,0.0000]
+	var domElement	= addItem(lib, 'Laser')
+	document.body.appendChild(domElement)
+
+	var lib	= ["saw",0.0000,0.4000,0.0000,0.1800,0.0000,0.1720,20.0000,451.0000,2400.0000,0.0000,0.0000,0.0000,0.0100,0.0003,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,1.0000,0.0000,0.0000,0.1000,0.0000]
+	var domElement	= addItem(lib, 'Blip')
+	document.body.appendChild(domElement)
+
+	//////////////////////////////////////////////////////////////////////////////////
+	//		comment								//
+	//////////////////////////////////////////////////////////////////////////////////
+	
+	function addItem(lib, title){
+		var analyser	= context.createAnalyser()
+		analyser.connect(lineOut.destination);
+		var destination	= analyser;
+
+		// get sound buffer from jsfx.js
+		var buffer	= WebAudiox.getBufferFromJsfx(context, lib)
+
+		
+		//////////////////////////////////////////////////////////////////////////////////
+		//		comment								//
+		//////////////////////////////////////////////////////////////////////////////////
+
+		var domElement	= document.createElement('div')
+		domElement.classList.add('card')
+		
+		// create and add the canvas
+		var canvas	= document.createElement('canvas');
+		canvas.width	= 256;
+		canvas.height	= 150;
+		var ctx		= canvas.getContext("2d");  
+		domElement.appendChild(canvas)
+
+		var titleElement= document.createElement('h3')
+		titleElement.innerHTML	= title
+		domElement.appendChild(titleElement)
+
+
+		domElement.addEventListener('click', function(){
+			var source	= context.createBufferSource()
+			source.buffer	= buffer
+			// source.loop	= true
+			source.connect(destination)
+			source.start(0)		
+		}, false)
+
+		// create the object
+		var analyser2canvas	= new WebAudiox.Analyser2Canvas(analyser, canvas)
+
+		// loop and update
+		requestAnimationFrame(function update() {
+			requestAnimationFrame(update);
+			// clear the canvas
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			// put the sound in the canvas
+			analyser2canvas.update()
+		})	
+		return domElement
+	}
 </script></body>
