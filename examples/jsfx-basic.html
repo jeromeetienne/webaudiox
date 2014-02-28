@@ -1,0 +1,23 @@
+<!doctype html>
+<script src='../lib/webaudiox.shim.js'></script>
+<script src='../lib/webaudiox.lineout.js'></script>
+<script src='../lib/webaudiox.jsfx.js'></script>
+<!-- include the .js files for jsfx.js -->
+<script src="vendor/jsfx/audio.js"></script>
+<script src="vendor/jsfx/jsfx.js"></script>
+<script src="vendor/jsfx/jsfxlib.js"></script>
+
+<body><script>
+	// get audio context
+	var context	= new AudioContext()
+	
+	// get sound buffer from jsfx.js
+	var lib		= ["square",0.0000,0.4000,0.0000,0.3200,0.0000,0.2780,20.0000,496.0000,2400.0000,0.4640,0.0000,0.0000,0.0100,0.0003,0.0000,0.0000,0.0000,0.0235,0.0000,0.0000,0.0000,0.0000,1.0000,0.0000,0.0000,0.0000,0.0000]
+	var buffer	= WebAudiox.getBufferFromJsfx(context, lib)
+
+	// play the sound
+	var source	= context.createBufferSource()
+	source.buffer	= buffer
+	source.connect(context.destination)
+	source.start(0)
+</script></body>
