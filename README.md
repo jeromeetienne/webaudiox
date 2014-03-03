@@ -442,6 +442,14 @@ It aims at making
 It aims to provide easy-to-use API for the common cases seen by gamedevs.
 Yet, by exposing its internals, it conserves the flexibility to fit your own needs.
 
+### Show Don't Tell
+
+* [webaudiox.gamesounds.js](https://github.com/jeromeetienne/webaudiox/blob/master/examples/helpers/webaudiox.gamesounds.js)
+the source itself.
+* [examples/gamesounds.html](http://jeromeetienne.github.io/webaudiox/examples/gamesounds.html)
+\[[view source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/gamesounds.html)\] :
+It shows a simple usages of gamesounds
+
 ## Basic Usage
 
 First, we init ```gameSounds```.
@@ -588,7 +596,6 @@ here are the various examples:
 * how to get a track from sound cloud: [here](http://jeromeetienne.github.io/webaudiox/examples/soundcloud-test.html)
 * how to load and play a sound only with the API: [here](http://jeromeetienne.github.io/webaudiox/examples/raw.html)
 * how to use it with beatdetektor.js: [here](http://jeromeetienne.github.io/webaudiox/examples/beatdetektorjs.html)
-* how load and play a sound with webaudio api raw. no helper at all: [here](http://jeromeetienne.github.io/webaudiox/examples/raw.html)
 
 
 # TODO
