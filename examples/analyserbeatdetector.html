@@ -4,6 +4,8 @@
 <script src='../lib/webaudiox.loadbuffer.js'></script>
 <script src='../lib/webaudiox.analyser2volume.js'></script>
 <script src='./helpers/webaudiox.analyserbeatdetector.js'></script>
+<script src='./vendor/three.js/examples/js/libs/dat.gui.min.js'></script>
+<script src='./helpers/webaudiox.analyserbeatdetectordatgui.js'></script>
 <body><script>
 	var context	= new AudioContext()
 
@@ -16,7 +18,10 @@
 	lineOut.destination	= analyser;
 
 	// load a sound and play it immediatly
-	WebAudiox.loadBuffer(context, 'sounds/Cissy_Strut_Edit.mp3', function(buffer){
+	var url		= 'sounds/rezoner-7DFPS-2013-2.mp3'
+	// var url		= 'sounds/perfume.mp3'
+	// var url		= 'sounds/techno.mp3'
+	WebAudiox.loadBuffer(context, url, function(buffer){
 		var source	= context.createBufferSource();
 		source.buffer	= buffer;
 		source.loop	= true
@@ -31,9 +36,6 @@
 	var ctx		= canvas.getContext("2d");  
 	document.body.appendChild(canvas)
 
-	// create the object
-	var analyser2Volume	= new WebAudiox.Analyser2Volume(analyser)
-
 	// loop and update
 	requestAnimationFrame(function update() {
 		requestAnimationFrame(update);
@@ -42,7 +44,7 @@
 		ctx.clearRect(0, 0, canvas.width, canvas.height)
 
 		// get volume
-		var volume	= analyser2Volume.rawValue()
+		var volume	= WebAudiox.Analyser2Volume.compute(analyser)
 
 		// up to you to find the colors you like
 		ctx.fillStyle	= "rgb("+Math.floor(1.3*volume*256)+", 0, 0);"
@@ -70,10 +72,11 @@
 	var beatDetector= new WebAudiox.AnalyserBeatDetector(analyser, function(){
 		console.log('beat')
 	})
+	WebAudiox.addAnalyserBeatDetectorDatGui(beatDetector)
 	// loop and update
 	setInterval(function(){
-		beatDetector.update()
+		beatDetector.update(1/60)
 	}, 1000/60);
 	
-	
+
 </script></body>

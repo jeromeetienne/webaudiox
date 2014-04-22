@@ -3,28 +3,30 @@ var WebAudiox	= WebAudiox	|| {}
 
 /**
  * display an analyser node in a canvas
+ * * See http://www.airtightinteractive.com/2013/10/making-audio-reactive-visuals/
  * 
  * @param  {AnalyserNode} analyser     the analyser node
  * @param  {Number}	  smoothFactor the smooth factor for smoothed volume
  */
 WebAudiox.AnalyserBeatDetector	= function(analyser, onBeat){
 	// arguments default values
-	this.holdTime	= 0.66
-	this.decayRate	= 0.97
-	this.minVolume	= 0.15
+	this.holdTime		= 0.33
+	this.decayRate		= 0.97
+	this.minVolume		= 0.2
+	this.frequencyBinCount	= 100
 
 	var holdingTime	= 0
 	var threshold	= this.minVolume
 	this.update	= function(delta){
-		var rawVolume	= WebAudiox.AnalyserBeatDetector.compute(analyser)
-		if( rawVolume > threshold ){
+		var rawVolume	= WebAudiox.AnalyserBeatDetector.compute(analyser, this.frequencyBinCount)
+		if( holdingTime > 0 ){
+			holdingTime	-= delta
+			holdingTime	= Math.max(holdingTime, 0)
+		}else if( rawVolume > threshold ){
 			onBeat()
 			holdingTime	= this.holdTime;
 			threshold	= rawVolume * 1.1;
 			threshold	= Math.max(threshold, this.minVolume);	
-		}else if( holdingTime > 0 ){
-			holdingTime	-= delta
-			holdingTime	= Math.max(holdingTime, 0)
 		}else{
 			threshold	*= this.decayRate;
 			threshold	= Math.max(threshold, this.minVolume);	

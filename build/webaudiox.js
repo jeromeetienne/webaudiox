@@ -197,11 +197,14 @@ var WebAudiox	= WebAudiox	|| {}
  * source is integers from 0 to 255,  destination is float from 0 to 1 non included
  * source and destination may not have the same length.
  * 
- * @param {[type]} srcArray [description]
- * @param {[type]} dstArray [description]
+ * @param {Array} srcArray       the source array
+ * @param {Array} dstArray       the destination array
+ * @param {Number|undefined} dstArrayLength the length of the destination array. If not provided
+ *                               dstArray.length value is used.
  */
-WebAudiox.ByteToNormalizedFloat32Array	= function(srcArray, dstArray){
-	var ratio	= srcArray.length / dstArray.length
+WebAudiox.ByteToNormalizedFloat32Array	= function(srcArray, dstArray, dstArrayLength){
+	dstArrayLength	= dstArrayLength !== undefined ? dstArrayLength : dstArray.length
+	var ratio	= srcArray.length / dstArrayLength
 	for(var i = 0; i < dstArray.length; i++){
 		var first	= Math.round((i+0) * ratio)
 		var last	= Math.round((i+1) * ratio)
@@ -323,9 +326,13 @@ var WebAudiox	= WebAudiox	|| {}
 WebAudiox.loadBuffer	= function(context, url, onLoad, onError){
 	onLoad		= onLoad	|| function(buffer){}
 	onError		= onError	|| function(){}
-	var request	= new XMLHttpRequest()
-	request.open('GET', url, true)
-	request.responseType	= 'arraybuffer'
+        if( url instanceof Blob ){
+		var request	= new FileReader();
+        } else {
+		var request	= new XMLHttpRequest()
+		request.open('GET', url, true)
+		request.responseType	= 'arraybuffer'
+        }
 	// counter inProgress request
 	WebAudiox.loadBuffer.inProgressCount++
 	request.onload	= function(){
@@ -613,28 +620,30 @@ var WebAudiox	= WebAudiox	|| {}
 
 /**
  * display an analyser node in a canvas
+ * * See http://www.airtightinteractive.com/2013/10/making-audio-reactive-visuals/
  * 
  * @param  {AnalyserNode} analyser     the analyser node
  * @param  {Number}	  smoothFactor the smooth factor for smoothed volume
  */
 WebAudiox.AnalyserBeatDetector	= function(analyser, onBeat){
 	// arguments default values
-	this.holdTime	= 0.66
-	this.decayRate	= 0.97
-	this.minVolume	= 0.15
+	this.holdTime		= 0.33
+	this.decayRate		= 0.97
+	this.minVolume		= 0.2
+	this.frequencyBinCount	= 100
 
 	var holdingTime	= 0
 	var threshold	= this.minVolume
 	this.update	= function(delta){
-		var rawVolume	= WebAudiox.AnalyserBeatDetector.compute(analyser)
-		if( rawVolume > threshold ){
+		var rawVolume	= WebAudiox.AnalyserBeatDetector.compute(analyser, this.frequencyBinCount)
+		if( holdingTime > 0 ){
+			holdingTime	-= delta
+			holdingTime	= Math.max(holdingTime, 0)
+		}else if( rawVolume > threshold ){
 			onBeat()
 			holdingTime	= this.holdTime;
 			threshold	= rawVolume * 1.1;
 			threshold	= Math.max(threshold, this.minVolume);	
-		}else if( holdingTime > 0 ){
-			holdingTime	-= delta
-			holdingTime	= Math.max(holdingTime, 0)
 		}else{
 			threshold	*= this.decayRate;
 			threshold	= Math.max(threshold, this.minVolume);	
@@ -669,7 +678,20 @@ WebAudiox.AnalyserBeatDetector.compute	= function(analyser, width, offset){
 }
 
 
-/**
+// @namespace defined WebAudiox namespace
+var WebAudiox	= WebAudiox	|| {}
+
+
+WebAudiox.addAnalyserBeatDetectorDatGui	= function(beatDetector, datGui){
+	datGui		= datGui || new dat.GUI()
+	
+	var folder	= datGui.addFolder('Beat Detector');
+	folder.add(beatDetector, 'holdTime'		, 0.0, 4)
+	folder.add(beatDetector, 'decayRate'		, 0.1, 1.0)
+	folder.add(beatDetector, 'minVolume'		, 0.0, 1.0)
+	folder.add(beatDetector, 'frequencyBinCount'	, 1, 1024).step(1)
+	folder.open();
+}/**
  * @namespace
  */
 var WebAudiox	= WebAudiox	|| {}

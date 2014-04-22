@@ -75,38 +75,23 @@ telephone, in a hall, or in a tunnel.
 Here is all the helpers provided and their respective API. the source contains a jsdoc
 which is authoritative.
 
-## webaudiox.bytetonormalizedfloat32array.js
-
-This helpers converts a byteArray to a normalized Float32Array.
-The destination Array is normalized because
-values are garanted to be between 0 and 1.
-It works even if the destination array has a different value than the source array.
-It is useful when playing with frequency spectrum.
-
-#### Show Don't Tell
-* [webaudiox.bytetonormalizedfloat32array.js](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.bytetonormalizedfloat32array.js)
-the source itself.
-* [examples/frequencyspectrum.html](http://jeromeetienne.github.io/webaudiox/examples/frequencyspectrum.html)
-\[[view source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/frequencyspectrum.html)\] :
-It shows a basic usage of this helper
-**TODO: this link is broken**
-
-#### Usage
-
-```javascript
-WebAudiox.ByteToNormalizedFloat32Array(srcArray, dstArray);
-// bytesFreq is from a analyser.getByteFrequencyData(bytesFreq)
-// histogram is destination array, e.g. new Float32Array(10)
-WebAudiox.ByteToNormalizedFloat32Array(bytesFreq, histogram)
-```
-
 ## webaudiox.analyser2canvas.js
 
-This helpers displays various visualisation of the played sound, the one analysed by ```analyser```.
-It display a FFT histogram, a waveform, and a volume. It is there mainly for debug.
+This helper displays a visualisation of the played sound in real time.
+It uses the 
+[AnalyserNode](https://developer.mozilla.org/en-US/docs/Web/API/AnalyserNode)
+from
+[Web Audio API](https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html).
+The visualisation is composed of 3 parts: 
+a FFT histogram, a waveform, and a volume. 
+It is useful to debug or simply to display sounds on screen.
+It has been widely inspired by this 
+[post](http://www.airtightinteractive.com/2013/10/making-audio-reactive-visuals/)
+by the excelent 
+[@felixturner](https://twitter.com/felixturner), be sure to check it out.
 
 #### Show Don't Tell
-* [webaudiox.analyser2canvas.js](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.analyser2canvas.js)
+* [webaudiox.analyser2canvas.js](https://github.com/jeromeetienne/webaudiox/blob/master/lib/examples/webaudiox.analyser2canvas.js)
 the source itself.
 * [examples/analyser2canvas.html](http://jeromeetienne.github.io/webaudiox/examples/analyser2canvas.html)
 \[[view source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/analyser2canvas.html)\] :
@@ -120,7 +105,7 @@ First you create the object
 var analyser2canvas	= new WebAudiox.Analyser2Canvas(analyser, canvas);
 ```
 
-Then every time you want to draw on the canvas do
+Then every time you want to draw on the canvas, just do
 
 ```
 analyser2canvas.update()
@@ -128,8 +113,15 @@ analyser2canvas.update()
 
 ## webaudiox.analyser2volume.js
 
-This helper makes an average on a ByteFrequencyData from an analyser node. clear ? :)
-In brief, it makes an fft to extract the frequency of the sound, all that in real time.
+This helper makes an average on a 
+````ByteFrequencyData```
+from an 
+[AnalyserNode](https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html#AnalyserNode).
+Clear ? I guess not.
+Ok ok audio vocabulary may appear criptic :)
+Let's rephrase in layman term.
+In brief, it makes an [fft](http://en.wikipedia.org/wiki/Fast_Fourier_transform)
+to extract the frequency of the sound, all that in real time.
 It is often used to detect pulse in some frequency range.
 like detecting pulse in the low frequencies can be a easy beat detector.
 
@@ -159,6 +151,45 @@ var rawVolume	= new WebAudiox.Analyser2Volume.compute(analyser, width, offset);
 
 width is optional and default to ```analyser.frequencyBinCount```.
 offset is optional and default to 0.
+
+## webaudiox.bytetonormalizedfloat32array.js
+
+This helper converts a
+[byteArray](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays)
+to a normalized
+[Float32Array](https://developer.mozilla.org/en-US/docs/Web/API/Float32Array).
+The destination array is normalized because
+its values are garanted to be between 0 and 1.
+This function is designed to works even if the destination array
+length is different from the source array's length.
+This is mainly aimed at convering and normalizing input when you are playing
+with frequency spectrum or other aspects of
+[AnalyserNode](https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html#AnalyserNode).
+
+#### Show Don't Tell
+* [webaudiox.bytetonormalizedfloat32array.js](https://github.com/jeromeetienne/webaudiox/blob/master/lib/webaudiox.bytetonormalizedfloat32array.js)
+the source itself.
+* [examples/analyser2canvas.html](http://jeromeetienne.github.io/webaudiox/examples/analyser2canvas.html)
+\[[view source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/analyser2canvas.html)\] :
+It shows a usage of this helper thru
+[webaudiox.analyser2canvas.js](https://github.com/jeromeetienne/webaudiox/blob/master/lib/examples/webaudiox.analyser2canvas.js)
+
+#### Usage
+
+Here is a basic usage. Note that dstArray must be reallocated.
+
+```javascript
+WebAudiox.ByteToNormalizedFloat32Array(srcArray, dstArray);
+```
+
+Here is a usage where it is used to normalize an histogram, before displaying it for
+examples.
+
+```javascript
+// bytesFreq is from a analyser.getByteFrequencyData(bytesFreq)
+// histogram is destination array, e.g. new Float32Array(10)
+WebAudiox.ByteToNormalizedFloat32Array(bytesFreq, histogram)
+```
 
 ## webaudiox.lineout.js
 
