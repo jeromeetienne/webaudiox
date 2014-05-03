@@ -200,7 +200,7 @@ WebAudiox.GameSound	= function(gameSounds, defaultOptions){
 				destination		= panner				
 			}
 			// put a PannerObject3DUpdater
-			var pannerUpdater	= new WebAudiox.PannerObject3DUpdater(panner, mesh)
+			var pannerUpdater	= new WebAudiox.PannerObject3DUpdater(panner, options.follow)
 			utterance.pannerUpdater	= pannerUpdater
 			utterance.stopFollow	= function(){
 				updateFcts.splice(updateFcts.indexOf(updatePannerUpdater), 1)
