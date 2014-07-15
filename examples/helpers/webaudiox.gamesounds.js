@@ -164,7 +164,7 @@ WebAudiox.GameSound	= function(gameSounds, defaultOptions){
 	//		play								//
 	//////////////////////////////////////////////////////////////////////////////////
 	
-// TODO change play in createUtterance
+// TODO change play in createSource and add a .play function()
 
 	this.play	= function(options){
 		options		= options || this.defaultOptions
