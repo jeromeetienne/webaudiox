@@ -165,6 +165,8 @@ WebAudiox.GameSound	= function(gameSounds, defaultOptions){
 	//////////////////////////////////////////////////////////////////////////////////
 	
 // TODO change play in createSource and add a .play function()
+// TODO what about to rename like unity: webaudiox.GameSoundClip and WebAudiox.GameSoundSource
+// - seems easier to understand
 
 	this.play	= function(options){
 		options		= options || this.defaultOptions
