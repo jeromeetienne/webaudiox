@@ -487,7 +487,7 @@ WebAudiox.PannerSetObject3D(panner, object3d)
 
 # webaudiox.gamesounds2.js
 
-It aims at making
+It aims at making 
 [Web Audio Api](http://www.w3.org/TR/webaudio/) easy to use for gamedevs.
 It aims to provide easy-to-use API for the common cases seen by gamedevs.
 Yet, by exposing its internals, it conserves the flexibility to fit your own needs.
