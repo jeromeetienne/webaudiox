@@ -638,7 +638,7 @@ You can play sound at various fixed locations, or following different 3d objects
 
 Here are all the options you can set
 
-* ```options.loop```: set the ```.loop``` parameter in the ```SourceBuffer```
+* ```options.volume``` controls the volume of this utterance. it will create a ```utterance.gainNode```. If you wish, you can access ```.gainNode``` directly change the gain during the utterance.
 * ```options.at```: receives a three.js position. It may be ```THREE.Object3D```
 or directly a ```THREE.Vector3```.
 The utterance will be played at this position
@@ -648,13 +648,13 @@ position.
 will be followed by the utterance.
 It will create a ```PannerNode``` if needed, and update it according to the 3d object
 position. Additionnaly It exposes ```utterance.stopFollow()``` to stop following a 3d object.
-* ```options.volume``` controls the volume of this utterance. it will create a ```utterance.gainNode```. If you wish, you can access ```.gainNode``` directly change the gain during the utterance.
+* ```options.loop```: set the ```.loop``` parameter in the ```SourceBuffer```
 
-### soundClip.play(delay)
+### soundSource.play(delay)
 
 It will start play the sound in delay millisecond, default to 0-ms
 
-### soundClip.stop(delay)
+### soundSource.stop(delay)
 It will stop playing the sound in delay millisecond, default to 0-ms.
 
 ## Dependancies
