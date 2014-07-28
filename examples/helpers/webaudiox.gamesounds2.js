@@ -112,7 +112,7 @@ WebAudiox.GameSoundListener	= function(gameSounds){
 	 * @param  {THREE.Object3D} object3d the object to follow
 	 * @return {WebAudiox.GameSounds} the object itself for linked API
 	 */
-	this.follow	= function(object3d){
+	this.startFollow= function(object3d){
 		// put a ListenerObject3DUpdater
 		this.listenerUpdater	= new WebAudiox.ListenerObject3DUpdater(context, object3d)
 		return this

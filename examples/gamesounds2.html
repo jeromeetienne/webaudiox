@@ -48,7 +48,7 @@
 
 	// handle a listener following the camera
 	var soundListener	= new WebAudiox.GameSoundListener(sounds)
-	soundListener.follow(camera)
+	soundListener.startFollow(camera)
 	updateFcts.push(function(delta){
 		soundListener.update(delta)
 	})

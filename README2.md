@@ -572,14 +572,14 @@ Then you periodically update it like that
 soundListener.update(delta)
 ```
 
-### soundListener.At(position)
+### soundListener.at(position)
 
 This is a sounds localisation function.
 It will place the audio listener at ```position```.
 If it is a ```THREE.Vector3```, it will directly use this position.
 If it is a ```THREE.Object3d```, it will use the position of this object.
 
-### gameListener.follow(object3d)
+### gameListener.startFollow(object3d)
 
 This is a sounds localisation function.
 The listener will start follow this ```THREE.Object3D```
