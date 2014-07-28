@@ -16,22 +16,22 @@ It initializes the AudioContext, the lineOut and downloads a sound.
 ```html
 <script src='webaudiox.js'></script>
 <script>
-	// create WebAudio API context
-	var context	= new AudioContext()
+    // create WebAudio API context
+    var context = new AudioContext()
 
-	// Create lineOut
-	var lineOut	= new WebAudiox.LineOut(context)
+    // Create lineOut
+    var lineOut = new WebAudiox.LineOut(context)
 
-	// load a sound and play it immediatly
-	WebAudiox.loadBuffer(context, 'sound.wav', function(buffer){
-		// init AudioBufferSourceNode
-		var source	= context.createBufferSource();
-		source.buffer	= buffer
-		source.connect(lineOut.destination)
+    // load a sound and play it immediatly
+    WebAudiox.loadBuffer(context, 'sound.wav', function(buffer){
+        // init AudioBufferSourceNode
+        var source  = context.createBufferSource();
+        source.buffer   = buffer
+        source.connect(lineOut.destination)
 
-		// start the sound now
-		source.start(0);
-	});
+        // start the sound now
+        source.start(0);
+    });
 </script>
 ```
 
@@ -102,7 +102,7 @@ It shows a basic usage of this helper
 First you create the object
 
 ```
-var analyser2canvas	= new WebAudiox.Analyser2Canvas(analyser, canvas);
+var analyser2canvas = new WebAudiox.Analyser2Canvas(analyser, canvas);
 ```
 
 Then every time you want to draw on the canvas, just do
@@ -137,15 +137,15 @@ It shows a basic usage of this helper
 
 ```javascript
 // create the object
-var analyser2Volume	= new WebAudiox.Analyser2Volume(analyser)
-var rawVolume		= analyser2Volume.rawValue()
-var smoothedVolume	= analyser2Volume.smoothedValue()
+var analyser2Volume = new WebAudiox.Analyser2Volume(analyser)
+var rawVolume       = analyser2Volume.rawValue()
+var smoothedVolume  = analyser2Volume.smoothedValue()
 ```
 
 It is possible to directly compute the raw volume.
 
 ```javascript
-var rawVolume	= new WebAudiox.Analyser2Volume.compute(analyser, width, offset);
+var rawVolume   = new WebAudiox.Analyser2Volume.compute(analyser, width, offset);
 // rawVolume is a Number of the computed average
 ```
 
@@ -225,13 +225,13 @@ Now let's see it's API
 #### create a lineOut
 
 ```javascript
-var lineOut	= new WebAudiox.LineOut(context)
+var lineOut = new WebAudiox.LineOut(context)
 ```
 
 #### to set the volume/gain
 
 ```javascript
-lineOut.volume	= 0.8;
+lineOut.volume  = 0.8;
 ```
 
 #### To connect a sound to your lineOut
@@ -246,7 +246,7 @@ source.connect(lineOut.destination)
 
 ```javascript
 if( lineOut.isMuted === true ){
-	console.log('sound has been muted by user')
+    console.log('sound has been muted by user')
 }
 ```
 
@@ -265,7 +265,7 @@ the vendor prefix, so you don't have to. Typically it contains code like
 
 
 ```javascript
-window.AudioContext	= window.AudioContext || window.webkitAudioContext;
+window.AudioContext = window.AudioContext || window.webkitAudioContext;
 ```
 
 #### Show Don't Tell
@@ -302,7 +302,7 @@ Let's see how to use it. First you create a
 [Audio Context](https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html#AudioContext-section) like this.
 
 ```
-var context	= new AudioContext()
+var context = new AudioContext()
 ```
 
 now you get the famous ```lib``` parameter from
@@ -313,15 +313,15 @@ From ```lib```, you will generate a
 .
 
 ```javascript
-var lib		= ["square",0.0000,0.4000,0.0000,0.3200,0.0000,0.2780,20.0000,496.0000,2400.0000,0.4640,0.0000,0.0000,0.0100,0.0003,0.0000,0.0000,0.0000,0.0235,0.0000,0.0000,0.0000,0.0000,1.0000,0.0000,0.0000,0.0000,0.0000]
-var buffer	= WebAudiox.getBufferFromJsfx(context, lib)
+var lib     = ["square",0.0000,0.4000,0.0000,0.3200,0.0000,0.2780,20.0000,496.0000,2400.0000,0.4640,0.0000,0.0000,0.0100,0.0003,0.0000,0.0000,0.0000,0.0235,0.0000,0.0000,0.0000,0.0000,1.0000,0.0000,0.0000,0.0000,0.0000]
+var buffer  = WebAudiox.getBufferFromJsfx(context, lib)
 ```
 
 Now we are all ready to play a sound! So let's do that.
 
 ```javascript
-var source	= context.createBufferSource()
-source.buffer	= buffer
+var source  = context.createBufferSource()
+source.buffer   = buffer
 source.connect(context.destination)
 source.start(0)
 ```
@@ -344,9 +344,9 @@ It shows a basic usage of this helper.
 
 ```javascript
 WebAudiox.loadBuffer(context, url, function(buffer){
-	// notified when the url has been downloaded and the sound decoded.
+    // notified when the url has been downloaded and the sound decoded.
 }, function(){
-	// notified if an error occurs
+    // notified if an error occurs
 });
 ```
 
@@ -366,8 +366,8 @@ here for an
 // url is where to download the sound
 // buffer is the just loaded buffer
 WebAudiox.loadBuffer.onLoad = function(context, url, buffer){
-	// put your own stuff here
-	// ...
+    // put your own stuff here
+    // ...
 }
 ```
 
@@ -472,16 +472,16 @@ pannerUpdater.update(delta, now)
 ### if you want a sound to be played at a given position
 
 ```
-var panner	= context.createPanner()
-var position	= new THREE.Vector3(1,0,0)
+var panner  = context.createPanner()
+var position    = new THREE.Vector3(1,0,0)
 WebAudiox.PannerSetPosition(panner, position)
 ```
 
 #### if you want a sound to be played from a THREE.Object3D
 
 ```
-var panner	= context.createPanner()
-var object3d	= new THREE.Object3D
+var panner  = context.createPanner()
+var object3d    = new THREE.Object3D
 WebAudiox.PannerSetObject3D(panner, object3d)
 ```
 
@@ -505,34 +505,34 @@ It shows a simple usages of gamesounds
 First, we init ```gameSounds```.
 
 ```
-var gameSounds	= new WebAudiox.GameSounds()
+var sounds  = new WebAudiox.GameSounds()
 ```
 
 Then we create a sound and load it from a url.
 
 ```
-gameSounds.createSound().load('mysound.ogg', function(sound){
-	// here the sound is loaded
+sounds.createClip().load('mysound.ogg', function(soundClip){
+    // here the sound is loaded
 })
 ```
 
 We are all ready to play a sound. So let's do it.
 
 ```
-sound.play();
+soundClip.play();
 ```
 
-This will create a **utterance**, i.e. an instance of our sound, a playing version of our sound. Each utterance is independant. Thus you got the flexibility to change its parameters during the playing of it. e.g. change its location, its volume, whatever you want.
+This will create a **source**, i.e. an source of our soundclip, a playing version of our sound. Each source is independant. Thus you got the flexibility to change its parameters during the playing of it. e.g. change its location, its volume, whatever you want.
 
 ## WebAudiox.GameSounds
 
-Instanciate the object itself
-
-```
-var gameSounds	= new WebAudiox.GameSounds()
-```
-
+First thing is to instanciate the object itself. 
 It will keep the WebAudio API context.
+
+```
+var gameSounds  = new WebAudiox.GameSounds()
+```
+
 It has a line out to the speakers which implement the current best practice according to ["Developing Game Audio with the Web Audio API"](http://www.html5rocks.com/en/tutorials/webaudio/games/) article on [HTML5Rock](http://www.html5rocks.com).
 It will expose the following properties:
 
@@ -546,43 +546,57 @@ It updates the gameSounds.
 It is needed to update ```gameSounds```. It is used to update 3d listener.
 It is used to update all registered ```WebAudiox.GameSound``` too.
 
-### gameSounds.createSound(options)
+### gameSounds.createClip(options)
 
 This will create a sound.
-```options``` is the default utterance option.
+```options``` is the default options for THREEx.GameSource.
 This is a simple alias for
 
 ```
-function createSound(options){
-		return new WebAudiox.GameSound(this, options)
+function createClip(options){
+        return new WebAudiox.GameSoundClip(this, options)
 }
 ```
 
-### gameSounds.listenerAt(position)
+## WebAudiox.GameSoundListener
+It is used for sound localisation. It is setting the position of the listener.
+First you create the object like this
+
+```
+var soundListener   = new WebAudiox.GameSoundListener(gameSounds)
+```
+
+Then you periodically update it like that
+
+```
+soundListener.update(delta)
+```
+
+### soundListener.at(position)
 
 This is a sounds localisation function.
 It will place the audio listener at ```position```.
 If it is a ```THREE.Vector3```, it will directly use this position.
 If it is a ```THREE.Object3d```, it will use the position of this object.
 
-### gameSounds.listenerFollow(object3d)
+### gameListener.startFollow(object3d)
 
 This is a sounds localisation function.
 The listener will start follow this ```THREE.Object3D```
 
-### gameSounds.listenerStopFollow()
+### gameListener.stopFollow()
 
 the listener will stop following the object3d.
 
 
-## WebAudiox.GameSound(gamesounds, options)
+## WebAudiox.GameSoundClip(gamesounds, options)
 
 The arguments of the constructor are :
 
 * ```gameSounds``` is a ```WebAudiox.GameSounds``` instance.
-* ```options``` is the utterance options. This is optional.
+* ```options``` is the THREEx.GameSoundSource options. This is optional.
 
-### gamesound.load(url, onLoad, onError)
+### soundClip.load(url, onLoad, onError)
 
 This load a sounds from an ```url```.
 Once the sound is loaded, ```onLoad(gameSound)``` is notified.
@@ -592,19 +606,40 @@ is loaded, false otherwise.
 It exposes ```gameSound.buffer```. It is the loaded buffer once it is loaded,
 or null otherwise.
 
-### gamesound.play(options)
+### soundClip.update(delta)
+It updates the sound.
+It is currently needed only if you use 3d localisation for this sounds.
+```delta``` is the number of seconds since the last iteration of the rendering loop.
 
-It will play a utterance of this sound.
-What is a utterance, this is a instance of a played sound.
-Everytime you play a gamesound, it is handled by an independant utterance.
+### soundClip.register(label)
+
+Register this sound into the bank of ```gameSounds``` with this ```label```.
+Every label is unique into a ```gameSounds```.
+```soundClip.unregister()``` unregisters the sound from gameSounds bank.
+This will cause this sound to be automatically updated by ```gameSounds```.
+
+### soundClip.createSource(options)
+
+This will create a ```THREEx.GameSoundSource``` using this options
+
+### soundClip.play(options)
+
+This will create a ```THREEx.GameSoundSource``` using this options and
+then call ```.play()``` on this soundSource
+
+
+## WebAudiox.GameSoundSource(soundClip, options)
+
+It will one source for this soundclip. It will be played only once.
+Everytime you play a gamesound, it is handled by an independant source.
 This you can controls them independantly.
 e.g. You can have various volume how strong is an impact,
 You can play sound at various fixed locations, or following different 3d objects.
 
 Here are all the options you can set
 
-* ```options.loop```: set the ```.loop``` parameter in the ```SourceBuffer```
-* ```options.position```: receives a three.js position. It may be ```THREE.Object3D```
+* ```options.volume``` controls the volume of this utterance. it will create a ```utterance.gainNode```. If you wish, you can access ```.gainNode``` directly change the gain during the utterance.
+* ```options.at```: receives a three.js position. It may be ```THREE.Object3D```
 or directly a ```THREE.Vector3```.
 The utterance will be played at this position
 It will create a ```PannerNode``` if needed, and update it according to the 3d object
@@ -613,19 +648,14 @@ position.
 will be followed by the utterance.
 It will create a ```PannerNode``` if needed, and update it according to the 3d object
 position. Additionnaly It exposes ```utterance.stopFollow()``` to stop following a 3d object.
-* ```options.volume``` controls the volume of this utterance. it will create a ```utterance.gainNode```. If you wish, you can access ```.gainNode``` directly change the gain during the utterance.
+* ```options.loop```: set the ```.loop``` parameter in the ```SourceBuffer```
 
-### gamesound.update(delta)
-It updates the sound.
-It is currently needed only if you use 3d localisation for this sounds.
-```delta``` is the number of seconds since the last iteration of the rendering loop.
+### soundSource.play(delay)
 
-### gamesound.register(label)
+It will start play the sound in delay millisecond, default to 0-ms
 
-Register this sound into the bank of ```gameSounds``` with this ```label```.
-Every label is unique into a ```gameSounds```.
-```gamesound.unregister()``` unregisters the sound from gameSounds bank.
-This will cause this sound to be automatically updated by ```gameSounds```.
+### soundSource.stop(delay)
+It will stop playing the sound in delay millisecond, default to 0-ms.
 
 ## Dependancies
 ```webaudiox.gamesounds.js``` is included in ```webaudiox.js``` build.

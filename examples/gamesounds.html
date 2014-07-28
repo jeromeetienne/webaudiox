@@ -40,34 +40,37 @@
 	//		to play immediatly						//
 	//////////////////////////////////////////////////////////////////////////////////
 
-	var gameSounds	= new WebAudiox.GameSounds()
-	gameSounds.lineOut.volume	= 0.2
-	// gameSounds.listenerAt(new THREE.Vector3(0,0,0))
-	gameSounds.listenerFollow(camera)
-	// setTimeout(function(){
-	// 	gameSounds.listenerStopFollow()		
-	// }, 2*1000)
+	var sounds	= new WebAudiox.GameSounds()
+	sounds.lineOut.volume	= 0.2
 	updateFcts.push(function(delta){
-		gameSounds.update(delta)
+		sounds.update(delta)
 	})
 
+	// handle a listener following the camera
+	var soundListener	= new WebAudiox.GameSoundListener(sounds)
+	soundListener.startFollow(camera)
+	updateFcts.push(function(delta){
+		soundListener.update(delta)
+	})
+
+
 	
-	var url	= 'sounds/rezoner-7DFPS-2013-2.mp3'
-	gameSounds.createSound()
+	var url		= 'sounds/rezoner-7DFPS-2013-2.mp3'
+	var soundClip	= sounds.createClip()
 		.register('soundTrack')
-		.load(url, function(sound){
-			var utterance	= sound.play({
+		.load(url, function(soundClip){
+			var soundSource	= soundClip.play({
 				loop	: true,
 				volume	: 1.0,
 				follow	: mesh,
 				// position: new THREE.Vector3(-1,0,0),
 				// position: mesh
 			})
-			console.dir(utterance)
-			// setTimeout(function(){
-			// 	console.log('expired')
-			// 	utterance.stopFollow()
-			// }, 1*1000)
+			console.dir(soundSource)
+			setTimeout(function(){
+				console.log('expired')
+				soundSource.stopFollow()
+			}, 1*1000)
 		})
 	
 	//////////////////////////////////////////////////////////////////////////////////
