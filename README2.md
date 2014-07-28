@@ -485,7 +485,7 @@ var object3d    = new THREE.Object3D
 WebAudiox.PannerSetObject3D(panner, object3d)
 ```
 
-# webaudiox.gamesounds.js
+# webaudiox.gamesounds2.js
 
 It aims at making
 [Web Audio Api](http://www.w3.org/TR/webaudio/) easy to use for gamedevs.
@@ -494,9 +494,9 @@ Yet, by exposing its internals, it conserves the flexibility to fit your own nee
 
 ### Show Don't Tell
 
-* [webaudiox.gamesounds.js](https://github.com/jeromeetienne/webaudiox/blob/master/examples/helpers/webaudiox.gamesounds.js)
+* [webaudiox.gamesounds2.js](https://github.com/jeromeetienne/webaudiox/blob/master/examples/helpers/webaudiox.gamesounds2.js)
 the source itself.
-* [examples/gamesounds.html](http://jeromeetienne.github.io/webaudiox/examples/gamesounds.html)
+* [examples/gamesounds2.html](http://jeromeetienne.github.io/webaudiox/examples/gamesounds2.html)
 \[[view source](https://github.com/jeromeetienne/webaudiox/blob/master/examples/gamesounds.html)\] :
 It shows a simple usages of gamesounds
 
@@ -505,13 +505,13 @@ It shows a simple usages of gamesounds
 First, we init ```gameSounds```.
 
 ```
-var gameSounds  = new WebAudiox.GameSounds()
+var sounds  = new WebAudiox.GameSounds2()
 ```
 
 Then we create a sound and load it from a url.
 
 ```
-gameSounds.createSound().load('mysound.ogg', function(sound){
+sounds.createClip().load('mysound.ogg', function(soundClip){
     // here the sound is loaded
 })
 ```
@@ -519,20 +519,20 @@ gameSounds.createSound().load('mysound.ogg', function(sound){
 We are all ready to play a sound. So let's do it.
 
 ```
-sound.play();
+soundClip.play();
 ```
 
-This will create a **utterance**, i.e. an instance of our sound, a playing version of our sound. Each utterance is independant. Thus you got the flexibility to change its parameters during the playing of it. e.g. change its location, its volume, whatever you want.
+This will create a **source**, i.e. an source of our soundclip, a playing version of our sound. Each source is independant. Thus you got the flexibility to change its parameters during the playing of it. e.g. change its location, its volume, whatever you want.
 
 ## WebAudiox.GameSounds
 
-Instanciate the object itself
+First thing is to instanciate the object itself. 
+It will keep the WebAudio API context.
 
 ```
 var gameSounds  = new WebAudiox.GameSounds()
 ```
 
-It will keep the WebAudio API context.
 It has a line out to the speakers which implement the current best practice according to ["Developing Game Audio with the Web Audio API"](http://www.html5rocks.com/en/tutorials/webaudio/games/) article on [HTML5Rock](http://www.html5rocks.com).
 It will expose the following properties:
 
