@@ -903,6 +903,7 @@ WebAudiox.GameSoundClip	= function(gameSounds, defaultOptions){
 //////////////////////////////////////////////////////////////////////////////////
 
 WebAudiox.GameSoundSource = function(gameSound, options) {
+	options		= options	|| {}
 	var utterance	= this
 	var gameSounds	= gameSound.gameSounds
 	var context	= gameSounds.context
