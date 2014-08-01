@@ -882,6 +882,7 @@ WebAudiox.GameSoundClip	= function(gameSounds, defaultOptions){
 	//////////////////////////////////////////////////////////////////////////////////	
 
 	this.createSource	= function(opts){
+		opts		= opts	|| {}
 		var dfl		= this.defaultOptions
 		var options	= {
 			at	: opts.at !== undefined		? opts.at 	: dfl.at,
