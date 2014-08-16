@@ -20,7 +20,7 @@ WebAudiox.GameSounds	= function(){
 	var lineOut	= new WebAudiox.LineOut(context)
 	this.lineOut	= lineOut
 	
-	var clips	= []
+	var clips	= {}
 	this.clips	= clips
 	
 	/**
