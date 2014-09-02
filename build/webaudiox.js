@@ -969,11 +969,13 @@ WebAudiox.GameSoundSource = function(gameSound, options) {
 
 	// start the sound now
 	utterance.play	= function(delay){
+		delay	= delay !== undefined ? delay : 0		
 		source.start(delay)
 		return this
 	}
 
 	utterance.stop		= function(delay){
+		delay	= delay !== undefined ? delay : 0		
 		source.stop(delay)
 		// TODO What if the sound is never stopped ? 
 		// - the list of function will grow in the loop
