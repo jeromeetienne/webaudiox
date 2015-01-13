@@ -113,9 +113,7 @@ analyser2canvas.update()
 
 ## webaudiox.analyser2volume.js
 
-This helper makes an average on a 
-````ByteFrequencyData```
-from an 
+This helper makes an average on a ```ByteFrequencyData``` from an 
 [AnalyserNode](https://dvcs.w3.org/hg/audio/raw-file/tip/webaudio/specification.html#AnalyserNode).
 Clear ? I guess not.
 Ok ok audio vocabulary may appear criptic :)
