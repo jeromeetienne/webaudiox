@@ -404,7 +404,7 @@ WebAudiox.ListenerSetObject3D	= function(context, object3d){
 	var matrixWorld	= object3d.matrixWorld
 	////////////////////////////////////////////////////////////////////////
 	// set position
-	var position	= new THREE.Vector3().getPositionFromMatrix(matrixWorld)
+	var position	= new THREE.Vector3().setFromMatrixPosition(matrixWorld)
 	context.listener.setPosition(position.x, position.y, position.z)
 
 	////////////////////////////////////////////////////////////////////////
@@ -441,9 +441,9 @@ WebAudiox.ListenerObject3DUpdater	= function(context, object3d){
 		// set velocity
 		var matrixWorld	= object3d.matrixWorld
 		if( prevPosition === null ){
-			prevPosition	= new THREE.Vector3().getPositionFromMatrix(matrixWorld);
+			prevPosition	= new THREE.Vector3().setFromMatrixPosition(matrixWorld);
 		}else{
-			var position	= new THREE.Vector3().getPositionFromMatrix(matrixWorld);
+			var position	= new THREE.Vector3().setFromMatrixPosition(matrixWorld);
 			var velocity	= position.clone().sub(prevPosition).divideScalar(delta);
 			prevPosition.copy(position)
 			context.listener.setVelocity(velocity.x, velocity.y, velocity.z);
@@ -481,7 +481,7 @@ WebAudiox.PannerSetObject3D	= function(panner, object3d){
 	
 	////////////////////////////////////////////////////////////////////////
 	// set position
-	var position	= new THREE.Vector3().getPositionFromMatrix(matrixWorld)
+	var position	= new THREE.Vector3().setFromMatrixPosition(matrixWorld)
 	panner.setPosition(position.x, position.y, position.z)
 
 	////////////////////////////////////////////////////////////////////////
@@ -517,9 +517,9 @@ WebAudiox.PannerObject3DUpdater	= function(panner, object3d){
 		// set velocity
 		var matrixWorld	= object3d.matrixWorld
 		if( prevPosition === null ){
-			prevPosition	= new THREE.Vector3().getPositionFromMatrix(matrixWorld);
+			prevPosition	= new THREE.Vector3().setFromMatrixPosition(matrixWorld);
 		}else{
-			var position	= new THREE.Vector3().getPositionFromMatrix(matrixWorld);
+			var position	= new THREE.Vector3().setFromMatrixPosition(matrixWorld);
 			var velocity	= position.clone().sub(prevPosition).divideScalar(delta);
 			prevPosition.copy( position )
 			panner.setVelocity(velocity.x, velocity.y, velocity.z);
