@@ -1,0 +1,10 @@
+{
+  "name": "webaudiox",
+  "version": "1.0.1",
+  "main": "build/webaudiox.js",
+  "license": "MIT",
+  "keywords": [
+    "webaudio",
+    "audio"
+  ]
+}
